@@ -42,7 +42,9 @@ class Main(HtmlPage):
             login_info, id='header')
 
     def _getBody(self):
-        return p('Body')
+        o = div(p('hi'), id='messageArea')
+
+        return div(o, id='body')
 
     def _getFooter(self):
         items = ['FAQ', 'About', 'Terms & Privacy', 'Contact']

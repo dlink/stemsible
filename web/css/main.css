@@ -22,6 +22,15 @@ body {
     color: white;
 }
 
+#body {
+    margin: 20px 300px;
+}
+#body #messageArea {
+    border-style: solid;
+    border-color: lightgrey;
+    border-width: 4px;
+}
+
 #footer {
-    margin: 50px 100px;
+    margin: 30px 100px;
 }
