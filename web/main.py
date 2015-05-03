@@ -59,7 +59,7 @@ class Main(HtmlPage):
 
         o = ''
         
-        o += div(user_icon + message.user.fullname)
+        o += div(user_icon + message.user.fullname + '-' + message.created)
         o += span(message.text) 
         o += hr()
         o += span(buttons)
