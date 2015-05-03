@@ -5,11 +5,14 @@ from vlib.odict import odict
 from vweb.html import *
 from vweb.htmlpage import HtmlPage
 
+from messages import Messages
+
 class Main(HtmlPage):
 
     def __init__(self):
         HtmlPage.__init__(self, 'Stemsible')
         self.style_sheets = ['css/main.css']
+        self.messages = Messages()
 
     def process(self):
         self.user = odict({'name': 'dlink',
@@ -42,9 +45,16 @@ class Main(HtmlPage):
             login_info, id='header')
 
     def _getBody(self):
-        o = div(p('hi'), id='messageArea')
+        messages = self.messages.get()
+        o = ''
+        for m in messages:
+            o += self._getMessageCard(m)
+        o = div(o, id='messageArea')
 
         return div(o, id='body')
+
+    def _getMessageCard(self, message):
+        return div(message.text, id='messageCard')
 
     def _getFooter(self):
         items = ['FAQ', 'About', 'Terms & Privacy', 'Contact']
