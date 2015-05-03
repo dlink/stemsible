@@ -54,7 +54,17 @@ class Main(HtmlPage):
         return div(o, id='body')
 
     def _getMessageCard(self, message):
-        return div(message.text, id='messageCard')
+        user_icon = img(src='images/generic_icon.png')
+        buttons = 'Like | Comment'
+
+        o = ''
+        
+        o += div(user_icon + message.user.fullname)
+        o += span(message.text) 
+        o += hr()
+        o += span(buttons)
+
+        return div(o, id='messageCard')
 
     def _getFooter(self):
         items = ['FAQ', 'About', 'Terms & Privacy', 'Contact']
