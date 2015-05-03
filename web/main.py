@@ -45,7 +45,12 @@ class Main(HtmlPage):
         return p('Body')
 
     def _getFooter(self):
-        return p('Footer')
+        items = ['FAQ', 'About', 'Terms & Privacy', 'Contact']
+        #links = [a(i, href='/%s' % i) for i in items]
+        o = hr()
+        for i in items:
+            o += a(i, href='/%s' % i)
+        return div(o, id='footer')
 
 if __name__ == '__main__':
     Main().go()
