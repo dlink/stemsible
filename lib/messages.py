@@ -5,9 +5,7 @@ from vlib.utils import lazyproperty
 from users import User
 
 # some fixed messages:
-MESSAGES = [odict(id=1, user_id=10, created='1 hr',
-                  text="What's on your mind?"),
-            odict(id=1, user_id=13, created='12 hrs', text='hello there'),
+MESSAGES = [odict(id=1, user_id=13, created='12 hrs', text='hello there'),
             odict(id=2, user_id=56, created='Yesterday at 2:10 pm',
                   text='Nice day mate'),
             odict(id=3, user_id=108, created='Yesterday at 1:13 pm',
