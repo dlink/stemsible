@@ -25,8 +25,10 @@ body {
 #body {
     margin: 20px 400px;
 }
+
 #body #messageArea {
 }
+
 #body #messageCard {
     border-style: solid;
     border-color: lightgrey;
@@ -34,6 +36,35 @@ body {
     margin: 10px;
     padding: 10px;
 }
+
+#body #messageCard .userIcon {
+    float: left;
+    margin: 0 15px 0 0;
+}
+
+#body #messageCard .usernameAndDate {
+    float: rigth;
+}
+
+#body #messageCard .messageAuthor {
+    color: lightblue;
+}
+
+#body #messageCard .messageDate {
+    color: lightgrey;
+    padding: 8px;
+}
+
+#body #messageCard .messageText {
+    clear: both;
+    padding: 10px 0;
+}
+
+#body #messageCard .messageButtons {
+    padding: 5px 20px;
+    color: lightblue;
+}
+
 #footer {
     margin: 30px 100px;
 }

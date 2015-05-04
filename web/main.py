@@ -54,15 +54,21 @@ class Main(HtmlPage):
         return div(o, id='body')
 
     def _getMessageCard(self, message):
-        user_icon = img(src='images/generic_icon.png')
+        user_icon = div(img(src='images/generic_icon.png'),
+                        class_='userIcon')
+
+        username = div(message.user.fullname, class_='messageAuthor')
+        date     = div(message.created      , class_='messageDate')
+        username_and_date = div(username + date,
+                                class_='usernameAndDate')
+
         buttons = 'Like | Comment'
 
         o = ''
-        
-        o += div(user_icon + message.user.fullname + '-' + message.created)
-        o += span(message.text) 
+        o += div(user_icon + username_and_date)
+        o += div(message.text, class_='messageText')
         o += hr()
-        o += span(buttons)
+        o += div(buttons, class_='messageButtons')
 
         return div(o, id='messageCard')
 
