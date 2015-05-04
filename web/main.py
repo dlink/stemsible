@@ -29,10 +29,10 @@ class Main(HtmlPage):
         name = span('Stemsible', id='headerName')
 
         # search bar
-        field = input(name='search',
-                      size=50,
-                      value='Search for activities, answers, and advice')
-        search = span(field, id='searchBar')
+        field = input(name='search', type='textfield',
+                      value='Search for activities, answers, and advice',
+                      id='searchField')
+        search = span(field, id='searchArea')
 
         # login Info
         href='/user/%s' % self.user.id
@@ -77,7 +77,8 @@ class Main(HtmlPage):
         #links = [a(i, href='/%s' % i) for i in items]
         o = hr()
         for i in items:
-            o += a(i, href='/%s' % i)
+            #o += a(i, href='/%s' % i)
+            o += span(i, class_='footerLink')
         return div(o, id='footer')
 
 if __name__ == '__main__':
