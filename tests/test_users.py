@@ -4,8 +4,6 @@ import unittest
 
 from users import User
 
-DEBUG = 0
-
 # Fixtures
 
 ID = 1
