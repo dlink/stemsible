@@ -1,26 +1,32 @@
-
+from vlib import db
+from vlib.datatable import DataTable
 from vlib.odict import odict
+from vlib.utils import lazyproperty
 
-# Here are some fixed users:
-
-USER_DATA = [{'id': 10, 'fullname': 'David Link'},
-             {'id': 13, 'fullname': 'Jenny Doe'},
-             {'id': 56, 'fullname': 'Jill Garner'},
-             {'id': 108, 'fullname': 'Uday Kumar'}]
+DEBUG = 0
 
 class UserError(Exception): pass
 
-class User(object):
+class User(DataTable):
+    '''Preside over a single User'''
 
-    def __init__(self, user_id):
-        self.id = None
+    def __init__(self, id):
+        '''Create a User Object given a user_id
+        '''
+        self.db = db.getInstance()
+        DataTable.__init__(self, self.db, 'users')
+        self.id = id
+        self.debug_sql = DEBUG
+        self._loadData()
 
-        for u in map(odict, USER_DATA):
-            if u.id == user_id:
-                self.id = u.id
-                self.fullname = u.fullname
-                break
-        if not self.id:
-            raise UserError('User not found. id: %s' % user_id)
-                
-            
+    def _loadData(self):
+        '''Read a single User DB record'''
+        self.setFilters('id=%s' % self.id)
+        results = self.getTable()
+        if not results:
+            raise UserError('User not found. Id: %s' % self.id)
+        self.__dict__.update(results[0])
+
+    @lazyproperty
+    def fullname(self):
+        return '%s %s' % (self.first_name, self.last_name)

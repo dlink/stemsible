@@ -1,0 +1,7 @@
+database:
+   engine : mysql
+   db     : stemsible
+   host   : localhost
+   user   : stemsible
+   passwd : redXnapper56
+   dictcursor: True
