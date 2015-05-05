@@ -1,10 +1,12 @@
+from vlib import db
 
-from vlib.odict import odict
-from vlib.utils import lazyproperty
-
+from record import Record
 from users import User
 
+DEBUG = 1
+
 # some fixed messages:
+from vlib.odict import odict
 MESSAGES = [odict(id=1, user_id=1, created='12 hrs', text='hello there'),
             odict(id=2, user_id=5, created='Yesterday at 2:10 pm',
                   text='Nice day mate'),
@@ -21,14 +23,9 @@ class Messages(object):
             o.append(Message(m))
         return o
 
-class Message(object):
+class Message(Record):
+    '''Preside over a single Message'''
 
-    def __init__(self, data):
-        self.id = data.id
-        self.user_id = data.user_id
-        self.created = data.created
-        self.text = data.text
-
-    @lazyproperty
-    def user(self):
-        return User(self.user_id)
+    def __init__(self, id):
+        '''Create a Message Object given a message_id'''
+        Record.__init__(self, db.getInstance(), 'messages', id)

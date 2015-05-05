@@ -1,5 +1,5 @@
 id,user_id,text,created,last_updated
-1,1,Hello There,2015-04-05 21:18:00,\N
+1,1,Hello There.,2015-04-05 21:18:00,\N
 2,8,Phil Jr is interested in the Camp Sci major at UPenn and has been doing the AP courses at school. There are practices in Algorithms available on the Pearson site if you are interested,2015-04-05 21:20:00,\N
 3,7,We've been doing quite a bit of 5-6 grade questions from the Math Olympiad book. Its got question/answers for the previous 5 years exams.,2015-04-05 21:26:00,\N
 4,6,I found this great TED Talk on photosynthesis that my 7 yr old enjoyed watching. Here is the URL. Check it out.,2015-04-05 21:28:00,\N
