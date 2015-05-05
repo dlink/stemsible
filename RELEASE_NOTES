@@ -1,0 +1,16 @@
+Stemsible Releases
+
+v0.0.1 - 5/3/2015
+
+* Build initial Main Web Page
+* Build Message Cards from Mock User and Messages Data
+* Style Main Web Page to halfway decent.
+* Style Message Cards to halfway decent.
+
+v0.0.2 - 5/4/2015
+
+* Build Database: Users and Messages Table
+* Build Data Layer: Records, Users, and Messages
+* Build Tests for Data Layer
+* Main Web Page now reading data from Database
+
