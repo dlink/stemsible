@@ -1,7 +1,6 @@
 from vlib import db
 
 from record import Record
-from users import User
 
 DEBUG = 1
 
@@ -27,5 +26,4 @@ class Message(Record):
     '''Preside over a single Message'''
 
     def __init__(self, id):
-        '''Create a Message Object given a message_id'''
         Record.__init__(self, db.getInstance(), 'messages', id)
