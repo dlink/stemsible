@@ -11,7 +11,7 @@ export swi=$sw/images      ; alias swi='cd $swi'
 # database shortcuts
 
 # dev db:
-alias dsdb='mysql -ustemsible -predXnapper56 -hlocalhost --database=dev_stemsible'
+alias dsdb='mysql -ustemsible -predXnapper56 -hlocalhost --database=dev_stemsible --local-infile=1'
 
 # prod db:
 alias psdb='mysql -ustemsible -predXnapper56 -hlocalhost --database=stemsible'
