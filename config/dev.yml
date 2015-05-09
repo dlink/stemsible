@@ -1,3 +1,5 @@
+baseurl: localhost:500
+
 database:
    engine : mysql
    db     : dev_stemsible

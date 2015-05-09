@@ -16,7 +16,7 @@ class Record(DataTable):
 
               class user(Record):
                  def __init__(self, id):
-                    Record(db.getConfig(), 'user', id)
+                    Record.__init__(db.getInstance(), 'user', id)
         '''
         self.db    = db      
         self.table = table
@@ -39,6 +39,10 @@ class Record(DataTable):
         results = self.getTable()
         if not results:
             raise RecordError('%s table: Record not found, Id: %s' %
-                              (self.table, self.id))
-        self.__dict__.update(results[0])
+                              (self.table.title(), self.id))
 
+        # store data in a dictionary
+        self.data = results[0]
+
+        # store data as properties of self
+        self.__dict__.update(results[0])
