@@ -54,6 +54,11 @@ class TestServer(unittest.TestCase):
         self.assertEqual(user1.created, CREATED)
         self.assertEqual(user1.uri, URI)
 
+    def test_REST_getUserFail(self):
+        url = '%s/users/%s' % (SERVER_URL, 0)
+        with self.assertRaises(urllib2.HTTPError):
+            response = urllib2.urlopen(url).read()
+
     def test_REST_getMessage(self):
         url = '%s/messages/%s' % (SERVER_URL, MESSAGE_ID)
         response = urllib2.urlopen(url).read()
