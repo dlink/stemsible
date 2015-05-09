@@ -1,11 +1,15 @@
 from vlib import db
+from vlib.datatable import DataTable
 from vlib.utils import lazyproperty
 
 from record import Record
 
 from users import User
 
-class Messages(object):
+class Messages(DataTable):
+
+    def __init__(self):
+        DataTable.__init__(self, db.getInstance(), 'messages')
 
     def get(self):
         o = []
