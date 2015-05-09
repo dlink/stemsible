@@ -22,6 +22,13 @@ FULLNAME = 'David Link'
 CREATED = 'Mon, 04 May 2015 20:54:00 GMT'
 URI = 'http://localhost:500/users/1'
 
+MESSAGE_ID = 1
+MESSAGE_USER_ID = 1
+MESSAGE_TEXT = 'Hello There.'
+MESSAGE_CREATED = 'Sun, 05 Apr 2015 21:18:00 GMT'
+MESSAGE_USER_FULLNAME = 'David Link'
+
+
 class TestServer(unittest.TestCase):
     '''Test REST Server'''
 
@@ -46,6 +53,29 @@ class TestServer(unittest.TestCase):
         self.assertEqual(user1.fullname, FULLNAME)
         self.assertEqual(user1.created, CREATED)
         self.assertEqual(user1.uri, URI)
+
+    def test_REST_getMessage(self):
+        url = '%s/messages/%s' % (SERVER_URL, MESSAGE_ID)
+        response = urllib2.urlopen(url).read()
+        message = odict(json.loads(response))
+
+        self.assertEqual(message.id, MESSAGE_ID)
+        self.assertEqual(message.user_id, MESSAGE_USER_ID)
+        self.assertEqual(message.text, MESSAGE_TEXT)
+        self.assertEqual(message.created, MESSAGE_CREATED)
+
+    def test_REST_getMessageUser(self):
+        url = '%s/messages/%s' % (SERVER_URL, MESSAGE_ID)
+        response = urllib2.urlopen(url).read()
+        message = odict(json.loads(response))
+
+        self.assertEqual(message.user['id'], MESSAGE_USER_ID)
+        self.assertEqual(message.user['fullname'], MESSAGE_USER_FULLNAME)
+
+    def test_REST_getMessageFail(self):
+        url = '%s/messages/%s' % (SERVER_URL, 0)
+        with self.assertRaises(urllib2.HTTPError):
+            response = urllib2.urlopen(url).read()
 
 if __name__ == '__main__':
     unittest.main()
