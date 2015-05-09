@@ -23,7 +23,7 @@ def getUsers():
             {'id'      : r['id'],
              'fullname': r['fullname'],
              'created' : r['created'],
-             'uri': 'http://%s/users/%s' % (conf_.baseurl, r['id']),
+             'uri': 'http://%s/users/%s' % (conf_.serverurl, r['id']),
              }
             for r in results]
         }
@@ -49,7 +49,7 @@ def getMessages():
              'user_id' : r['user_id'],
              'text'    : r['text'],
              'created' : r['created'],
-             'uri': 'http://%s/messages/%s' % (conf_.baseurl, r['id']),
+             'uri': 'http://%s/messages/%s' % (conf_.serverurl, r['id']),
              }
             for r in results]
         }

@@ -1,4 +1,4 @@
-baseurl: localhost:500
+serverurl: localhost:500
 
 database:
    engine : mysql
