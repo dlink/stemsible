@@ -17,4 +17,11 @@ class User(Record):
 
     def __init__(self, id):
         Record.__init__(self, db.getInstance(), 'users', id)
-        self.data['fullname'] = '%s %s' % (self.first_name, self.last_name)
+        self._loadAdditionalData()
+
+    def _loadAdditionalData(self):
+        '''Add fullnames to self and to self.data
+        '''
+        fullname = '%s %s' % (self.first_name, self.last_name)
+        self.data['fullname'] = fullname
+        self.__dict__.update({'fullname': fullname})
