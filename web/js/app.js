@@ -1,7 +1,3 @@
-function Hello($scope) {
-    $scope.msg = 'Hello, World';
-}
-
 (function(){
     var app = angular.module('talkApp', []);
 
@@ -9,7 +5,6 @@ function Hello($scope) {
 
     app.controller('messageController', function() {
 	this.messages = message_model;
-	this.x = 'fred';
     });
 
     // Directives
