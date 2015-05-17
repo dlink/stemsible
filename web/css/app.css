@@ -10,14 +10,13 @@
 }
 
 #header #searchField {
-    width: 600px;
+    width: 650px;
     height: 25px;
 }
 
-#header #loginInfo {
-    float: right;
+body {
+    background-color: #e8e8e8;
 }
-
 
 .messageCard {
     background-color: white;
