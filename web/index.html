@@ -15,20 +15,29 @@
       <span>Talk</span>
       <input type='textfield' id='search' class='input-xlarge' placeholder='Search ...'>
       <span>
-        <span>Logged in as </span>
-        <span>dlink</span>
+	<span>Logged in as </span>
+	<span>dlink</span>
       </span>
     <hr>
     </header
 
-    <!-- main section -->
-    <section class='container'>
+    <div class='container row'>
 
-      <message-form></message-form>
+      <!-- Left Panel -->
+      <div class='col-md-3'></div>
 
-      <messages></messages>
+      <!-- Center Panel -->
+      <section class='col-md-6'>
 
-    </section>
+	<message-form></message-form>
+
+	<messages></messages>
+
+      </section>
+
+      <!-- Right Pannel -->
+      <div class='col-md-3'></div>
+    </div>
 
     <!-- footer -->
     <footer class='container'>
