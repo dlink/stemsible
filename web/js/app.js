@@ -14,6 +14,13 @@ function Hello($scope) {
 
     // Directives
 
+    app.directive('headerSection', function() {
+	return {
+	    restrict: 'E',
+	    templateUrl: 'header-section.html'
+	};
+    });
+
     app.directive('messageForm', function() {
 	return {
 	    restrict: 'E',
