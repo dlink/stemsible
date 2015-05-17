@@ -1,0 +1,39 @@
+.messageCard {
+    background-color: white;
+    border-style: solid;
+    border-color: lightgrey;
+    border-width: 4px;
+    margin: 10px;
+    padding: 10px;
+}
+.messageCard .userIcon {
+    float: left;
+    margin: 0 15px 0 0;
+}
+
+.messageCard .usernameAndDate {
+    float: rigth;
+    font-family: Arial;
+}
+
+.messageCard .messageAuthor {
+    color: #4090bf;
+}
+
+.messageCard .messageDate {
+    color: lightgrey;
+    padding: 8px;
+}
+
+.messageCard .messageText {
+    clear: both;
+    padding: 10px 0;
+    font-size: large;
+}
+
+.messageCard .messageButtons {
+    padding: 5px 20px;
+    color: #4090bf;
+    font-family: Arial;
+}
+
