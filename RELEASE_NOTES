@@ -1,5 +1,10 @@
 Stemsible Releases
 
+v0.0.3 - 5/17/2015
+
+* Interface rewrite with Ansible.js and Bootstrap
+* New restful api Server written with flask
+
 v0.0.2 - 5/4/2015
 
 * Build Database: Users and Messages Table
