@@ -5,6 +5,12 @@
 
     app.controller('messageController', function() {
 	this.messages = message_model;
+
+	this.new_message = {text: ''};
+
+	this.update = function() {
+	    this.messages.push(this.new_message);
+	};
     });
 
     // Directives
