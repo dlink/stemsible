@@ -21,10 +21,10 @@ function Hello($scope) {
 	};
     });
 
-    app.directive('messageForm', function() {
+    app.directive('newMessage', function() {
 	return {
 	    restrict: 'E',
-	    templateUrl: 'message-form.html'
+	    templateUrl: 'new-message.html'
 	};
     });
 
