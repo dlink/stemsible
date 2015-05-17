@@ -9,7 +9,12 @@
 	this.new_message = {text: ''};
 
 	this.update = function() {
-	    this.messages.push(this.new_message);
+	    d = new Date();
+	    this.new_message.created = d.toString();
+	    this.new_message.author = 'David Link';
+	    this.messages.unshift(this.new_message);
+	    // Init
+	    this.new_message = {text: ''}
 	};
     });
 
@@ -31,8 +36,7 @@
 
     app.directive('messages', function() {
 	return {
-	    // template: '{{x}}'
-	     restrict: 'E',
+	    restrict: 'E',
 	    templateUrl: 'messages.html',
 	};
     });
@@ -43,7 +47,7 @@
 	 'created': '2015-05-17 11:01:00',
 	 'text': "What's up with LCPS closing every other day?? I've had enough of this stuff"},
 	{'id': 2,
-	 'author': 'Nidhi Mishra',
+	 'author': 'Fred Barnes',
 	 'created': '2015-05-17 10:39:01',
 	 'text': 'There is an awesome STEM event in One Loudoun that you may want to check out. Here is the info ...'}
     ];
