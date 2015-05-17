@@ -1,8 +1,15 @@
 
 
-<div class='messageCard'>
+<form class='messageCard' novalidate>
   <div class='newMessage' ng-controller='messageFormController as messageFormCtrl'>
     <img class='img-thumbnail' src='images/generic_icon.png'></img>
-    <input id='new_message_text' type='text' placeholder="What's on your mind?" class='input-xlarge'>
+    <span class='.form-group'>
+      <textarea class='newMessageText form-control' rows='2'
+		ng-model='message.text' placeholder="What's up?"></textarea>
+      <button type="button" class="postButton btn btn-primary"
+	      ng-click=''>
+	Post
+      </button>
+    </span>
   </div>
-</div>
+</form>
