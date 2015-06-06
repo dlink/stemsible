@@ -14,9 +14,9 @@ class Record(DataTable):
 
            Meant to be subclassed, as follows:
 
-              class user(Record):
-                 def __init__(self, id):
-                    Record.__init__(db.getInstance(), 'user', id)
+           class user(Record):
+              def __init__(self, id):
+                 Record.__init__(db.getInstance(), 'user', id)
         '''
         self.db    = db      
         self.table = table
