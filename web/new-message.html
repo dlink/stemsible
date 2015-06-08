@@ -1,13 +1,13 @@
 
 
 <form class='messageCard' novalidate>
-  <div class='newMessage' ng-controller='messageController as messageCtrl'>
+  <div class='newMessage'>
     <!-- img class='img-thumbnail' src='images/generic_icon.png'></img -->
     <span class='.form-group'>
       <textarea class='newMessageText form-control' rows='1'
-		ng-model='messageCtrl.new_message.text' placeholder="What's up?"></textarea>
+		ng-model='new_message.text' placeholder="What's up?"></textarea>
       <button type="button" class="postButton btn btn-primary"
-	      ng-click='messageCtrl.update()'>Post</button>
+	      ng-click='update()'>Post</button>
     </span>
   </div>
 </form>

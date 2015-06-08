@@ -3,20 +3,30 @@
 
     // Controllers
 
-    app.controller('messageController', function() {
-	this.messages = message_model;
+    app.controller('messageCtrl', ['$scope', '$http', function($scope, $http) {
 
-	this.new_message = {text: ''};
+	$http.get('messagesapi.py')
+            .success(function(data) {
+		// console.log('http suceeded');
+		$scope.messages = data.messages;
+	    })
+	    .error(function(data) {
+		console.log('http failed');
+		$scope.messages = [];
+	    });
 
-	this.update = function() {
+	$scope.new_message = {text: ''};
+
+	$scope.update = function() {
 	    d = new Date();
-	    this.new_message.created = d.toString();
-	    this.new_message.author = 'David Link';
-	    this.messages.unshift(this.new_message);
+	    $scope.new_message.created = d.toString();
+	    $scope.new_message.author = "David Link";
+	    $scope.messages.unshift($scope.new_message);
+
 	    // Init
-	    this.new_message = {text: ''}
+	    $scope.new_message = {text: ''}
 	};
-    });
+    }]);
 
     // Directives
 
