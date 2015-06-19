@@ -7,11 +7,11 @@
 
 	$http.get('messagesapi.py')
             .success(function(data) {
-		// console.log('http suceeded');
+		console.log('http suceeded');
 		$scope.messages = data.messages;
 	    })
 	    .error(function(data) {
-		console.log('http failed');
+		console.log('http failed.  data = ' + data);
 		$scope.messages = [];
 	    });
 
@@ -20,7 +20,18 @@
 	$scope.update = function() {
 	    d = new Date();
 	    $scope.new_message.created = d.toString();
+	    // $scope.new_message.author = "David Link";
 	    $scope.new_message.author = "David Link";
+	    $http.post('messagesapi.py', {'data': $scope.new_message})
+		.success(function(data, status, headers, config) {
+		    console.log('post successful');
+		})
+	        .error(function(data, status, headers, config) {
+		    console.log('post fail');
+		    console.log('data: ' + data);
+		    console.log('status: ' + status);
+		});
+
 	    $scope.messages.unshift($scope.new_message);
 
 	    // Init
