@@ -12,10 +12,10 @@ API Server:
 
 Examples:
 
-   stemsible.crowfly.net/api/users
-   stemsible.crowfly.net/api/users/1
-   stemsible.crowfly.net/api/messages
-   stemsible.crowfly.net/api/messages/1
+   - stemsible.crowfly.net/api/users
+   - stemsible.crowfly.net/api/users/1
+   - stemsible.crowfly.net/api/messages
+   - stemsible.crowfly.net/api/messages/1
 
 
 High Level Application Architecture
