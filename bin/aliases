@@ -9,6 +9,7 @@ export st=$s/tests         ; alias st='cd $st'
 export sw=$s/web           ; alias sw='cd $sw'
 export swc=$sw/css         ; alias swc='cd $swc'
 export swi=$sw/images      ; alias swi='cd $swi'
+export swj=$sw/js          ; alias swj='cd $swj'
 
 # database shortcuts
 
