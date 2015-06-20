@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from vlib import conf
 
@@ -9,25 +9,29 @@ HTTP_BAD_REQUEST = 400
 
 app = Flask(__name__)
 
-@app.route('/users')
+@app.route('/users', methods=['GET', 'POST'])
 def getUsers():
     conf_ = conf.getInstance()
     users = Users()
-    users.setColumns(['id',
-                      'concat_ws(" ", first_name, last_name) as fullname',
-                      'created'])
-    users.setOrderBy('id')
-    results = users.getTable()
-    data = {
-        'users': [
-            {'id'      : r['id'],
-             'fullname': r['fullname'],
-             'created' : r['created'],
-             'uri': 'http://%s/users/%s' % (conf_.serverurl, r['id']),
-             }
-            for r in results]
-        }
-    return jsonify(data)
+    if request.method == 'POST':
+        data = dict((k, request.form[k]) for k in request.form.keys())
+        return jsonify(users.add(data))
+    else:
+        users.setColumns(['id',
+                          'concat_ws(" ", first_name, last_name) as fullname',
+                          'created'])
+        users.setOrderBy('id')
+        results = users.getTable()
+        data = {
+            'users': [
+                {'id'      : r['id'],
+                 'fullname': r['fullname'],
+                 'created' : r['created'],
+                 'uri': 'http://%s/users/%s' % (conf_.serverurl, r['id']),
+                 }
+                for r in results]
+            }
+        return jsonify(data)
 
 @app.route('/users/<int:id>')
 def getUser(id):
@@ -70,5 +74,5 @@ def problem(e):
     return jsonify(response), HTTP_BAD_REQUEST
 
 if __name__ == '__main__':
-    app.debug = True
+    app.debug = True # not for production
     app.run()
