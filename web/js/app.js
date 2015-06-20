@@ -5,9 +5,9 @@
 
     app.controller('messageCtrl', ['$scope', '$http', function($scope, $http) {
 
-	$http.get('messagesapi.py')
+	$http.get('/api/messages')
             .success(function(data) {
-		// console.log('http suceeded');
+		console.log('http suceeded');
 		$scope.messages = data.messages;
 	    })
 	    .error(function(data) {
