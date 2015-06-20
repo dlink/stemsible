@@ -7,3 +7,8 @@ database:
    user   : stemsible
    passwd : redXnapper56
    dictcursor: True
+
+logging:
+   dir: /home/dlink/log
+   filename: /home/dlink/log/stemsible.log
+   level: DEBUG
