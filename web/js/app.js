@@ -63,15 +63,4 @@
 	};
     });
 
-    message_model = [
-	{'id': 1,
-	 'author': 'Jill Garner',
-	 'created': '2015-05-17 11:01:00',
-	 'text': "What's up with LCPS closing every other day?? I've had enough of this stuff"},
-	{'id': 2,
-	 'author': 'Fred Barnes',
-	 'created': '2015-05-17 10:39:01',
-	 'text': 'There is an awesome STEM event in One Loudoun that you may want to check out. Here is the info ...'}
-    ];
-
 })();
