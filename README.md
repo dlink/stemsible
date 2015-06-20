@@ -10,7 +10,7 @@ API Server:
 
    - stemsible.crowfly.net/api
 
-Examples:
+API Call Examples:
 
    - stemsible.crowfly.net/api/users
    - stemsible.crowfly.net/api/users/1
