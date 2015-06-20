@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from vlib import db
+from vlib import conf
 from vlib.datatable import DataTable
 from vlib.utils import lazyproperty
 
@@ -11,13 +12,24 @@ from users import User
 class Messages(DataTable):
 
     def __init__(self):
+        self.db = db.getInstance()
+        self.conf = conf.getInstance()
         DataTable.__init__(self, db.getInstance(), 'messages')
 
-    def get(self):
-        o = []
-        for m in reversed(range(1,8)):
-            o.append(Message(m))
-        return o
+    def getMessages(self):
+        sql_file = '%s/sql/templates/messages.sql' % self.conf.basedir
+        sql = open(sql_file, 'r').read()
+        data = {
+            'messages': [
+                {'id'      : r['id'],
+                 'user_id' : r['user_id'],
+                 'author'  : r['author'],
+                 'text'    : r['text'],
+                 'created' : r['created'],
+                 }
+                for r in self.db.query(sql)]
+            }
+        return data
 
     def add(self, data):
         try:
