@@ -28,7 +28,8 @@ class Messages(DataTable):
             results['user'] = message.user.data
             return results
         except Exception, e:
-            return {'error': str(e)}
+            return {'error': str(e),
+                    'data': str(data)}
 
 class Message(Record):
     '''Preside over a single Message'''

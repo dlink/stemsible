@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request
 
+import json
+
 from vlib import conf
 
 from users import Users, User
@@ -45,7 +47,14 @@ def getMessages():
     conf_ = conf.getInstance()
     messages = Messages()
     if request.method == 'POST':
-        data = dict((k, request.form[k]) for k in request.form.keys())
+        if request.data:
+            # Content-Type: application/json
+            # ie. - { "foo": "bar", "baz": "moe" }
+            data = json.loads(request.data)
+        else:
+            # Content-Type: x-www-form-urlencoded
+            # ie. - foo=bar&baz=moe
+            data = dict((k, request.values[k]) for k in request.values.keys())
         return jsonify(messages.add(data))
     else:
         messages.setColumns(['id', 'user_id', 'text', 'created'])
