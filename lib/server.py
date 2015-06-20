@@ -40,24 +40,28 @@ def getUser(id):
     except Exception, e:
         return problem(e)
 
-@app.route('/messages')
+@app.route('/messages', methods=['GET', 'POST'])
 def getMessages():
     conf_ = conf.getInstance()
     messages = Messages()
-    messages.setColumns(['id', 'user_id', 'text', 'created'])
-    messages.setOrderBy('id')
-    results = messages.getTable()
-    data = {
-        'messages': [
-            {'id'      : r['id'],
-             'user_id' : r['user_id'],
-             'text'    : r['text'],
-             'created' : r['created'],
-             'uri': 'http://%s/messages/%s' % (conf_.serverurl, r['id']),
-             }
-            for r in results]
-        }
-    return jsonify(data)
+    if request.method == 'POST':
+        data = dict((k, request.form[k]) for k in request.form.keys())
+        return jsonify(messages.add(data))
+    else:
+        messages.setColumns(['id', 'user_id', 'text', 'created'])
+        messages.setOrderBy('id desc')
+        results = messages.getTable()
+        data = {
+            'messages': [
+                {'id'      : r['id'],
+                 'user_id' : r['user_id'],
+                 'text'    : r['text'],
+                 'created' : r['created'],
+                 'uri': 'http://%s/messages/%s' % (conf_.serverurl, r['id']),
+                 }
+                for r in results]
+            }
+        return jsonify(data)
 
 @app.route('/messages/<int:id>')
 def getMessage(id):
