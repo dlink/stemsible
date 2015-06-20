@@ -1,5 +1,16 @@
 Stemsible Releases
 
+v0.0.4 - 6/19/2015
+
+* Support Ajax Write backs to API Server!
+* Restful API server now running as a WSGI application
+* Created Apache Virtual Host Configs for both App and API Server
+* New Site locations, with new DNS entries:
+* - stemsible.crowfly.net, and
+* - stemsible.crowfly.net/api
+* - dev-stemsible.crowfly.net, and
+* - dev-stemsible.crowfly.net/api
+
 v0.0.3 - 5/17/2015
 
 * Interface rewrite with Ansible.js and Bootstrap
