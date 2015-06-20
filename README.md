@@ -22,7 +22,7 @@ High Level Application Architecture
 
    Front End:
 
-      1. web/index.html  (Singluar HTML Page App)
+      1. web/index.html  (Single HTML Page App)
       2. web/js/apps.js  (AngularJS App)
 
    Back End:
