@@ -4,11 +4,11 @@ Where Parents talk about their Kid's Education
 
 App:
 
-   stemsible.crowfly.net
+   - stemsible.crowfly.net
 
 API Server:
 
-   stemsible.crowfly.net/api
+   - stemsible.crowfly.net/api
 
 Examples:
 
