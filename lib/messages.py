@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from vlib import db
 from vlib.datatable import DataTable
 from vlib.utils import lazyproperty
@@ -16,6 +18,17 @@ class Messages(DataTable):
         for m in reversed(range(1,8)):
             o.append(Message(m))
         return o
+
+    def add(self, data):
+        try:
+            data['created'] = datetime.now()
+            id = self.insertRow(data)
+            message = Message(id)
+            results = message.data
+            results['user'] = message.user.data
+            return results
+        except Exception, e:
+            return {'error': str(e)}
 
 class Message(Record):
     '''Preside over a single Message'''
