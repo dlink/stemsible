@@ -1,3 +1,5 @@
+environment: dev
+basedir: /home/dlink/stemsible
 serverurl: localhost:5000
 
 database:

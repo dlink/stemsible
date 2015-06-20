@@ -1,3 +1,5 @@
+environment: prod
+basedir: /apps/stemsible
 serverurl: localhost:5000
 
 database:
