@@ -10,14 +10,22 @@ from messages import Messages
 class Main(HtmlPage):
 
     def __init__(self):
-        HtmlPage.__init__(self, 'Stemsible', include_form_tag=0)
+        HtmlPage.__init__(self, 'Stemsible') #, include_form_tag=0)
         self.style_sheets = ['bootstrap/css/bootstrap.min.css',
                              'css/app.css']
         self.messages = Messages()
+        self.debug_cgi = 0
 
     def process(self):
+        HtmlPage.process(self)
         self.user = odict({'name': 'dlink',
                            'id': 10})
+
+        # add new messages
+        if 'new_message' in self.form:
+            data = {'user_id': 1,
+                    'text'   : self.form['new_message'].value}
+            id = self.messages.add(data)
 
     def getHtmlContent(self):
         return \
@@ -41,7 +49,7 @@ class Main(HtmlPage):
         return div(o, id='messageArea')
 
     def _getNewMessageCard(self):
-        return open('new-message.html', 'r').read()
+        return open('new-message2.html', 'r').read()
 
     def _getMessageCard(self, message):
         message = odict(message)
@@ -63,6 +71,9 @@ class Main(HtmlPage):
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
 
     def _getFooter(self):
+        # not op
+        return ''
+
         items = ['FAQ', 'About', 'Terms & Privacy', 'Contact']
         #links = [a(i, href='/%s' % i) for i in items]
         o = hr()
