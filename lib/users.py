@@ -15,6 +15,20 @@ class Users(DataTable):
     def __init__(self):
         DataTable.__init__(self, db.getInstance(), 'users')
 
+    def getUsers(self, filters):
+        '''Given a filter
+           Return a list of Instantiated User Objects
+
+           filter is anything accepted by DataTable.setFilters()
+           ex. user = Users().getUsers({'username': 'dlink'})[0]
+        '''
+        self.setFilters(filters)
+        self.setColumns('id')
+        o = []
+        for row in self.getTable():
+            o.append(User(row['id']))
+        return o
+
     def add(self, data):
         try:
             data['created'] = datetime.now()
