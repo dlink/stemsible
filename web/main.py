@@ -45,7 +45,7 @@ class Main(HtmlPage):
             login_info, id='header')
 
     def _getBody(self):
-        messages = self.messages.get()
+        messages = self.messages.getMessages()['messages']
         o = ''
         for m in messages:
             o += self._getMessageCard(m)
@@ -54,10 +54,12 @@ class Main(HtmlPage):
         return div(o, id='body')
 
     def _getMessageCard(self, message):
+        message = odict(message)
+
         user_icon = div(img(src='images/generic_icon.png'),
                         class_='userIcon')
 
-        username = div(message.user.fullname, class_='messageAuthor')
+        username = div(message.author, class_='messageAuthor')
         date     = div(message.created      , class_='messageDate')
         username_and_date = div(username + date,
                                 class_='usernameAndDate')

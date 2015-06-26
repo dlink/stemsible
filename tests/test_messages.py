@@ -4,7 +4,7 @@ from datetime import datetime
 import unittest
 from record import RecordError
 
-from messages import Message
+from messages import Message, Messages
 
 # Fixtures
 
@@ -18,7 +18,11 @@ USER_FULLNAME = 'David Link'
 class TestMessages(unittest.TestCase):
     '''Test Messages'''
 
-    def test_getMessage(self):
+    def test_get(self):
+        messages = Messages().getMessages()['messages']
+        self.assertEqual(messages[0]['user_id'], USER_ID)
+
+    def test_message(self):
         message = Message(ID)
         self.assertEqual(message.id, ID)
         self.assertEqual(message.user_id, USER_ID)
@@ -26,12 +30,12 @@ class TestMessages(unittest.TestCase):
         self.assertEqual(str(message.created), CREATED)
         self.assertTrue(isinstance(message.last_updated, datetime))
 
-    def test_getMessageUser(self):
+    def test_messageUser(self):
         message = Message(ID)
         self.assertEqual(message.user.id, USER_ID)
         self.assertEqual(message.user.fullname, USER_FULLNAME)
 
-    def test_getMessageFail(self):
+    def test_messageFail(self):
         with self.assertRaises(RecordError):
             message = Message(0)
 
