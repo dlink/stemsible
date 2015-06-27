@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
+import os
+
 from vlib.odict import odict
 
 from vweb.html import *
 from vweb.htmlpage import HtmlPage
 
+from users import Users
 from messages import Messages
 
 class Main(HtmlPage):
@@ -13,17 +16,20 @@ class Main(HtmlPage):
         HtmlPage.__init__(self, 'Stemsible') #, include_form_tag=0)
         self.style_sheets = ['bootstrap/css/bootstrap.min.css',
                              'css/app.css']
+        self.users = Users()
         self.messages = Messages()
         self.debug_cgi = 0
 
     def process(self):
         HtmlPage.process(self)
-        self.user = odict({'name': 'dlink',
-                           'id': 10})
+
+        # get user
+        username = os.environ['REMOTE_USER']
+        self.user = self.users.getUsers({'username': username})[0]
 
         # add new messages
         if 'new_message' in self.form:
-            data = {'user_id': 1,
+            data = {'user_id': self.user.id,
                     'text'   : self.form['new_message'].value}
             id = self.messages.add(data)
 
