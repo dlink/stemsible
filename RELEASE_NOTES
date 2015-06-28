@@ -1,5 +1,10 @@
 Stemsible Releases
 
+v0.0.6 - 6/28/2015
+
+* Built up Python CGI App: crowfly.net/stemsible/main.py
+* Added Basic HTTP Authentication
+
 v0.0.5 - 6/19/2015
 
 * Put Author Name on Message cards
