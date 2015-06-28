@@ -2,15 +2,20 @@
 
 Where Parents talk about their Kid's Education
 
-App:
 
-   - stemsible.crowfly.net
+Python CGI App:
+
+   - [dev.]crowfly.net/stemsible/main.py
+
+JS App:
+
+   - [dev-]stemsible.crowfly.net
 
 API Server:
 
-   - stemsible.crowfly.net/api
+   - [dev-]stemsible.crowfly.net/api
 
-API Call Examples:
+   Example API Calls:
 
    - stemsible.crowfly.net/api/users
    - stemsible.crowfly.net/api/users/1
@@ -20,7 +25,11 @@ API Call Examples:
 
 High Level Application Architecture
 
-   Front End:
+   Python CGI Front End:
+
+      1. web/main.py
+
+   JS Front End:
 
       1. web/index.html  (Single HTML Page App)
       2. web/js/apps.js  (AngularJS App)
