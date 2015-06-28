@@ -40,7 +40,7 @@ class Main(HtmlPage):
             self._getFooter()
 
     def _getHeader(self):
-        return open('header-section.html', 'r').read()
+        return open('header-section2.html', 'r').read() % self.user.fullname
 
     def _getBody(self):
         return open('body-section.html', 'r').read() % (
