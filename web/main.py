@@ -31,9 +31,20 @@ class Main(HtmlPage):
         username = os.environ['REMOTE_USER']
         self.user = self.users.getUsers({'username': username})[0]
 
+       # substitute user
+        self.su_user = self.user.id
+        if 'user_chooser' in self.form:
+            self.su_user = int(self.form['user_chooser'].value)
+        #self.debug_msg += p('substitute user: %s' % self.su_user)
+
         # add new messages
         if 'new_message' in self.form:
-            data = {'user_id': self.user.id,
+            if USER_CHOOSER:
+                user_id = self.su_user
+            else:
+                user_id = self.user.id
+
+            data = {'user_id': user_id,
                     'text'   : self.form['new_message'].value}
             id = self.messages.add(data)
 
@@ -90,12 +101,20 @@ class Main(HtmlPage):
             return ''
 
         options = ''
-        keys = ['Sally', 'George', 'Ringo', 'Felip']
-        for key in keys:
-            if key == 'George':
-                options += option(key, value=key, selected='1')
+        #keys = ['select a substitute user', 'Sally', 'George', 'Ringo', 'Felip']
+        #for key in keys:
+        #    if key == self.su_user:
+        #        options += option(key, value=key, selected='1')
+        #    else:
+        #        options += option(key, value=key)
+        #return select(options, name='user_chooser', id='user_chooser',
+        #              onChange='submit()', class_='selectpicker')
+
+        for id, username in self.users.getUserMap():
+            if id == self.su_user:
+                options += option(username, value=id, selected='1')
             else:
-                options += option(key, value=key)
+                options += option(username, value=id)
         return select(options, name='user_chooser', id='user_chooser',
                       onChange='submit()', class_='selectpicker')
 

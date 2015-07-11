@@ -34,5 +34,9 @@ class TestUsers(unittest.TestCase):
         user = User(ID)
         self.assertEqual(user.fullname, FULLNAME)
 
+    def test_getUserMap(self):
+        user_map = Users().getUserMap()
+        self.assertTrue([ID, USERNAME] in user_map)
+
 if __name__ == '__main__':
     unittest.main()

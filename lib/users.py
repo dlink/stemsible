@@ -37,6 +37,16 @@ class Users(DataTable):
         except Exception, e:
             return {'error': str(e)}
 
+    def getUserMap(self):
+        '''Return a list of id,username pairs of all users'''
+        self.setFilters('1=1') # hack
+        self.setColumns('id, username')
+        self.setOrderBy('username')
+        o = []
+        for row in self.getTable():
+            o.append([row['id'], row['username']])
+        return o
+
 class User(Record):
     '''Preside over a single User'''
 
