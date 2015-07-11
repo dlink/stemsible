@@ -10,12 +10,16 @@ from vweb.htmlpage import HtmlPage
 from users import Users
 from messages import Messages
 
+USER_CHOOSER = 1
+
 class Main(HtmlPage):
 
     def __init__(self):
         HtmlPage.__init__(self, 'Stemsible') #, include_form_tag=0)
         self.style_sheets = ['bootstrap/css/bootstrap.min.css',
                              'css/app.css']
+        if USER_CHOOSER:
+            self.style_sheets.append('css/userchooser.css')
         self.users = Users()
         self.messages = Messages()
         self.debug_cgi = 0
@@ -40,7 +44,9 @@ class Main(HtmlPage):
             self._getFooter()
 
     def _getHeader(self):
-        return open('header-section2.html', 'r').read() % self.user.fullname
+        return open('header-section2.html', 'r').read() % \
+            (self.user.fullname,
+             self._getUserChooser())
 
     def _getBody(self):
         return open('body-section.html', 'r').read() % (
@@ -75,6 +81,24 @@ class Main(HtmlPage):
         #o += div(buttons, class_='messageButtons')
 
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
+
+    def _getUserChooser(self):
+        '''Used for debug
+           provide a drop down of different users
+        '''
+        if not USER_CHOOSER:
+            return ''
+
+        options = ''
+        keys = ['Sally', 'George', 'Ringo', 'Felip']
+        for key in keys:
+            if key == 'George':
+                options += option(key, value=key, selected='1')
+            else:
+                options += option(key, value=key)
+        return select(options, name='user_chooser', id='user_chooser',
+                      onChange='submit()', class_='selectpicker')
+
 
     def _getFooter(self):
         # not op
