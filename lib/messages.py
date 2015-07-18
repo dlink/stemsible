@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from vlib import db
 from vlib import conf
 from vlib.datatable import DataTable
@@ -33,7 +31,6 @@ class Messages(DataTable):
 
     def add(self, data):
         try:
-            data['created'] = datetime.now()
             id = self.insertRow(data)
             message = Message(id)
             results = message.data
