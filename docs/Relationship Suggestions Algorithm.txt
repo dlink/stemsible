@@ -1,0 +1,17 @@
+Relationship Suggestions
+7/9/2015
+
+Assign Followers
+
+Given:
+    Ideal Number of Seeded/Initial Relationships = 20
+
+While No. Relationships < Ideal Number of Relationships, Add Relationships as follows:
+
+  1. Find Users: Same: Town, Grade
+  2. Find Users: Same: Town, Level
+  4. Find Users: Same: Vicinity, Grade
+  3. Find users: Same: Town
+  5. Find Users: Same: Vicinity, Level
+  6. Find Users: Same: Vicinity
+  7. All
