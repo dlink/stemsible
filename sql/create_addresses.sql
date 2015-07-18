@@ -4,6 +4,7 @@ set foreign_key_checks = 0;
 
 create table addresses (
   id                 integer unsigned not null auto_increment primary key,
+  address_type_id    integer unsigned not null,
   address1           varchar(255)     ,
   address2           varchar(255)     ,
   city               varchar(255)     ,
