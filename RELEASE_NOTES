@@ -1,5 +1,10 @@
 Stemsible Releases
 
+v0.0.7 - 7/11/2015
+
+* Adding User Chooser, to change Logged in User for testing
+* Documentation on relationship suggestions
+
 v0.0.6 - 6/28/2015
 
 * Built up Python CGI App: crowfly.net/stemsible/main.py
