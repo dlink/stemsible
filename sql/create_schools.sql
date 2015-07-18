@@ -23,4 +23,8 @@ show warnings;
 
 set foreign_key_checks = 1;
 
+create trigger schools_create before insert on schools
+   for each row set new.created = now()
+;
+
 desc schools;

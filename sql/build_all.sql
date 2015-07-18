@@ -8,8 +8,8 @@ drop table if exists users;
 drop table if exists schools;
 drop table if exists school_districts;
 drop table if exists school_relationships;
-drop table if exists address_types;
 drop table if exists addresses;
+drop table if exists address_types;
 
 -- Create all tables
 

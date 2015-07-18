@@ -18,4 +18,11 @@ show warnings;
 
 set foreign_key_checks = 1;
 
+create trigger address_type_create before insert on address_types
+   for each row set new.created = now()
+;
+
+load data local infile 'data/address_types.csv' into table address_types
+fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
+
 desc address_types;

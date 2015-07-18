@@ -18,4 +18,8 @@ show warnings;
 
 set foreign_key_checks = 1;
 
+create trigger school_relationsihps_create before insert
+   on school_relationships
+   for each row set new.created = now()
+;
 desc school_relationships;

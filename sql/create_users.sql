@@ -21,4 +21,8 @@ show warnings;
 
 set foreign_key_checks = 1;
 
+create trigger users_create before insert on users
+   for each row set new.created = now()
+;
+
 desc users;

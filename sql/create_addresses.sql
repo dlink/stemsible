@@ -26,4 +26,7 @@ show warnings;
 
 set foreign_key_checks = 1;
 
+create trigger addresses_create before insert on addresses
+   for each row set new.created = now()
+;
 desc addresses;

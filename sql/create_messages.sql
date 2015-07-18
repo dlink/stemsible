@@ -17,6 +17,9 @@ engine InnoDB default charset=utf8;
 
 show warnings;
 
+create trigger messages_create before insert on messages
+   for each row set new.created = now()
+;
 desc messages;
 
 set foreign_key_checks = 1;
