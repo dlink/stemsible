@@ -14,7 +14,10 @@ create table addresses (
 
   created            datetime         not null ,
   last_updated       timestamp        not null 
-        default current_timestamp on update current_timestamp
+        default current_timestamp on update current_timestamp,
+
+  foreign key (address_type_id) references address_types (id)
+
 ) 
 engine InnoDB default charset=utf8;
 ;

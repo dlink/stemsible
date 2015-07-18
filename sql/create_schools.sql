@@ -13,8 +13,8 @@ create table schools (
   last_updated       timestamp        not null 
         default current_timestamp on update current_timestamp,
 
-  foreign key (school_district_id) references school_district (id),
-  foreign key (address_id)         references address (id)
+  foreign key (school_district_id) references school_districts (id),
+  foreign key (address_id)         references addresses (id)
 ) 
 engine InnoDB default charset=utf8;
 ;
