@@ -2,12 +2,14 @@ select
    u.username,
    u.first_name,
    u.last_name,
-   sr.code,
+   sr.code as relation,
    s.name as school,
    us.grade,
    sd.name as school_district,
-   concat_ws(', ', a.address1, a.address2, a.city, a.state, a.zipcode, a.country) as school_address,
-   concat_ws(', ', a2.address1, a2.address2, a2.city, a2.state, a2.zipcode, a2.country) as school_district_address
+   concat_ws(', ', a.address1, a.address2, a.city, a.state, a.zipcode,
+                   a.country) as school_address,
+   concat_ws(', ', a2.address1, a2.address2, a2.city, a2.state, a2.zipcode,
+                   a2.country) as school_district_address
 from
    users u
    left join user_schools us on u.id = us.user_id
