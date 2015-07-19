@@ -19,5 +19,5 @@ from
    left join school_districts sd on s.school_district_id = sd.id
    left join addresses a2 on sd.address_id = a2.id
 where
-   u.id = 2
+   sr.id is not null
 \G
