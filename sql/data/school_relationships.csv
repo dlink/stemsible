@@ -1,0 +1,5 @@
+id,code,name,description,active,created,last_updated
+1,has_student,Has Student,User has a student at this school,1,2015-07-18 16:29:52,2015-07-18 16:29:52
+2,is_student,Is Student,User is a student as this school,1,2015-07-18 16:30:14,2015-07-18 16:30:14
+3,is_educator,Is Educator,User is an educator as this school,1,2015-07-18 16:30:32,2015-07-18 16:30:32
+4,is_administrator,Is Administrator,User is an administrator at this school,1,2015-07-18 16:30:53,2015-07-18 16:30:53
