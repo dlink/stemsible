@@ -39,6 +39,7 @@ class Messages(DataTable):
                  'author'  : r['author'],
                  'text'    : r['text'],
                  'created' : r['created'],
+                 'reason'  : r['reason'],
                  }
                 for r in self.db.query(sql)]
             }

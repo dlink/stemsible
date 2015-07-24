@@ -84,8 +84,9 @@ class Main(HtmlPage):
                             class_='img-thumbnail'),
                         class_='userIcon')
         username = div(message.author,  class_='messageAuthor')
+        reason   = div(message.reason)
         date     = div(message.created, class_='messageDate')
-        username_and_date = div(username + date,
+        username_and_date = div(username + reason + date,
                                 class_='usernameAndDate')
         buttons = 'Like | Comment'
 
