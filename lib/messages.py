@@ -29,6 +29,21 @@ class Messages(DataTable):
             }
         return data
 
+    def getUserMessages(self, user_id):
+        sql_file = '%s/sql/templates/user_messages.sql' % self.conf.basedir
+        sql = open(sql_file, 'r').read().replace('<user_id>', str(user_id))
+        data = {
+            'messages': [
+                {'id'      : r['id'],
+                 'user_id' : r['user_id'],
+                 'author'  : r['author'],
+                 'text'    : r['text'],
+                 'created' : r['created'],
+                 }
+                for r in self.db.query(sql)]
+            }
+        return data
+
     def add(self, data):
         try:
             id = self.insertRow(data)

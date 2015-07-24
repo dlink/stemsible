@@ -65,7 +65,11 @@ class Main(HtmlPage):
             self._getMessages())
 
     def _getMessages(self):
-        messages = self.messages.getMessages()['messages']
+        if USER_CHOOSER:
+            user_id = self.su_user
+        else:
+            user_id = self.user.id
+        messages = self.messages.getUserMessages(user_id)['messages']
         o = ''
         for m in messages:
             o += self._getMessageCard(m)

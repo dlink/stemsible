@@ -24,6 +24,11 @@ load data local infile 'test_data/user_schools.csv' into table user_schools
 fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
 select * from user_schools;
 
+-- load test followers
+load data local infile 'test_data/follows.csv' into table follows
+fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
+select * from follows;
+
 -- Load test messages
 load data local infile 'test_data/messages.csv' into table messages
 fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
