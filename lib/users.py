@@ -12,6 +12,7 @@ DEBUG = 0
 class UserError(Exception): pass
 
 class Users(DataTable):
+
     def __init__(self):
         DataTable.__init__(self, db.getInstance(), 'users')
 
@@ -60,3 +61,17 @@ class User(Record):
         fullname = '%s %s' % (self.first_name, self.last_name)
         self.data['fullname'] = fullname
         self.__dict__.update({'fullname': fullname})
+
+    @lazyproperty
+    def following(self):
+        '''Return a list of User Objects of those this user follows'''
+        dt = DataTable(self.db, 'follows')
+        dt.setColumns(['follows_id'])
+        dt.setFilters('user_id = %s' % self.id)
+        o = []
+        for record in dt.getTable():
+            follows_id = record['follows_id']
+            if follows_id == self.id:
+                continue
+            o.append(User(follows_id))
+        return o

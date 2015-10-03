@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app='talkApp'>
+  <!-- head -->
+  <head>
+    <title>Talk</title>
+    <link href='bootstrap/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='css/app.css' rel='stylesheet'>
+  </head>
+
+  <!-- body -->
+  <body>
+
+    <!-- header -->
+    <header-section></header-section>
+
+
+    <div class='container row'>
+
+      <!-- Left Panel -->
+      <div class='leftPanel col-md-2'></div>
+
+      <!-- Center Panel -->
+      <section class='centerPanel col-md-8' ng-controller='messageCtrl'>
+
+	<new-message></new-message>
+
+	<messages></messages>
+
+      </section>
+
+      <!-- Right Pannel -->
+      <div class='rightPanel col-md-2'></div>
+    </div>
+
+    <!-- footer -->
+    <footer class='container'>
+    </footer>
+
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='bootstrap/js/bootstrap.min.js'></script>
+    <script src="http://code.angularjs.org/1.1.5/angular.min.js"> </script>
+    <script src='js/app.js'></script>
+  </body>
+</html>

@@ -1,5 +1,13 @@
 Stemsible Releases
 
+v0.1.0 - TBD
+
+* Introduced Sessions Login/Logout
+* Introduced User Profile Page
+* Refactored Main out into a Base Parent Class
+* Data Model: Added password to user table
+* Spruce Up: Mock ups for Groups, and Trending Tags
+
 v0.0.7 - 7/11/2015
 
 * Adding User Chooser, to change Logged in User for testing

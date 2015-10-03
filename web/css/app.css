@@ -57,3 +57,9 @@ body {
     font-family: Arial;
 }
 
+.inactive-text {
+    color: grey;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
