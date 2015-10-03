@@ -14,3 +14,6 @@ logging:
    dir: /home/dlink/log
    filename: /home/dlink/log/stemsible.log
    level: DEBUG
+
+sessions:
+   dir: /data/stemsible/sessions
