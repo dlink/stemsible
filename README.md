@@ -41,3 +41,11 @@ High Level Application Architecture
       3. lib/server.py   (Python Flask Restful API Server)
       4. lib/users.py    (Python Object Model)
       5. lib/messages.py (Python Object Model)
+
+Python Only version
+
+   Being used for quicker development of prototype
+
+   http://crowfly.net/stemsible/main.py
+   http://dev.crowfly.net/stemsible/main.py
+   ^hiliPeppers^8
