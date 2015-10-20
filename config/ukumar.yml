@@ -1,0 +1,16 @@
+environment: dev
+basedir: /home/ukumar/stemsible
+serverurl: localhost:5000
+
+database:
+   engine : mysql
+   db     : dev_stemsible
+   host   : localhost
+   user   : stemsible
+   passwd : redXnapper56
+   dictcursor: True
+
+logging:
+   dir: /home/ukumar/log
+   filename: /home/ukumar/log/stemsible.log
+   level: DEBUG
