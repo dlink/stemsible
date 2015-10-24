@@ -28,7 +28,8 @@ class Main(HtmlPage):
         HtmlPage.process(self)
 
         # get user
-        username = 'ukumar' # os.environ['REMOTE_USER']
+        #username = 'ukumar' #os.environ['REMOTE_USER']
+        username = os.environ['REMOTE_USER']
         self.user = self.users.getUsers({'username': username})[0]
 
        # substitute user
