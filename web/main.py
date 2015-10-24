@@ -28,6 +28,7 @@ class Main(HtmlPage):
         HtmlPage.process(self)
 
         # get user
+        #username = 'ukumar' #os.environ['REMOTE_USER']
         username = os.environ['REMOTE_USER']
         self.user = self.users.getUsers({'username': username})[0]
 
@@ -61,8 +62,11 @@ class Main(HtmlPage):
 
     def _getBody(self):
         return open('body-section.html', 'r').read() % (
+            self._getSchoolCounty(),
+            self._getGroupsPanel(),
             self._getNewMessageCard() +
-            self._getMessages())
+            self._getMessages(),
+            self._getTagsPanel())
 
     def _getMessages(self):
         if USER_CHOOSER:
@@ -135,6 +139,27 @@ class Main(HtmlPage):
             #o += a(i, href='/%s' % i)
             o += span(i, class_='footerLink')
         return div(o, id='footer')
+
+    def _getSchoolCounty(self):
+        items = ['Creightons Corner Elementary', 'Loudoun County Public Schools']
+        schoolcounty = ''
+        for i in items:
+            schoolcounty += '<tr><td><li>' + i + '</li></td></tr>'
+        return schoolcounty
+
+    def _getGroupsPanel(self):
+        items = ['CCE PTA', 'CCE Garden Committee', 'LCPS Math Olympiad']
+        groups = ''
+        for i in items:
+            groups += '<tr><td><li>' + i + '</li></td></tr>'
+        return groups
+
+    def _getTagsPanel(self):
+        items = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics']
+        tags = ''
+        for i in items:
+            tags += '<button type="button" class="btn btn-default btn-sm">' + i + '</button>'
+        return tags
 
 if __name__ == '__main__':
     Main().go()
