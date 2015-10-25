@@ -20,16 +20,19 @@ class Profile(Base):
         Base.process(self)
 
     def _getBody(self):
-        return open('body-section.html', 'r').read() % (
-            '', '',
-            self._getProfileHeader() +
-            self._getUserFields(),
-            '')
+        left = ''
+        center = \
+            self._getProfileHeader() + \
+            self._getGeneralInfo()
+        right = ''
+
+        return open('body-section.html', 'r').read() % (left, center, right)
+
 
     def _getProfileHeader(self):
         return h1('Your User Profile')
 
-    def _getUserFields(self):
+    def _getGeneralInfo(self):
         table = HtmlTable(class_='profileTable')
         data = [
             ['Name'  , self.session.user.fullname],
@@ -50,6 +53,6 @@ class Profile(Base):
             value      = row[1]
             table.addRow([row_header, value])
         return table.getTable()
-    
+
 if __name__ == '__main__':
     Profile().go()

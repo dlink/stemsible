@@ -3,6 +3,7 @@
 from vlib.odict import odict
 
 from vweb.html import *
+from vweb.htmltable import HtmlTable
 
 from base import Base
 from messages import Messages
@@ -26,12 +27,11 @@ class Main(Base):
             id = self.messages.add(data)
 
     def _getBody(self):
-        return open('body-section.html', 'r').read() % (
-            self._getSchoolCounty(),
-            self._getGroupsPanel(),
-            self._getNewMessageCard() +
-            self._getMessages(),
-            self._getTagsPanel())
+        left   = self._getSchoolCounty() + self._getGroups()
+        center = self._getNewMessageCard() + self._getMessages()
+        right  = self._getTagsPanel()
+
+        return open('body-section.html', 'r').read() % (left, center, right)
 
     def _getMessages(self):
         user_id = self.session.user.id
@@ -64,27 +64,39 @@ class Main(Base):
 
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
 
-
     def _getSchoolCounty(self):
-        items = ['Creightons Corner Elementary', 'Loudoun County Public Schools']
-        schoolcounty = ''
-        for i in items:
-            schoolcounty += '<tr><td><li>' + i + '</li></td></tr>'
-        return schoolcounty
+        schools = ['Creightons Corner Elementary',
+                   'Loudoun County Public Schools']
+        table = HtmlTable(class_='table')
+        table.addHeader(['School & County'])
+        for school in schools:
+            table.addRow([li(school)])
+        return p('') + table.getTable()
 
-    def _getGroupsPanel(self):
-        items = ['CCE PTA', 'CCE Garden Committee', 'LCPS Math Olympiad']
-        groups = ''
-        for i in items:
-            groups += '<tr><td><li>' + i + '</li></td></tr>'
-        return groups
+    def _getGroups(self):
+        groups = ['CCE PTA', 'CCE Garden Committee', 'LCPS Math Olympiad']
+        table = HtmlTable(class_='table')
+        table.addHeader(['Groups'])
+        for group in groups:
+            table.addRow([li(group)])
+        return table.getTable()
 
     def _getTagsPanel(self):
-        items = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics']
-        tags = ''
-        for i in items:
-            tags += '<button type="button" class="btn btn-default btn-sm">' + i + '</button>'
-        return tags
+        def mkbutton(tag):
+            return input(
+                value=tag, type='button', class_='btn btn-default btn-sm')
+
+        tags = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics']
+        tag_buttons = ''.join([mkbutton(t) for t in tags])
+
+        table = HtmlTable(class_='table')
+        table.addHeader(['Trending Tags'])
+        table.addRow([tag_buttons])
+        return table.getTable()
+
+def tag_button(tag):
+    return input(value=tag, type='button', class_='btn btn-default btn-sm')
+
 
 if __name__ == '__main__':
     Main().go()
