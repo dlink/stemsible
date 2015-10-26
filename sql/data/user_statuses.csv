@@ -1,0 +1,3 @@
+id,code,name,description,active,created,last_updated
+8,pending,Pending,User started sign up proceedure,1,\N,\N
+10,active,Active,Active User,\N,\N

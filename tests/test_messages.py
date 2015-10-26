@@ -11,7 +11,7 @@ from messages import Message, Messages
 ID = 1
 USER_ID = 1
 TEXT = 'Hello There.'
-CREATED = '2015-04-05 21:18:00'
+CREATED = '2015-07-24 17:40:53'
 USER_FULLNAME = 'David Link'
 
 
@@ -20,7 +20,7 @@ class TestMessages(unittest.TestCase):
 
     def test_get(self):
         messages = Messages().getMessages()['messages']
-        self.assertEqual(messages[0]['user_id'], USER_ID)
+        self.assertEqual(messages[2]['user_id'], USER_ID)
 
     def test_message(self):
         message = Message(ID)

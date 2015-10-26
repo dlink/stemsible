@@ -8,12 +8,11 @@ from users import Users, User
 # Fixtures
 
 ID = 1
-USERNAME = 'dlink'
 EMAIL = 'dvlink@gmail.com'
 FIRST_NAME = 'David'
 LAST_NAME = 'Link'
 FULLNAME = 'David Link'
-CREATED = '2015-05-04 20:54:00'
+CREATED = '2015-07-24 17:40:53'
 
 class TestUsers(unittest.TestCase):
     '''Test Users'''
@@ -26,17 +25,9 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(str(user.created), CREATED)
         self.assertTrue(isinstance(user.last_updated, datetime))
 
-    def test_getUser_byName(self):
-        user = Users().getUsers({'username': USERNAME})[0]
-        self.assertEqual(user.id, ID)
-
     def test_getUserFullname(self):
         user = User(ID)
         self.assertEqual(user.fullname, FULLNAME)
-
-    def test_getUserMap(self):
-        user_map = Users().getUserMap()
-        self.assertTrue([ID, USERNAME] in user_map)
 
 if __name__ == '__main__':
     unittest.main()

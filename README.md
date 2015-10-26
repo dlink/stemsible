@@ -49,3 +49,7 @@ Python Only version
    http://crowfly.net/stemsible/main.py
    http://dev.crowfly.net/stemsible/main.py
    ^hiliPeppers^8
+
+Toolstack:
+
+   pip install passlib

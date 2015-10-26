@@ -1,5 +1,15 @@
 Stemsible Releases
 
+v0.2.0 - TBD
+
+* User Sign Up Functionality!
+* Updates to users, user_schools, follows, and schools tables
+* Data Model: Adding groups
+* Data Model: Adding user.statuses
+* Data Model: Remove user.username
+* Data Model: Changed user.password to 80 char sha256 hash
+* Web: Remove search area
+
 v0.1.1 - 10/25/2015
 
 * Refactored left and right panels

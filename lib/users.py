@@ -21,7 +21,7 @@ class Users(DataTable):
            Return a list of Instantiated User Objects
 
            filter is anything accepted by DataTable.setFilters()
-           ex. user = Users().getUsers({'username': 'dlink'})[0]
+           ex. user = Users().getUsers({'email': 'dlink@gmail.com'})[0]
         '''
         self.setFilters(filters)
         self.setColumns('id')
@@ -31,22 +31,9 @@ class Users(DataTable):
         return o
 
     def add(self, data):
-        try:
-            data['created'] = datetime.now()
-            id = self.insertRow(data)
-            return User(id).data
-        except Exception, e:
-            return {'error': str(e)}
-
-    def getUserMap(self):
-        '''Return a list of id,username pairs of all users'''
-        self.setFilters('1=1') # hack
-        self.setColumns('id, username')
-        self.setOrderBy('username')
-        o = []
-        for row in self.getTable():
-            o.append([row['id'], row['username']])
-        return o
+        data['created'] = datetime.now()
+        id = self.insertRow(data)
+        return User(id)
 
 class User(Record):
     '''Preside over a single User'''

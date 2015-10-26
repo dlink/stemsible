@@ -63,3 +63,14 @@ body {
 .cursor-pointer {
     cursor: pointer;
 }
+
+.errorMsg {
+    // background-color: #EAC117; // golden brown;
+    background-color: lightyellow;
+    padding: 0px 0px 0px 20px;
+}
+
+.red {
+    color: orangered;
+}
+
