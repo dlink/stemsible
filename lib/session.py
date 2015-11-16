@@ -9,6 +9,7 @@ import sha
 import shelve
 import time
 import Cookie
+from passlib.hash import sha256_crypt
 
 from vlib import conf
 from vlib import logger
@@ -85,8 +86,8 @@ class Session(object):
 
       # get user
       self.users = Users()
-      results = self.users.getUsers({'email': email, 'password': password})
-      if not results:
+      results = self.users.getUsers({'email': email})
+      if not results or not sha256_crypt.verify(password, results[0].password):
          self.logger.info('Login Fail: %s' %  email)
          raise SessionErrorLoginFail('Incorrect Email or Password')
       self._user = results[0]
@@ -124,5 +125,11 @@ class Session(object):
    def close(self):
       self.data.close()
 
+def hash_pass(passwd):
+   '''Encrypt passwd'''
+   return sha256_crypt.encrypt(passwd)
+
 if __name__ == '__main__':
-   print Session().describe()
+   # encrypt a password
+   import sys
+   print hash_pass(sys.argv[1])

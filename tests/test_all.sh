@@ -5,4 +5,5 @@
 ./test_record.py $*
 ./test_users.py $*
 ./test_messages.py $*
-./test_server.py $*
+./test_registration.py $*
+#./test_server.py $*

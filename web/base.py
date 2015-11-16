@@ -2,6 +2,7 @@
 
 import os
 
+from vlib.utils import lazyproperty
 from vweb.html import *
 from vweb.htmlpage import HtmlPage
 
@@ -11,10 +12,22 @@ USER_CHOOSER = 0 # turning on needs rework with new login mech.
 
 class Base(HtmlPage):
 
+    @lazyproperty
+    def users(self):
+        from users import Users
+        return Users()
+
     def __init__(self, name='Stembsible'):
         HtmlPage.__init__(self, name) #, include_form_tag=0)
-        self.style_sheets = ['bootstrap/css/bootstrap.min.css',
-                             'css/app.css']
+        self.style_sheets = [
+            'bootstrap/css/bootstrap.min.css',
+            'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/' \
+                'bootstrap-combined.min.css',
+            'css/app.css']
+        self.javascript_src.extend([
+                "//code.jquery.com/jquery-1.10.2.js",
+                "//code.jquery.com/ui/1.11.1/jquery-ui.js",
+                'bootstrap/js/bootstrap.min.js'])
         if USER_CHOOSER:
             self.style_sheets.append('css/userchooser.css')
         self.isSubstituteUser = False
