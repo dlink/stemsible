@@ -60,6 +60,7 @@ class Registration(object):
             self.db.rollback()
             raise
 
+        self.logger.info('New Registration: %s, %s' % (user.id, user.fullname))
 
     def _getSchoolId(self, school_name):
         '''Given a school name
