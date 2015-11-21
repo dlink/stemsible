@@ -27,7 +27,7 @@ class Main(Base):
             id = self.messages.add(data)
 
     def _getBody(self):
-        left   = self._getSchoolCounty() + self._getGroups()
+        left   = self._getSchoolPanel()
         center = self._getNewMessageCard() + self._getMessages()
         right  = self._getTagsPanel()
 
@@ -64,22 +64,21 @@ class Main(Base):
 
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
 
-    def _getSchoolCounty(self):
+    def _getSchoolPanel(self):
         schools = ['Creightons Corner Elementary',
                    'Loudoun County Public Schools']
         table = HtmlTable(class_='table borderless truncate')
         table.addHeader(['School & County'])
         for school in schools:
             table.addRow([li(school)])
-        return p('') + table.getTable()
 
-    def _getGroups(self):
         groups = ['CCE PTA', 'CCE Garden Committee', 'LCPS Math Olympiad']
-        table = HtmlTable(class_='table borderless truncate')
-        table.addHeader(['Groups'])
+        table2 = HtmlTable(class_='table borderless truncate')
+        table2.addHeader(['Groups'])
         for group in groups:
-            table.addRow([li(group)])
-        return table.getTable()
+            table2.addRow([li(group)])
+        return div(p('') + table.getTable() + table2.getTable(),
+                   id='school-panel')
 
     def _getTagsPanel(self):
         def mkbutton(tag):

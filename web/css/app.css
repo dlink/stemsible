@@ -103,11 +103,12 @@ a {
     width: 78px;
 }
 
-#school-entry {
+#school-panel {
     color: gray;
+    margin: 0 0 0 85px;
 }
 
-#school-entry td {
+#school-panel td {
     font-size: 80%;
 }
 
