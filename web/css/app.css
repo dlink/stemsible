@@ -112,10 +112,6 @@ a {
     font-size: 80%;
 }
 
-#tag-entry {
-    color: gray;
-}
-
 .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
     border: none;
 }

@@ -85,7 +85,7 @@ class Main(Base):
             return input(
                 value=tag, type='button', class_='btn btn-default btn-xs disabled')
 
-        tags = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics', 'SOL',
+        tags = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics',
                  'Cafeteria', 'ESL', 'AP Latin', 'Programming', 'Movies', 'Field Trips']
         tag_buttons = ''.join([mkbutton(t) for t in tags])
 
