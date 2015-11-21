@@ -82,11 +82,12 @@ class Main(Base):
 
     def _getTagsPanel(self):
         def mkbutton(tag):
-            return input(
-                value=tag, type='button', class_='btn btn-default btn-xs disabled')
+            return input(value=tag, type='button',
+                         class_='btn btn-default btn-xs disabled')
 
         tags = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics',
-                 'Cafeteria', 'ESL', 'AP Latin', 'Programming', 'Movies', 'Field Trips']
+                'Cafeteria', 'ESL', 'AP Latin', 'Programming', 'Movies',
+                'Field Trips']
         tag_buttons = ''.join([mkbutton(t) for t in tags])
 
         table = HtmlTable(class_='table borderless')
@@ -95,8 +96,8 @@ class Main(Base):
         return table.getTable()
 
 def tag_button(tag):
-    return input(value=tag, type='button', class_='btn btn-default btn-xs disabled')
-
+    return input(value=tag, type='button',
+                 class_='btn btn-default btn-xs disabled')
 
 if __name__ == '__main__':
     Main().go()
