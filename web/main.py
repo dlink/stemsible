@@ -27,7 +27,7 @@ class Main(Base):
             id = self.messages.add(data)
 
     def _getBody(self):
-        left   = self._getSchoolCounty() + self._getGroups()
+        left   = self._getSchoolPanel()
         center = self._getNewMessageCard() + self._getMessages()
         right  = self._getTagsPanel()
 
@@ -50,7 +50,7 @@ class Main(Base):
                             class_='img-thumbnail'),
                         class_='userIcon')
         username = div(message.author,  class_='messageAuthor')
-        reason   = div(message.reason)
+        reason   = div(message.reason, class_='messageReason')
         date     = div(message.created, class_='messageDate')
         username_and_date = div(username + reason + date,
                                 class_='usernameAndDate')
@@ -64,39 +64,40 @@ class Main(Base):
 
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
 
-    def _getSchoolCounty(self):
+    def _getSchoolPanel(self):
         schools = ['Creightons Corner Elementary',
                    'Loudoun County Public Schools']
-        table = HtmlTable(class_='table')
+        table = HtmlTable(class_='table borderless truncate')
         table.addHeader(['School & County'])
         for school in schools:
             table.addRow([li(school)])
-        return p('') + table.getTable()
 
-    def _getGroups(self):
         groups = ['CCE PTA', 'CCE Garden Committee', 'LCPS Math Olympiad']
-        table = HtmlTable(class_='table')
-        table.addHeader(['Groups'])
+        table2 = HtmlTable(class_='table borderless truncate')
+        table2.addHeader(['Groups'])
         for group in groups:
-            table.addRow([li(group)])
-        return table.getTable()
+            table2.addRow([li(group)])
+        return div(p('') + table.getTable() + table2.getTable(),
+                   id='school-panel')
 
     def _getTagsPanel(self):
         def mkbutton(tag):
-            return input(
-                value=tag, type='button', class_='btn btn-default btn-sm')
+            return input(value=tag, type='button',
+                         class_='btn btn-default btn-xs disabled')
 
-        tags = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics']
+        tags = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics',
+                'Cafeteria', 'ESL', 'AP Latin', 'Programming', 'Movies',
+                'Field Trips']
         tag_buttons = ''.join([mkbutton(t) for t in tags])
 
-        table = HtmlTable(class_='table')
+        table = HtmlTable(class_='table borderless')
         table.addHeader(['Trending Tags'])
         table.addRow([tag_buttons])
         return table.getTable()
 
 def tag_button(tag):
-    return input(value=tag, type='button', class_='btn btn-default btn-sm')
-
+    return input(value=tag, type='button',
+                 class_='btn btn-default btn-xs disabled')
 
 if __name__ == '__main__':
     Main().go()

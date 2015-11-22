@@ -1,6 +1,6 @@
 #header {
     background-color: #4090bf;
-    padding: 9px;
+    padding: 7px;
     color: white;
 }
 
@@ -10,7 +10,7 @@
 }
 
 #header #searchField {
-    width: 650px;
+    width: 550px;
     height: 25px;
 }
 
@@ -22,33 +22,47 @@ body {
     background-color: white;
     border-style: solid;
     border-color: lightgrey;
-    border-width: 4px;
+    border-width: 1px;
     margin: 10px;
     padding: 10px;
 }
+
 .messageCard .userIcon {
     float: left;
     margin: 0 15px 0 0;
 }
 
 .messageCard .usernameAndDate {
-    float: rigth;
+    float: left;
     font-family: Arial;
 }
 
 .messageCard .messageAuthor {
-    color: #4090bf;
+    color: #3b5998;
+    font-weight: bold;
+}
+
+.messageCard .messageReason {
+    color: gray;
+    font-style: italic;
 }
 
 .messageCard .messageDate {
-    color: lightgrey;
-    padding: 8px;
+    color: gray;
+    padding: 0px;
+    font-size: smaller;
+}
+
+.messageCard .messageReason {
+    color: #888888;
+    font-style: italic;
+    font-size: smaller;
 }
 
 .messageCard .messageText {
     clear: both;
     padding: 10px 0;
-    font-size: large;
+    font-size: small;
 }
 
 .messageCard .messageButtons {
@@ -74,3 +88,30 @@ body {
     color: orangered;
 }
 
+.customButton {
+    width: 78px;
+}
+
+#school-panel {
+    color: gray;
+    margin: 0 0 0 85px;
+}
+
+#school-panel td {
+    font-size: 80%;
+}
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}
+
+.truncate {
+    table-layout: fixed;
+}
+
+.truncate td {
+    width:250px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
