@@ -6,13 +6,17 @@ from vweb.html import *
 from vweb.htmltable import HtmlTable
 
 from base import Base
-from messages import Messages
+from messages import Messages, Message
+from messagelikes import MessageLikes, addHeaders as messageLikes_addHeaders
 
 class Main(Base):
 
     def __init__(self):
         Base.__init__(self)
+        messageLikes_addHeaders(self)
+
         self.messages = Messages()
+        self.scroll_pos = 0
         self.debug_cgi = 0
 
     def process(self):
@@ -26,17 +30,37 @@ class Main(Base):
                     'text'   : self.form['new_message'].value}
             id = self.messages.add(data)
 
+        # add like
+        if 'like' in self.form:
+            message_id = int(self.form['like'].value)
+            if message_id:
+                message = Message(message_id)
+                MessageLikes(message).toggle(self.session.user.id)
+
+        # remember scroll
+        if 'scroll_pos' in self.form:
+            self.scroll_pos = int(self.form['scroll_pos'].value)
+
     def _getBody(self):
         left   = self._getSchoolPanel()
         center = self._getNewMessageCard() + self._getMessages()
         right  = self._getTagsPanel()
 
-        return open('body-section.html', 'r').read() % (left, center, right)
+        # hack
+        bot = '<script>$(document).scrollTop(%s);</script>' % self.scroll_pos
+
+        return open('body-section.html', 'r').read() % (left, center, right) + bot
 
     def _getMessages(self):
-        user_id = self.session.user.id
+        user_id = self.user = self.session.user.id
         messages = self.messages.getUserMessages(user_id)['messages']
+
+        hidden_fields = \
+            input(name='like', type='hidden') + \
+            input(name='scroll_pos', type='hidden')
+
         o = ''
+        o += hidden_fields
         for m in messages:
             o += self._getMessageCard(m)
         return div(o, id='messageArea')
@@ -54,15 +78,48 @@ class Main(Base):
         date     = div(message.created, class_='messageDate')
         username_and_date = div(username + reason + date,
                                 class_='usernameAndDate')
-        buttons = 'Like | Comment'
+
+        messageLikes = MessageLikes(message)
+
+        # TO DO: Change this mess into:
+        #    messageComments.html_widge(self.user)
+        if message.id == 71:
+            num_comments = 3
+        else:
+            num_comments = 0
+        comment = span(img(src='images/comment.png') + str(num_comments),
+                       title='Comment on this',
+                       class_='messageFooterButton')
+
+        footer = messageLikes.html_widget(self.user) + \
+            comment + i('(comments pending)')
 
         o = ''
         o += user_icon + username_and_date
         o += div(message.text, class_='messageText')
-        #o += hr()
-        #o += div(buttons, class_='messageButtons')
+        o += div(footer, class_='messageFooter')
+        o += div(self._getLikersSection(messageLikes))
+        o += div(self._getComments(message), class_='messageComments')
 
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
+
+    def _getLikersSection(self, messageLikes):
+        desc = p('Liked by:')
+        likers = ', '.join([b(n['user_fullname'])
+                            for n in messageLikes.likes])
+        return div(desc + likers, class_='likers', id='likers_%s'
+                   % messageLikes.message.id)
+
+
+    def _getComments(self, message):
+        return ''
+        o = ''
+        if message.id == 71:
+            o += hr()
+            o += p(b('David Link') + '11/21 - Yeah, you say that but do you mean it?')
+            o += p(b('Uday Kumar') + '11/21 - Of course I mean it!')
+            o += p(b('David Link') + '11/21 - These are test comments.  This one is a little bit longer than the others.  Does a person know thyself from the nature of their post comments?')
+        return o
 
     def _getSchoolPanel(self):
         schools = ['Creightons Corner Elementary',

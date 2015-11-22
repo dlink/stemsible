@@ -65,10 +65,21 @@ body {
     font-size: small;
 }
 
-.messageCard .messageButtons {
-    padding: 5px 20px;
-    color: #4090bf;
-    font-family: Arial;
+.messageCard .messageFooter {
+    font-size: small;
+    text-align: center;
+}
+.messageCard .messageFooterButton {
+    padding: 0 20px 0 20px;
+}
+
+.messageCard hr {
+    margin: 3px;
+}
+
+.messageCard .messageComments {
+    font-size: small;
+    padding: 0 0 0 50px;
 }
 
 .inactive-text {
