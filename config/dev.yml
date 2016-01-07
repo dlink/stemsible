@@ -16,4 +16,4 @@ logging:
    level: DEBUG
 
 sessions:
-   dir: /data/stemsible/sessions
+   dir: /data/stemsible/dev-sessions

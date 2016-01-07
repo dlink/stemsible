@@ -9,3 +9,11 @@ database:
    user   : stemsible
    passwd : redXnapper56
    dictcursor: True
+
+logging:
+   dir: /var/log/stemsible
+   filename: /var/log/stemsible/stemsible.log
+   level: DEBUG
+
+sessions:
+   dir: /data/stemsible/sessions

@@ -52,7 +52,7 @@ show warnings;
 create trigger unlikes_create before insert on unlikes
    for each row set new.created = now();
 
-desc likes;
+desc unlikes;
 
 
 
