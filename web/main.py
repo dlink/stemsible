@@ -39,7 +39,7 @@ class Main(Base):
 
         # remember scroll
         if 'scroll_pos' in self.form:
-            self.scroll_pos = int(self.form['scroll_pos'].value)
+            self.scroll_pos = int(round(float(self.form['scroll_pos'].value), 0))
 
     def _getBody(self):
         left   = self._getSchoolPanel()
