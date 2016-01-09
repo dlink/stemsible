@@ -29,9 +29,22 @@ class Messages(DataTable):
             }
         return data
 
-    def getUserMessages(self, user_id):
-        sql_file = '%s/sql/templates/user_messages.sql' % self.conf.basedir
-        sql = open(sql_file, 'r').read().replace('<user_id>', str(user_id))
+
+    def getUserMessages(self, user_id, type=None):
+        '''Return a all messages this users follows
+           if type == 'my', then return this users messages.
+           Data structure:
+           messages: [ {id: x, text: y, ...},
+                       {id: z, text: a, ...},
+                       ... ]
+        '''
+        if type == 'my':
+            sql_file = 'my_messages.sql'
+        else:
+            sql_file = 'user_messages.sql'
+
+        sql_filepath = '%s/sql/templates/%s' % (self.conf.basedir, sql_file)
+        sql = open(sql_filepath, 'r').read().replace('<user_id>', str(user_id))
         data = {
             'messages': [
                 {'id'      : r['id'],
@@ -44,6 +57,9 @@ class Messages(DataTable):
                 for r in self.db.query(sql)]
             }
         return data
+
+    def getMyMessages(self, user_id):
+        return self.getUserMessages(user_id, type='my')
 
     def add(self, data):
         try:
