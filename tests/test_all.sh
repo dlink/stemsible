@@ -7,3 +7,4 @@
 ./test_messages.py $*
 ./test_registration.py $*
 #./test_server.py $*
+./test_urls.py $*

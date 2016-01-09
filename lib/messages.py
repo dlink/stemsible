@@ -6,12 +6,14 @@ from vlib.utils import lazyproperty
 from record import Record
 
 from users import User
+from urls import Urls
 
 class Messages(DataTable):
 
     def __init__(self):
         self.db = db.getInstance()
         self.conf = conf.getInstance()
+        self.urls = Urls(target='_blank')
         DataTable.__init__(self, db.getInstance(), 'messages')
 
     def getMessages(self):
@@ -50,7 +52,7 @@ class Messages(DataTable):
                 {'id'      : r['id'],
                  'user_id' : r['user_id'],
                  'author'  : r['author'],
-                 'text'    : r['text'],
+                 'text'    : self.urls.makeLinksHot(r['text']),
                  'created' : r['created'],
                  'reason'  : r['reason'],
                  }

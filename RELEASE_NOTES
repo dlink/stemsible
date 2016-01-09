@@ -1,6 +1,10 @@
 Stemsible Releases
 
-v0.3.0 - 01/07/2015
+v0.4.0 - 01/09/2016
+
+* URLs in messages are now clickable links
+
+v0.3.0 - 01/07/2016
 
 * Users can now 'Like' other users messages
 
