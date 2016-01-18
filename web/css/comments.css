@@ -1,0 +1,25 @@
+.comments {
+    // background-color: #D2F1E0; /* light green */
+    /* display: none;*/
+    padding-top: 10px;
+}
+.comments .comment-card {
+  background-color: white;
+  padding: 5px;
+  border-top: lightgrey solid 1px;
+}
+.comments .comment-card .commenter {
+    font-weight: bold;
+    padding-right: 10px;
+}
+.comments .comment-card .comment-text {
+    padding-right: 2px;
+}
+.comments .comment-card .comment-time-ago {
+    font-style: italic;
+    color: grey;
+}
+.comments .newCommentText {
+    width: 100%;
+    display: inline-block;
+}

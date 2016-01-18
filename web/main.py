@@ -8,12 +8,15 @@ from vweb.htmltable import HtmlTable
 from base import Base
 from messages import Messages, Message
 from messagelikes import MessageLikes, addHeaders as messageLikes_addHeaders
+from messagecomments import MessageComments, \
+    addHeaders as messageComments_addHeaders
 
 class Main(Base):
 
     def __init__(self):
         Base.__init__(self)
         messageLikes_addHeaders(self)
+        messageComments_addHeaders(self)
 
         self.messages = Messages()
         self.scroll_pos = 0
@@ -24,9 +27,7 @@ class Main(Base):
 
         # add new messages
         if 'new_message' in self.form:
-            user_id = self.session.user.id
-
-            data = {'user_id': user_id,
+            data = {'user_id': self.session.user.id,
                     'text'   : self.form['new_message'].value}
             id = self.messages.add(data)
 
@@ -37,9 +38,20 @@ class Main(Base):
                 message = Message(message_id)
                 MessageLikes(message).toggle(self.session.user.id)
 
+        # add comment
+        for field in self.form.keys():
+            if field.startswith('new_comment_'):
+                reference_id = field.split('_')[2]
+                if reference_id:
+                    data = {'user_id': self.session.user.id,
+                            'reference_id': reference_id,
+                            'text': self.form[field].value}
+                    id = self.messages.add(data)
+                break;
+
         # remember scroll
         if 'scroll_pos' in self.form:
-            self.scroll_pos = int(round(float(self.form['scroll_pos'].value), 0))
+            self.scroll_pos =int(round(float(self.form['scroll_pos'].value),0))
 
     def _getBody(self):
         left   = self._getSchoolPanel()
@@ -49,10 +61,11 @@ class Main(Base):
         # hack
         bot = '<script>$(document).scrollTop(%s);</script>' % self.scroll_pos
 
-        return open('body-section.html', 'r').read() % (left, center, right) + bot
+        return open('body-section.html', 'r').read() \
+            % (left, center, right) + bot
 
     def _getMessages(self):
-        user_id = self.user = self.session.user.id
+        user_id = self.session.user.id
         messages = self.messages.getUserMessages(user_id)['messages']
 
         hidden_fields = \
@@ -80,6 +93,7 @@ class Main(Base):
                                 class_='usernameAndDate')
 
         messageLikes = MessageLikes(message)
+        messageComments = MessageComments(message)
 
         # TO DO: Change this mess into:
         #    messageComments.html_widge(self.user)
@@ -91,35 +105,18 @@ class Main(Base):
                        title='Comment on this',
                        class_='messageFooterButton')
 
-        footer = messageLikes.html_widget(self.user) + \
-            comment + i('(comments pending)')
+        footer = \
+            messageLikes.html_widget(self.session.user) + \
+            messageComments.html_widget()
 
         o = ''
         o += user_icon + username_and_date
         o += div(message.text, class_='messageText')
         o += div(footer, class_='messageFooter')
-        o += div(self._getLikersSection(messageLikes))
-        o += div(self._getComments(message), class_='messageComments')
+        o += messageLikes.html_likersSection()
+        o += messageComments.html_commentsSection(self.session.user)
 
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
-
-    def _getLikersSection(self, messageLikes):
-        desc = p('Liked by:')
-        likers = ', '.join([b(n['user_fullname'])
-                            for n in messageLikes.likes])
-        return div(desc + likers, class_='likers', id='likers_%s'
-                   % messageLikes.message.id)
-
-
-    def _getComments(self, message):
-        return ''
-        o = ''
-        if message.id == 71:
-            o += hr()
-            o += p(b('David Link') + '11/21 - Yeah, you say that but do you mean it?')
-            o += p(b('Uday Kumar') + '11/21 - Of course I mean it!')
-            o += p(b('David Link') + '11/21 - These are test comments.  This one is a little bit longer than the others.  Does a person know thyself from the nature of their post comments?')
-        return o
 
     def _getSchoolPanel(self):
         schools = ['Creightons Corner Elementary',

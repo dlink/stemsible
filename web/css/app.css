@@ -66,8 +66,7 @@ body {
 }
 
 .messageCard .messageFooter {
-    font-size: small;
-    text-align: center;
+    font-size: large;
 }
 .messageCard .messageFooterButton {
     padding: 0 20px 0 20px;

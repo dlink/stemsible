@@ -4,7 +4,7 @@ set foreign_key_checks = 0;
 
 create table follows (
   id                 integer unsigned not null auto_increment primary key,
-  user_id            integer unsigned not null comment 'They how follows',
+  user_id            integer unsigned not null comment 'They who follows',
   follows_id         integer unsigned not null comment 'Whom they follow',
 
   -- reasons why they follow:

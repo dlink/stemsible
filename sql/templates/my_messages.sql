@@ -9,7 +9,8 @@ from
    messages m
    join users mu on m.user_id = mu.id
 where
-   m.user_id= '<user_id>'
+   m.user_id= '<user_id>' and
+   m.reference_id is null
 order by
    m.id desc
 ;

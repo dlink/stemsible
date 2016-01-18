@@ -1,5 +1,7 @@
 from vlib import conf
 from vlib import db
+from vweb.html import *
+
 
 js_files = ['js/likes.js']
 css_files = ['css/likes.css']
@@ -55,8 +57,6 @@ class MessageLikes(object):
         return self._likes
 
     def html_widget(self, user):
-        from vweb.html import *
-
         status_class = 'open'
         if self.num_likes:
             like_icon_file = 'images/thumbs-up2.png'
@@ -82,6 +82,13 @@ class MessageLikes(object):
                            class_=status_class)
         return span(like_button + likers_link,
                     class_='messageFooterButton')
+
+    def html_likersSection(self):
+        desc = p('Liked by:')
+        likers = ', '.join([b(n['user_fullname']) for n in self.likes])
+        return div(desc + likers, class_='likers', id='likers_%s'
+                   % self.message.id)
+
 
 if __name__ == '__main__':
     # test
