@@ -7,17 +7,20 @@ URL_RE = r'''
   ((http|https)://)?         #     http:// | https://     - optional
 
                              # Domain
-  \w{1,20}(\.\w{1,20}){1,3}  #     abc.def .. abc.def.hij.klm
+  \w{1,30}(\.\w{1,30}){1,4}  #     abc.def .. abc.def.hij.klm.nop
 
                              # Subdirectories
   (/\W                       #    lone tailing / or url   - optional
     |                        #        - or -
-   /\w{1,20}                 #    subdir
-   (/\w{1,20}){0,3}          #    and/or multiple subdirs - optional
+   /\w{1,30}                 #    subdir
+   (/\w{1,30}){0,3}          #    and/or multiple subdirs - optional
   )?
 
                              # Filename Extention
-  (\.\w{1,20}){0,2}          #    abc .. abc.def.hij      - optional
+  (\.\w{1,30}){0,2}          #    abc .. abc.def.hij      - optional
+  (/)?
+                                   # parameters
+  ([?&]\w{1,30}(=\w{1,30})?){0,30} #  ?param1=opt1&param2=opt2
 '''
 class Urls(object):
     '''Preside over URLs'''
