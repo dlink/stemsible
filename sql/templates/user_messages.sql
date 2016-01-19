@@ -15,7 +15,8 @@ from
    join messages m on f.follows_id = m.user_id
    join users mu on m.user_id = mu.id
 where
-   u.id = '<user_id>'
+   u.id = '<user_id>' and
+   m.reference_id is null
 order by
    m.id desc
 ;
