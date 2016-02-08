@@ -1,5 +1,10 @@
 Stemsible Releases
 
+v0.5.2 - 02/08/2016
+
+* Refactored messages feeds out of Main and Profile into web/Feed
+  class so they both support the same functionality.
+
 v0.5.1 - 01/26/2016
 
 * Added 250 Schools from Loudoun and Fairfax, VA counties
