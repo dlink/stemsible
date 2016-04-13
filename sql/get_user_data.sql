@@ -1,8 +1,9 @@
 select
-   u.username,
+   -- u.username,
    u.first_name,
    u.last_name,
-   sr.code as relation,
+   -- sr.code as relation,
+   sr.description as relation,
    s.name as school,
    us.grade,
    sd.name as school_district,
