@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
+from vlib import conf
 from vlib.odict import odict
 
 from vweb.html import *
 from vweb.htmltable import HtmlTable
+
+from encryptint import encrypt_int, decrypt_int
 
 from messages import Messages, Message
 from messagelikes import MessageLikes, addHeaders as messageLikes_addHeaders
@@ -14,6 +17,7 @@ class Feed(object):
 
     def __init__(self, page):
         self.page = page
+        self.conf = conf.getInstance()
         messageLikes_addHeaders(page)
         messageComments_addHeaders(page)
 
@@ -51,8 +55,11 @@ class Feed(object):
             p = self.page.form['scroll_pos'].value
             self.scroll_pos = int(round(float(p),0))
 
-    def getMessages(self):
-        user_id = self.page.session.user.id
+    def getMessages(self, user_id=None):
+        # TO DO: rename getMyMessages to something like getThisUsersMessages
+
+        if not user_id:
+            user_id = self.page.session.user.id
         if self.page.name == 'profile':
             messages = self.messages.getMyMessages(user_id)['messages']
         else:
@@ -79,7 +86,9 @@ class Feed(object):
         username = div(message.author,  class_='messageAuthor')
         reason   = div(message.reason, class_='messageReason')
         date     = div(message.created, class_='messageDate')
-        username_and_date = div(username + reason + date,
+        name_link = a(username, href='//%s/profile.py?u=%s'
+                      % (self.conf.baseurl, encrypt_int(message.user_id)))
+        username_and_date = div(name_link + reason + date,
                                 class_='usernameAndDate')
 
         messageLikes = MessageLikes(message)

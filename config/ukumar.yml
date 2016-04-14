@@ -1,4 +1,5 @@
 environment: dev
+baseurl: ukumar.stemsible.com
 basedir: /home/ukumar/stemsible
 serverurl: localhost:5000
 
