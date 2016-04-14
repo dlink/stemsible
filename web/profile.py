@@ -46,17 +46,25 @@ class Profile(Base):
             ]
 
         #followers
+        followings = []
         for i, f in enumerate(self.session.user.following):
-            if i == 0:
-                row_header = 'Following'
-            else:
-                row_header = ''
-            data.append([row_header, f.fullname])
+            row_header = 'Following' if i == 0 else ''
+
+            # append (n) to duplicate Usernames
+            fullname = f.fullname
+            n = 2
+            while fullname in followings:
+                fullname = '%s (%s)' % (f.fullname, n)
+                n += 1
+            followings.append(fullname)
+
+            data.append([row_header, fullname])
 
         for row in data:
             row_header = span(row[0], class_='profileRowHeader')
             value      = row[1]
             table.addRow([row_header, value])
+        table.setColVAlign(1, 'top')
         return table.getTable()
 
     def _getProfilePostsHeader(self):
