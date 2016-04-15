@@ -1,7 +1,13 @@
 TABLE.profileTable tr td {
-   padding: 2px;
+   padding: 5px;
+}
+TABLE.profileTable tr th {
+   padding: 5px;
 }
 
 .profileRowHeader {
    font-weight: bold;
+}
+.smaller-text {
+    font-size: smaller;
 }

@@ -12,3 +12,7 @@ class UserSchools(DataTable):
         data['created'] = datetime.now()
         id = self.insertRow(data)
         return id # UserSchool(id).data
+
+    def delete(self, id):
+        self.setFilters('id = %s' % id)
+        self.deleteRows()

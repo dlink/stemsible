@@ -1,6 +1,7 @@
 
 from datetime import datetime
 
+from vlib import conf
 from vlib import db
 from vlib.datatable import DataTable
 from vlib.utils import lazyproperty
@@ -40,6 +41,7 @@ class User(Record):
 
     def __init__(self, id):
         Record.__init__(self, db.getInstance(), 'users', id)
+        self.conf = conf.getInstance()
         self._loadAdditionalData()
 
     def _loadAdditionalData(self):
@@ -61,4 +63,28 @@ class User(Record):
             if follows_id == self.id:
                 continue
             o.append(User(follows_id))
+        o = sorted(o, key=lambda u: u.fullname)
         return o
+
+    @lazyproperty
+    def followers(self):
+        '''Return a list of User Objects of users who follow this user'''
+        dt = DataTable(self.db, 'follows')
+        dt.setColumns(['user_id'])
+        dt.setFilters('follows_id = %s' % self.id)
+        o = []
+        for record in dt.getTable():
+            follows_id = record['user_id']
+            if follows_id == self.id:
+                continue
+            o.append(User(follows_id))
+        o = sorted(o, key=lambda u: u.fullname)
+        return o
+
+    @lazyproperty
+    def schools(self):
+        '''Return a list of School Objects this user has a relationship to'''
+        file = '%s/lib/sql/user_schools.sql' % self.conf.basedir
+        sql = open(file, 'r').read()
+        results = self.db.query(sql, params=(self.id,))
+        return results

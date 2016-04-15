@@ -1,5 +1,9 @@
 Stemsible Releases
 
+v0.6.0 - 4/24/2016
+
+* Profile Revamp - now allows school add/del.
+
 v0.5.2 - 02/08/2016
 
 * Refactored messages feeds out of Main and Profile into web/Feed
