@@ -48,12 +48,17 @@ class Profile(Base):
         if self.cannot_read_profile:
             return self.cannotReadProfile()
 
+        # allow post new message on profile?
+        newcard = ''
+        if self.user.id == self.session.user.id:
+            newcard = self.feed.getNewMessageCard()
+
         left = ''
         center = \
             self._getProfileUserHeader() + \
             self._getGeneralInfo()
         right = self._getProfilePostsHeader() + \
-                self.feed.getNewMessageCard() + \
+                newcard + \
                 self.feed.getMessages(self.user.id)
 
         return open('profile-section.html', 'r').read() % (left, center, right)
@@ -64,19 +69,20 @@ class Profile(Base):
             p('Sorry we can not read profile')))
 
     def _getProfileUserHeader(self):
-        return h3('My Profile')
+        return h3('Profile')
 
     def _getGeneralInfo(self):
         # build data
         data = [
-            ['Name'  , self.user.fullname],
-            ['Email' , self.user.email],
-            ['Member Since', format_date(self.user.created)]]
+            ['Name:'  , self.user.fullname],
+            ['Email:' , self.user.email],
+            [nobr('Member Since:'), format_date(self.user.created)],
+            ['&nbsp;', '&nbsp;']]
 
         #followers
         followings = []
         for i, f in enumerate(self.user.following):
-            row_header = 'Following' if i == 0 else ''
+            row_header = 'Following:' if i == 0 else ''
 
             # append (n) to duplicate Usernames
             fullname = f.fullname
@@ -101,7 +107,7 @@ class Profile(Base):
         return table.getTable()
 
     def _getProfilePostsHeader(self):
-        return h3('My Posts')
+        return h3('Posts')
 
 if __name__ == '__main__':
     Profile().go()
