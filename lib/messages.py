@@ -31,7 +31,6 @@ class Messages(DataTable):
             }
         return data
 
-
     def getUserMessages(self, user_id, type=None):
         '''Return a all messages this users follows
            if type == 'my', then return this users messages.

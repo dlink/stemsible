@@ -1,0 +1,61 @@
+.rightPanel h3 {
+   margin-left: 10px;
+}
+
+#schoolInfo {
+   padding: 10px;
+   margin: 10px 0px 30px 10px;
+   background-color: white;
+    border-style: solid;
+    border-color: lightgrey;
+    border-width: 1px;
+}
+
+#schoolInfo table tr td {
+   vertical-align: bottom;
+}
+#schoolInfo table tr td.right-center {
+   text-align: center;
+}
+#schoolInfo .dropdown {
+   margin-bottom: 0px;
+}
+#schoolInfo .first-button {
+   margin-left: 8px;
+}
+.missing-value {
+   background-color: #FFDFDD;
+}
+.helpMsg {
+   font-size: 12px;
+}
+.helpMsg a {
+   text-decoration: none;
+}
+.helpMsg a:hover {
+   text-decoration: none;
+}
+
+.delete {
+    background: lightgrey;
+    color: #FFFFFF;
+    line-height: 20px;
+    text-decoration: none;
+    width: 24px;
+    border-radius: 12px;
+    font-weight: bold;
+    text-align: center;
+    padding: 2px;
+}
+.delete:hover {
+    background: #606061;
+   color: #FFFFFF;
+   text-decoration: none;
+}
+
+.dropdown {
+   width: 100px;
+}
+.dropdown.long {
+   width: 160px;
+}

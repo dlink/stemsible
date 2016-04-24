@@ -62,6 +62,31 @@ class Registration(object):
 
         self.logger.info('New Registration: %s, %s' % (user.id, user.fullname))
 
+    def addSchool(self, user, school_rel_id, school_name, grade):
+        self.db.startTransaction()
+        try:
+            # get school_id
+            school_id = self._getSchoolId(school_name)
+
+            # set user_school_rec
+            rec = {'user_id': user.id,
+                   'school_relationship_id': school_rel_id,
+                   'school_id': school_id,
+                   'grade': grade,
+                   'original_grade': grade,
+                   'active': 1}
+            UserSchools().add(rec)
+            self.db.commit()
+        except Exception, e:
+            emsg = \
+                'Unable to add School: %s; Error: %s' % (school_name, e)
+            self.logger.error(emsg)
+            self.db.rollback()
+            raise
+
+        self.logger.info('Added School: %s, %s, %s' %
+                         (user.id, user.fullname, school_name))
+
     def _getSchoolId(self, school_name):
         '''Given a school name
            Create a new school record if nec. (with unknown District and addr)

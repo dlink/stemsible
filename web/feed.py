@@ -23,6 +23,7 @@ class Feed(object):
 
         self.messages = Messages()
         self.scroll_pos = 0
+        self.num_messages = None
 
     def process(self):
 
@@ -64,6 +65,8 @@ class Feed(object):
             messages = self.messages.getMyMessages(user_id)['messages']
         else:
             messages = self.messages.getUserMessages(user_id)['messages']
+
+        self.num_messages = len(messages)
 
         hidden_fields = \
             input(name='like', type='hidden') + \
