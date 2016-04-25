@@ -73,6 +73,7 @@ class SchoolInfo(object):
         # schools
         for s in user.schools:
             row = [s['relation'], s['school'], s['grade']]
+            row[2] = Grades().table[row[2]]['name']
             if can_edit:
                 school_info = '%s - %s - %s Grade' % tuple(row)
                 row.append(a('X', class_ = 'delete',
