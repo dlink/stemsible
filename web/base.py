@@ -17,7 +17,7 @@ class Base(HtmlPage):
         from users import Users
         return Users()
 
-    def __init__(self, name='Stembsible'):
+    def __init__(self, name='Stemsible'):
         HtmlPage.__init__(self, name) #, include_form_tag=0)
         self.style_sheets = [
             'bootstrap/css/bootstrap.min.css',
