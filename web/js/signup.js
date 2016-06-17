@@ -1,3 +1,5 @@
+/* Password Strength Meter, and Password Match Indicator Code */
+
 $( document ).ready(function() {
     var schools = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -16,7 +18,7 @@ $( document ).ready(function() {
     });
 
     // password strength meter
-    $('#password1').keyup(function(e) {
+    $('#password1-input').keyup(function(e) {
         var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
         var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
         var enoughRegex = new RegExp("(?=.{6,}).*", "g");
@@ -35,8 +37,8 @@ $( document ).ready(function() {
         return true;
     });
 
-    $('#password2').keyup(function(e) {
-        if ($('#password1').val() == $(this).val()) {
+    $('#password2-input').keyup(function(e) {
+        if ($('#password1-input').val() == $(this).val()) {
             $('#passmatch').className = 'ok';
             $('#passmatch').html('Match!');
         } else {

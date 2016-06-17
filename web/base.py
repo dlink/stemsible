@@ -8,8 +8,6 @@ from vweb.htmlpage import HtmlPage
 
 from session import Session, SessionErrorLoginFail
 
-USER_CHOOSER = 0 # turning on needs rework with new login mech.
-
 class Base(HtmlPage):
 
     @lazyproperty
@@ -18,32 +16,27 @@ class Base(HtmlPage):
         return Users()
 
     def __init__(self, name='Stemsible'):
-        HtmlPage.__init__(self, name) #, include_form_tag=0)
+        HtmlPage.__init__(self, name, include_form_tag=0)
         self.style_sheets = [
-            'bootstrap/css/bootstrap.min.css',
-            'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/' \
-                'bootstrap-combined.min.css',
-            'css/app.css']
+            'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/' \
+                'bootstrap.min.css',
+            'css/main.css',
+            'css/header.css']
+
         self.javascript_src.extend([
-                "//code.jquery.com/jquery-1.10.2.js",
-                "//code.jquery.com/ui/1.11.1/jquery-ui.js",
-                'bootstrap/js/bootstrap.min.js'])
-        if USER_CHOOSER:
-            self.style_sheets.append('css/userchooser.css')
-        self.isSubstituteUser = False
+                'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/' \
+                    'jquery.min.js',
+                'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/' \
+                    'jquery-ui.min.js',
+                'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/' \
+                    'bootstrap.min.js'
+                ])
         self.debug_cgi = 0
         self.require_login = True
 
     def process(self):
         HtmlPage.process(self)
         self._processSession()
-
-        # substitute user
-        #   this needs rework for new login mech
-        #self.actual_user = self.session.user.id
-        if 'user_chooser' in self.form:
-            self.user = User(self.form['user_chooser'].value)
-            self.isSubstituteUser = True
 
     def _processSession(self):
         # get session
@@ -70,67 +63,79 @@ class Base(HtmlPage):
 
         # need to be logged in?
         if self.require_login and not self.session.logged_in:
-            print 'Location: login.py'
+            print 'Location: home.py'
 
     def getHtmlContent(self):
-        return \
-            self._getHeader() + \
+        o = self._getHeader() + \
             self._getBody() + \
             self._getFooter()
+        return div(o, class_='container')
 
     def _getHeader(self):
-
         if self.session.logged_in:
-            profile_button = input(name='profile', class_='btn btn-info btn-xs',
-                                   type='button',
-                                   value=space_pad(self.session.user.fullname),
-                                   onclick="location.href='profile.py';")
-            logout = input(name='logout', class_='btn btn-xs',
-                           type='submit', value=space_pad('Logout'))
-            welcome = 'Welcome %s' % profile_button
-            action = '&nbsp;' + logout
+            on_the_right = self._getLogout()
         else:
-            welcome = ''
-            action = ''
+            on_the_right = self._getLogin()
 
-        return open('header-section2.html', 'r').read() % \
-            (welcome, action) # self._getUserChooser())
+        return open('header-section.html', 'r').read() % on_the_right
+
+    def _getLogin(self):
+        # email
+        email_label = label('Email',
+                            for_='email-input')
+        email_field = input(type='email',
+                            name='email',
+                            class_='form-control input-sm',
+                            id='email-input',
+                            placeholder="Email")
+        email = div(email_label + email_field, class_='form-group')
+
+        # password
+        pass_label = label('Password',
+                           for_='password-input')
+        pass_field = input(type='password',
+                           name='password',
+                           class_='form-control input-sm',
+                           id='password-input',
+                           placeholder='Password')
+        password = div(pass_label + pass_field, class_='form-group')
+
+        button = input(type='submit',
+                       name='login_submit',
+                       class_='btn btn-default btn-sm',
+                       value='Login')
+
+        return form(email + password + button, class_='form-inline')
+
+    def _getLogout(self):
+        welcome = label('Welcome',
+                        for_='profile-button')
+        profile_button = input(type='button',
+                               name='profile',
+                               id='profile-button',
+                               class_='btn btn-xs btn-info',
+                               value=self.session.user.fullname,
+                               onclick="location.href='profile.py';")
+        logout = input(type='submit',
+                       name='logout',
+                       class_='btn btn-xs btn-default',
+                       value='Logout')
+        o = welcome + profile_button + logout
+        return form(o, class_='form-inline')
 
     def _getBody(self):
         return open('body-section.html', 'r').read() % (
             p('this is the base class'))
 
-    def _getUserChooser(self):
-        '''Used for debug
-           provide a drop down of different users
-        '''
-        if not USER_CHOOSER:
-            return ''
-
-        options = ''
-        for id, username in self.users.getUserMap():
-            if id == self.user.id:
-                options += option(username, value=id, selected='1')
-            else:
-                options += option(username, value=id)
-        return select(options, name='user_chooser', id='user_chooser',
-                      onChange='submit()', class_='selectpicker')
-
-
     def _getFooter(self):
-        # not op
-        return ''
+        o = ''
+        return o
 
-        items = ['FAQ', 'About', 'Terms & Privacy', 'Contact']
-        #links = [a(i, href='/%s' % i) for i in items]
-        o = hr()
-        for i in items:
-            #o += a(i, href='/%s' % i)
-            o += span(i, class_='footerLink')
-        return div(o, id='footer')
-
-def space_pad(s):
-    return '&nbsp; %s &nbsp;' % s
+        #items = ['FAQ', 'About', 'Terms & Privacy', 'Contact']
+        #o = hr()
+        #for i in items:
+        #    o += span(i, class_='footerLink')
+        #return div(o, id='footer')
 
 if __name__ == '__main__':
     Base().go()
