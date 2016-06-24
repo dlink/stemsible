@@ -1,15 +1,15 @@
 function addSchoolRow() {
-    document.form1.add_school_row.value = 1;
-    document.form1.submit();
+    document.si_form.add_school_row.value = 1;
+    document.si_form.submit();
 }
 function saveNewSchool() {
-    document.form1.save_new_school.value = 1;
-    document.form1.submit();
+    document.si_form.save_new_school.value = 1;
+    document.si_form.submit();
 }
 function deleteSchool(user_school_id, school_info) {
     var r = confirm('Are you sure you want to delete\n\n' + school_info + '?');
     if (r == true) {
-	document.form1.delete_user_school.value = user_school_id;
-	document.form1.submit();
+	document.si_form.delete_user_school.value = user_school_id;
+	document.si_form.submit();
     }
 }

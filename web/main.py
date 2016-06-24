@@ -13,6 +13,8 @@ class Main(Base):
 
     def __init__(self):
         Base.__init__(self)
+        self.style_sheets.append('css/feed.css')
+
         self.feed = Feed(self)
         self.debug_cgi = 0
 
@@ -26,11 +28,13 @@ class Main(Base):
         right  = self._getTagsPanel()
 
         # hack
-        bot = '<script>$(document).scrollTop(%s);</script>' \
-            % self.feed.scroll_pos
+        #bot = '<script>$(document).scrollTop(%s);</script>' \
+        #    % self.feed.scroll_pos
+        bot = ''
 
-        return open('body-section.html', 'r').read() \
+        o = open('body-section.html', 'r').read() \
             % (left, center, right) + bot
+        return form(o, name='form1', method='POST')
 
     def _getSchoolPanel(self):
         schools = ['Creightons Corner Elementary',

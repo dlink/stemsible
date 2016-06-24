@@ -14,17 +14,17 @@ class SchoolInfo(object):
         self.school = ''
         self.school_rel = 0
         self.grade = 0
+        self.missing_values = []
 
     def getCssFile(self):
-        return ['css/schoolinfo.css', 'css/signup.css']
+        return ['css/schoolinfo.css'] #, 'css/signup.css']
 
     def getJsFile(self):
-        return ['js/schoolinfo.js', 'js/typeahead.js', 'js/signup.js']
+        return ['js/schoolinfo.js', 'js/typeahead.js']
 
     def process(self, session, form):
         self.session = session
         self.form = form
-        self.missing_values = []
 
         # add school row?
         if 'add_school_row' in self.form:
@@ -112,17 +112,22 @@ class SchoolInfo(object):
             input(type='hidden', name='save_new_school') + \
             input(type='hidden', name='delete_user_school')
 
+
+        body = div(table.getTable() + buttons + hidden_fields,
+                   id='schoolInfo')
+        return header + form(body, name='si_form', method='POST')
+    '''
         return header + \
             div(
                 table.getTable() + \
                 buttons + \
                 hidden_fields,
             id='schoolInfo')
-
+            '''
     def schoolFields(self):
         '''Return a the three fields as list'''
         # Fields
-        return [p(b('Add a new School:')) + \
+        return [p(b('Add a School:')) + \
                     self._schoolRelField(),
                 self._schoolField(),
                 self._gradeField()]
@@ -144,7 +149,7 @@ class SchoolInfo(object):
 
     def _gradeField(self):
         '''Build school grade field'''
-        options = {0: 'Select one'}
+        options = {0: 'Select grade'}
         for id, record in Grades().table.items():
             options[id] = record['name']
         return self.mkDropDownMenu('grade', options)
@@ -155,8 +160,8 @@ class SchoolInfo(object):
         class_ = 'dropdown form-control'
         if name in self.missing_values:
             class_ += ' missing-value'
-        if name == 'school_rel':
-            class_ += ' long'
+        #if name == 'school_rel':
+        #    class_ += ' long'
         attrs = {'class_': class_}
 
         # sort ids, but put 0 on top

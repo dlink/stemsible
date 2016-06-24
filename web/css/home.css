@@ -1,0 +1,11 @@
+#home-page #head1 {
+   margin-bottom: 0px;
+}
+#home-page #head2 {
+   margin-top: 0px;
+}
+
+/* expand width of school typeahead field */
+.twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+   width: 100%;
+}

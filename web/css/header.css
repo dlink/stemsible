@@ -1,0 +1,23 @@
+#header {
+    background-color: #4090bf;
+    color: white;
+}
+#header #company-name {
+    font-size: 35px;
+}
+#header #header-login {
+   margin-bottom: 10px;
+}
+#header #header-login .btn {
+   padding: 0 10px;
+}
+@media (min-width: 768px) {
+   #header-login {
+      display: block;
+      text-align: right;
+      margin-top: 12px;
+   }
+   #header-login input {
+      height: 25px;
+   }
+}
