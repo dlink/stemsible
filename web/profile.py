@@ -24,7 +24,7 @@ class Profile(Base):
         self.conf = conf.getInstance()
         self.feed = Feed(self)
         self.schoolInfo = SchoolInfo()
-        self.style_sheets.append('css/profile.css')
+        self.style_sheets.extend(['css/profile.css', 'css/feed.css'])
         self.style_sheets.extend(self.schoolInfo.getCssFile())
         self.javascript_src.extend(self.schoolInfo.getJsFile())
         self.cannot_read_profile = 0
@@ -71,7 +71,8 @@ class Profile(Base):
             self._getGeneralInfo() + \
             self._getFollowingInfo()
 
-        return open('profile-section.html', 'r').read() % (left, right)
+        o = open('profile-section.html', 'r').read() % (left, right)
+        return form(o, name='form1', method='POST')
 
     def cannotReadProfile(self):
         return center(div(
