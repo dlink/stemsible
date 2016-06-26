@@ -15,6 +15,25 @@ I. Python CGI App:
 
     - Landing Page: web/main.py
 
+    - Dependencies:
+
+      Cookie
+
+      json
+
+      passlib
+
+      sha
+
+      shelve
+
+      unittest
+
+      vlib, https://github.com/dlink/vlib
+
+      vweb, https://github.com/dlink/vweb
+
+
 II. JS App:
 
    - Work has ceased here
