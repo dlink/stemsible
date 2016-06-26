@@ -20,7 +20,7 @@ class SchoolInfo(object):
         return ['css/schoolinfo.css', 'css/signup.css']
 
     def getJsFile(self):
-        return ['js/schoolinfo.js', 'js/signup.js', 'js/typeahead.js']
+        return ['js/schoolinfo.js', 'js/typeahead.js']
 
     def process(self, session, form):
         self.session = session

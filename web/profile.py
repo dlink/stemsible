@@ -26,6 +26,7 @@ class Profile(Base):
         self.schoolInfo = SchoolInfo()
         self.style_sheets.extend(['css/profile.css', 'css/feed.css'])
         self.style_sheets.extend(self.schoolInfo.getCssFile())
+        self.javascript_src.extend(['js/signup.js'])
         self.javascript_src.extend(self.schoolInfo.getJsFile())
         self.cannot_read_profile = 0
         self.debug_cgi = 0
