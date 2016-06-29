@@ -50,7 +50,7 @@ class Messages(DataTable):
                 {'id'      : r['id'],
                  'user_id' : r['user_id'],
                  'author'  : r['author'],
-                 'text'    : urlize(r['text'], target='_blank')
+                 'text'    : urlize(r['text'], target='_blank'),
                  'created' : r['created'],
                  'reason'  : r['reason'],
                  }
