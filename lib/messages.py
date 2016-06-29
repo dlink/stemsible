@@ -6,14 +6,13 @@ from vlib.utils import lazyproperty
 from record import Record
 
 from users import User
-from urls import Urls
+from jinja2.utils import urlize
 
 class Messages(DataTable):
 
     def __init__(self):
         self.db = db.getInstance()
         self.conf = conf.getInstance()
-        self.urls = Urls(target='_blank')
         DataTable.__init__(self, db.getInstance(), 'messages')
 
     def getMessages(self):
@@ -51,7 +50,7 @@ class Messages(DataTable):
                 {'id'      : r['id'],
                  'user_id' : r['user_id'],
                  'author'  : r['author'],
-                 'text'    : self.urls.makeLinksHot(r['text']),
+                 'text'    : urlize(r['text'], target='_blank')
                  'created' : r['created'],
                  'reason'  : r['reason'],
                  }
