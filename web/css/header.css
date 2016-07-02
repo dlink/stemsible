@@ -4,6 +4,7 @@
 }
 #header #company-name {
     font-size: 35px;
+    cursor: pointer;
 }
 #header #header-login {
    margin-bottom: 10px;
