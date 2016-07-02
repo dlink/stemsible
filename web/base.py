@@ -30,7 +30,8 @@ class Base(HtmlPage):
                 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/' \
                     'jquery-ui.min.js',
                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/' \
-                    'bootstrap.min.js'
+                    'bootstrap.min.js',
+                'js/header.js',
                 ])
         self.debug_cgi = 0
         self.require_login = True
@@ -74,7 +75,9 @@ class Base(HtmlPage):
 
     def _getHeader(self):
         if self.session.logged_in:
-            on_the_right = self._getLogout()
+            on_the_right = \
+                self._getProfileButton() + \
+                self._getHeaderMenu()
         else:
             on_the_right = self._getLogin()
 
@@ -108,7 +111,40 @@ class Base(HtmlPage):
 
         return form(email + password + button, class_='form-inline')
 
-    def _getLogout(self):
+    def _getHeaderMenu(self):
+
+        # menu triangle
+
+        menu_triangle = div(div('', class_='arrow-down'),
+                            id='header-menu-triangle',
+                            onclick='javascript:toggleHeaderMenu()')
+        # logout
+        logout_option = a('Logout', onclick='javascript:logout()')
+        logout_input  = input(type='hidden',
+                              name='logout',
+                              value='')
+
+        # menu
+
+        options = [['About Stemsible', 'about.py'],
+                   ['Help', 'help.py'],
+                   ['Terms and Conditions', 'terms.py'],
+                   ['Logout', 'logout']]
+        o = ''
+        for option, url in options:
+            if option == 'Logout':
+                o += li(logout_option + logout_input)
+            else:
+                o += li(a(option, href=url))
+
+        menu = ul(o, id='header-menu')
+
+
+        return form(menu_triangle + menu,
+                    name='header-form',
+                    class_='form-inline')
+
+    def _getProfileButton(self):
         welcome = label('Welcome',
                         for_='profile-button')
         profile_button = input(type='button',
@@ -117,12 +153,7 @@ class Base(HtmlPage):
                                class_='btn btn-xs btn-info',
                                value=self.session.user.fullname,
                                onclick="location.href='profile.py';")
-        logout = input(type='submit',
-                       name='logout',
-                       class_='btn btn-xs btn-default',
-                       value='Logout')
-        o = welcome + profile_button + logout
-        return form(o, class_='form-inline')
+        return welcome + profile_button
 
     def _getBody(self):
         return open('body-section.html', 'r').read() % (

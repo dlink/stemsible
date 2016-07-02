@@ -12,6 +12,31 @@
 #header #header-login .btn {
    padding: 0 10px;
 }
+#header form {
+   float: right;
+}
+#header #header-menu-triangle {
+   padding-left: 40px;
+}
+#header #header-menu {
+   display: none;
+   border: solid 1px black;
+   position: absolute;
+   list-style-type: none;
+   background-color: #e8e8e8;
+   color: black;
+   text-align: left;
+   padding: 20px;
+   top: 30px;
+   right: 12px;
+   z-index: 1;
+}
+#header #header-menu li {
+   padding: 10px;
+}
+#header #header-menu li:hover {
+   background-color: gold;
+}
 @media (min-width: 768px) {
    #header-login {
       display: block;
@@ -21,4 +46,16 @@
    #header-login input {
       height: 25px;
    }
+}
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+
+  border-top: 10px solid white;
+  margin-top: 8px;
+}
+.arrow-down:hover {
+  border-top: 10px solid gold;
 }
