@@ -22,7 +22,7 @@ class About(Base):
             h3('About') +\
             p('Uday Kumar is an entrepreneurs living and working in the D.C. area, and has being working in the online education space for many years.') +\
             p('While many social media platforms exist, Uday recognized that none existed for the parents of children in school.   That was the inspiration for Stemsible') +\
-            p('When Uday approached David Link, a computer engine who also has worked in the educational space, he immediately liked the idea and started to build it - and Stemsible was created')
+            p('When Uday approached David Link, a computer engineer who also has worked in the educational space, he immediately liked the idea and started to build it - and Stemsible was created')
         
         return div(text, class_='text')
 
