@@ -7,6 +7,7 @@ create table school_relationships (
   code               varchar(20)      not null,
   name               varchar(255)     not null,
   description        varchar(255)     ,
+  role               varchar(255)     not null,
   active             boolean          not null,
   created            datetime         not null ,
   last_updated       timestamp        not null 
