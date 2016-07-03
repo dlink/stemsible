@@ -5,3 +5,9 @@ body {
 DIV {
   /* border: solid 2px black; */
 }
+.red {
+    color: orangered;
+}
+.right {
+    float: right;
+}

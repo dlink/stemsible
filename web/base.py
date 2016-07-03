@@ -35,6 +35,7 @@ class Base(HtmlPage):
                 ])
         self.debug_cgi = 0
         self.require_login = True
+        self.user_msg = ''
 
     def process(self):
         HtmlPage.process(self)
@@ -58,7 +59,7 @@ class Base(HtmlPage):
                 self.session.login(self.form['email'].value,
                                    self.form['password'].value)
             except SessionErrorLoginFail, e:
-                self.debug_msg += p(str(e))
+                self.user_msg += p(str(e), class_='right red')
 
         # close session
         self.session.close()
@@ -69,6 +70,7 @@ class Base(HtmlPage):
 
     def getHtmlContent(self):
         o = self._getHeader() + \
+            self._getUserMsg() + \
             self._getBody() + \
             self._getFooter()
         return div(o, class_='container')
@@ -154,6 +156,9 @@ class Base(HtmlPage):
                                value=self.session.user.fullname,
                                onclick="location.href='profile.py';")
         return welcome + profile_button
+
+    def _getUserMsg(self):
+        return div(self.user_msg)
 
     def _getBody(self):
         return open('body-section.html', 'r').read() % (

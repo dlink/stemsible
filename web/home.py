@@ -28,7 +28,7 @@ class Login(Base):
 
         self.require_login = False
         self.error_msg = ''
-        self.user_msg = []
+        self.su_user_msg = []
         self.missing_fields = []
 
     def process(self):
@@ -67,8 +67,6 @@ class Login(Base):
         # sign up error message
         if self.missing_fields:
             self.error_msg += 'Please fill in required fields marked in red'
-            self.debug_msg += p(self.error_msg)
-            self.debug_msg += p(self.missing_fields)
             self.schoolInfo.missing_values = self.missing_fields
             return
 
@@ -112,7 +110,7 @@ class Login(Base):
 
         # registration complete
         self._clearFields()
-        self.user_msg = 'Registration Complete - you can now login'
+        self.su_user_msg = 'Registration Complete - you can now login'
 
     def _getBody(self):
         return open('home.html', 'r').read() % self._getSignUpNow()
@@ -129,7 +127,7 @@ class Login(Base):
 
         # User msg
 
-        user_msg =  self._getUserMsg()
+        su_user_msg =  self._getSUUserMsg()
 
         # Basic Info
 
@@ -151,7 +149,8 @@ class Login(Base):
         o += div(signup, class_='form-group')
 
 
-        return head1 + head2 + user_msg + form(o, method='POST')
+        return head1 + head2 + su_user_msg + form(o, name='signup-form',
+                                                  method='POST')
 
     def _getSignUpField(self, name, attr):
         '''Given a field name (in lowercase)
@@ -195,10 +194,10 @@ class Login(Base):
 
         return div(field + extra, class_='form-group')
 
-    def _getUserMsg(self):
+    def _getSUUserMsg(self):
         o = ''
-        if self.user_msg:
-            o += p(self.user_msg, class_='user-message')
+        if self.su_user_msg:
+            o += p(self.su_user_msg, class_='user-message')
         if self.error_msg:
             o += p(self.error_msg, class_='error-message')
         return o
