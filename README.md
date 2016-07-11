@@ -2,72 +2,67 @@
 
 Where Parents talk about their Kid's Education
 
-Currently there are three separate servers:
+Stemsible is a Python 2.7 CGI Web App.
 
-I. Python CGI App:
+Production Site: http://crowfly.net/stemsible/main.py
 
-   - Active development going on here.
+Development Site: http://dev.crowfly.net/stemsible/main.py
 
-   - Url: http://crowfly.net/stemsible/main.py
-          http://dev.crowfly.net/stemsible/main.py
+Installation:
 
-   - See apache config: config/apache/stemsible2.conf   
+   apt-get install python-dev libmysqlclient-dev
 
-    - Landing Page: web/main.py
+   pip install MySQL-python
+   pip install vlib
+   pip install vweb
+   pip install passlib
+   pip install jinja2
 
-    - Dependencies:
+   git clone git@github.com:dlink/stemsible.git
+
+Set Environement Variables
+
+   cd ~/stemsible/bin
+   . ./aliases     # this creates the psdb, and dsdb aliases
+   . ./set_env.sh  # this sets PYTHONPATH, and VCONF
+
+Install Database:
+
+   # create a database on local host:
+
+   # create production database
+
+   cd ~/stemsible/sql
+   cat database_create.sql | mysql -uroot -p
+   cat build_all.sql | psdb --local-infile=1 -t
+
+   # create development database
+
+   cd ~/stemsible/sql
+   cat dev_database_create.sql | mysql -uroot -p
+   cat build_all.sql | dsdb --local-infile=1 -t
+
+
+Configure
+
+
+   # review ~/stemsible/conf/dev.yml
+   # if your database is on localhost
+
+Test
+
+   cd ~/stemsible/tests
+   ./test_all.sh
+
+Apache Setup
+
+   cd /etc/apache2/sites-available
+   ln -s /home/USERNAME/stemsible/config/apache/stemsible2.conf
+
+Other python modules that will be needed
 
       Cookie
-
       json
-
-      passlib
-
       sha
-
       shelve
-
       unittest
-
-      vlib, https://github.com/dlink/vlib
-
-      vweb, https://github.com/dlink/vweb
-
-
-II. JS App:
-
-   - Work has ceased here
-
-   - Move to simple Python CGI app for rapid prototyping
-
-   - [dev-]stemsible.crowfly.net
-
-   - See apache config: config/apache/stemsible.conf
-
-   - Landing Page:
-       web/index.html  (Single HTML Page App)
-       web/js/apps.js  (AngularJS App)
-
-III. API Server:
-
-   - API Server set up to service JS App (II)
-
-   - Work has ceased here
-
-   - [dev-]stemsible.crowfly.net/api
-
-   - See apache config: config/apache/stemsible.conf
-
-   Example API Calls:
-
-   - stemsible.crowfly.net/api/users
-   - stemsible.crowfly.net/api/users/1
-   - stemsible.crowfly.net/api/messages
-   - stemsible.crowfly.net/api/messages/1
-
-   Back End:
-      1. Apache2         (HTTP Server)
-      2. web/server.wsgi (WSGI App Server)
-      3. lib/server.py   (Python Flask Restful API Server)
-      4. lib/users.py    (Python Object Model)
-      5. lib/messages.py (Python Object Model)
