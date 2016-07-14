@@ -1,6 +1,6 @@
 # stemsible
 
-Where Parents talk about their Kid's Education
+*Where Parents talk about their Kid's Education*
 
 Stemsible is a Python 2.7 CGI Web App.
 
@@ -8,61 +8,62 @@ Production Site: http://crowfly.net/stemsible/main.py
 
 Development Site: http://dev.crowfly.net/stemsible/main.py
 
-Installation:
+## Installation:
+```
+apt-get install python-dev libmysqlclient-dev
 
-   apt-get install python-dev libmysqlclient-dev
+pip install MySQL-python vlib vweb passlib jinja2
 
-   pip install MySQL-python
-   pip install vlib
-   pip install vweb
-   pip install passlib
-   pip install jinja2
-
-   git clone git@github.com:dlink/stemsible.git
+git clone git@github.com:dlink/stemsible.git
+```
 
 Set Environement Variables
+```
+cd ~/stemsible/bin
+. ./aliases     # this creates the psdb, and dsdb aliases
+. ./set_env.sh  # this sets PYTHONPATH, and VCONF
+```
 
-   cd ~/stemsible/bin
-   . ./aliases     # this creates the psdb, and dsdb aliases
-   . ./set_env.sh  # this sets PYTHONPATH, and VCONF
+Install Database
+```
+# create a database on local host:
 
-Install Database:
+# create production database
 
-   # create a database on local host:
+cd ~/stemsible/sql
+cat database_create.sql | mysql -uroot -p
+cat build_all.sql | psdb --local-infile=1 -t
 
-   # create production database
+# create development database
 
-   cd ~/stemsible/sql
-   cat database_create.sql | mysql -uroot -p
-   cat build_all.sql | psdb --local-infile=1 -t
-
-   # create development database
-
-   cd ~/stemsible/sql
-   cat dev_database_create.sql | mysql -uroot -p
-   cat build_all.sql | dsdb --local-infile=1 -t
-
+cd ~/stemsible/sql
+cat dev_database_create.sql | mysql -uroot -p
+cat build_all.sql | dsdb --local-infile=1 -t
+```
 
 Configure
-
-
-   # review ~/stemsible/conf/dev.yml
-   # if your database is on localhost
+```
+# review ~/stemsible/conf/dev.yml
+# if your database is on localhost
+```
 
 Test
-
-   cd ~/stemsible/tests
-   ./test_all.sh
+```
+cd ~/stemsible/tests
+./test_all.sh
+```
 
 Apache Setup
-
-   cd /etc/apache2/sites-available
-   ln -s /home/USERNAME/stemsible/config/apache/stemsible2.conf
+```
+cd /etc/apache2/sites-available
+ln -s /home/USERNAME/stemsible/config/apache/stemsible2.conf
+```
 
 Other python modules that will be needed
-
-      Cookie
-      json
-      sha
-      shelve
-      unittest
+```
+Cookie
+json
+sha
+shelve
+unittest
+```
