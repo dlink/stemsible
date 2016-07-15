@@ -44,7 +44,7 @@ cat build_all.sql | dsdb --local-infile=1 -t
 Configure
 ```
 # review ~/stemsible/conf/dev.yml
-# if your database is on localhost
+# change your database settings if not on localhost
 ```
 
 Test
@@ -56,7 +56,14 @@ cd ~/stemsible/tests
 Apache Setup
 ```
 cd /etc/apache2/sites-available
-ln -s /home/USERNAME/stemsible/config/apache/stemsible2.conf
+cp /home/USERNAME/stemsible/config/apache/stemsible.conf .
+```
+
+Create Session Data Folder
+```
+mkdir -p /data/stemsible/sessions
+chgrp -R www-data /data/stemsible
+chmod g+w /data/stemsible/sessions
 ```
 
 Other python modules that will be needed
