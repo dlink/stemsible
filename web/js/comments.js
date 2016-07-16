@@ -1,7 +1,7 @@
 function addComment() {
     var pos = $(document).scrollTop();
     $("input[name=scroll_pos]").val(pos);
-    $("form[name=form1]").submit();
+    $("form[name=messages-form]").submit();
 }
 
 function toggleComments(comments_id) {
