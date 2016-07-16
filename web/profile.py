@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 from copy import copy
 
 from vlib import conf
@@ -53,6 +54,9 @@ class Profile(Base):
             
         self.schoolInfo.process(self.session, self.form)
 
+        if 'filename' in self.form and self.user == self.session.user:
+            self._handleImageUpload()
+
     def _getBody(self):
         if self.cannot_read_profile:
             return self.cannotReadProfile()
@@ -80,8 +84,28 @@ class Profile(Base):
             h4("We've got a problem.") +\
             p('Sorry we can not read profile')))
 
+    def _getImageForUser(self, user_id):
+        image_file = '{}.jpg'.format(encrypt_int(user_id))
+        image_path = os.path.join(self.conf.basedir, 'web', 'uploads', image_file)
+        if os.path.exists(image_path):
+            return 'uploads/{}'.format(image_file)
+        return 'images/generic_icon.png'
+
+    def _handleImageUpload(self):
+        image_file = '{}.jpg'.format(encrypt_int(self.session.user.id))
+        image_path = os.path.join(self.conf.basedir, 'web', 'uploads', image_file)
+        with open(image_path, 'wb') as f:
+            data = self.form['filename'].file
+            f.write(data.read())
+
     def _getGeneralInfo(self):
         header = h3('Profile')
+        image = div(img(width='120px', src=self._getImageForUser(self.user.id)))
+
+        if self.user == self.session.user:
+            o = input(type='file', name='filename', accept='image/*') + input(type='submit')
+            image += form(o, enctype='multipart/form-data', action='', method='post', name='upload_form')
+
         # build data
         data = [
             ['Name:'  , self.user.fullname],
@@ -103,7 +127,7 @@ class Profile(Base):
                       str(len(self.user.followers)),
                       str(len(self.user.following))])
 
-        return header + table.getTable() + table2.getTable()
+        return header + image + table.getTable() + table2.getTable()
 
     def _getFollowingInfo(self):
         header = h3('Following')
