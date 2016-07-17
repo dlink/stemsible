@@ -3,6 +3,8 @@
 import os
 from copy import copy
 
+from PIL import Image
+
 from vlib import conf
 from vlib.utils import format_date
 from vweb.html import *
@@ -54,7 +56,7 @@ class Profile(Base):
             
         self.schoolInfo.process(self.session, self.form)
 
-        if 'filename' in self.form and self.user == self.session.user:
+        if 'filename' in self.form and self.user.id == self.session.user.id:
             self._handleImageUpload()
 
     def _getBody(self):
@@ -85,26 +87,29 @@ class Profile(Base):
             p('Sorry we can not read profile')))
 
     def _getImageForUser(self, user_id):
-        image_file = '{}.jpg'.format(encrypt_int(user_id))
-        image_path = os.path.join(self.conf.basedir, 'web', 'uploads', image_file)
-        if os.path.exists(image_path):
-            return 'uploads/{}'.format(image_file)
+        filename = '{}.jpg'.format(encrypt_int(user_id))
+        path = os.path.join(self.conf.basedir, 'web', 'uploads', filename)
+        if os.path.exists(path):
+            return 'uploads/{}'.format(filename)
         return 'images/generic_icon.png'
 
-    def _handleImageUpload(self):
-        image_file = '{}.jpg'.format(encrypt_int(self.session.user.id))
-        image_path = os.path.join(self.conf.basedir, 'web', 'uploads', image_file)
-        with open(image_path, 'wb') as f:
-            data = self.form['filename'].file
-            f.write(data.read())
+    def _handleImageUpload(self, resize=True):
+        filename = '{}.jpg'.format(encrypt_int(self.session.user.id))
+        path = os.path.join(self.conf.basedir, 'web', 'uploads', filename)
+        image = Image.open(self.form['filename'].file)
+        if resize:
+            image.thumbnail((200, 200))
+        image.save(path, 'JPEG', quality=85)
 
     def _getGeneralInfo(self):
         header = h3('Profile')
-        image = div(img(width='120px', src=self._getImageForUser(self.user.id)))
+        image = div(img(width='200px', src=self._getImageForUser(self.user.id)))
 
-        if self.user == self.session.user:
-            o = input(type='file', name='filename', accept='image/*') + input(type='submit')
-            image += form(o, enctype='multipart/form-data', action='', method='post', name='upload_form')
+        if self.user.id == self.session.user.id:
+            o = input(type='file', name='filename', accept='image/*') 
+            o += input(type='submit')
+            image += form(o, enctype='multipart/form-data', action='', 
+                             method='post', name='upload_form')
 
         # build data
         data = [
