@@ -59,6 +59,11 @@ cd /etc/apache2/sites-available
 ln -s /home/USERNAME/stemsible/config/apache/stemsible2.conf
 ```
 
+Create Session Data Folder
+```
+mkdir -p /data/stemsible/sessions
+```
+
 Other python modules that will be needed
 ```
 Cookie
