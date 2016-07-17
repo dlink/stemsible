@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 from copy import copy
 
 from vlib import conf
@@ -14,6 +15,7 @@ from encryptint import encrypt_int, decrypt_int
 from base import Base
 from feed import Feed
 from schoolinfo import SchoolInfo
+from images import getUserImage, saveUserImage
 
 class Profile(Base):
 
@@ -53,6 +55,9 @@ class Profile(Base):
             
         self.schoolInfo.process(self.session, self.form)
 
+        if 'filename' in self.form and self.user.id == self.session.user.id:
+            self._handleImageUpload()
+
     def _getBody(self):
         if self.cannot_read_profile:
             return self.cannotReadProfile()
@@ -80,8 +85,22 @@ class Profile(Base):
             h4("We've got a problem.") +\
             p('Sorry we can not read profile')))
 
+    def _handleImageUpload(self, resize=True):
+        saveUserImage(self.session.user.id, self.form['filename'].file)
+
     def _getGeneralInfo(self):
         header = h3('Profile')
+        image_ = div(img(width='200px', src=getUserImage(self.user.id)))
+
+        if self.user.id == self.session.user.id:
+            file = input(type='file', name='filename', accept='image/*',
+                         onchange='upload_form.submit();')
+            browse = span(image_ + file, class_='btn btn-file')
+            image = form(browse, enctype='multipart/form-data', action='',
+                             method='post', name='upload_form')
+        else:
+            image = image_
+
         # build data
         data = [
             ['Name:'  , self.user.fullname],
@@ -103,7 +122,7 @@ class Profile(Base):
                       str(len(self.user.followers)),
                       str(len(self.user.following))])
 
-        return header + table.getTable() + table2.getTable()
+        return header + image + table.getTable() + table2.getTable()
 
     def _getFollowingInfo(self):
         header = h3('Following')
