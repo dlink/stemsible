@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from copy import copy
 
 from vlib import conf
@@ -72,8 +73,7 @@ class Profile(Base):
             self._getGeneralInfo() + \
             self._getFollowingInfo()
 
-        o = open('profile-section.html', 'r').read() % (left, right)
-        return form(o, name='form1', method='POST')
+        return open('profile-section.html', 'r').read() % (left, right)
 
     def cannotReadProfile(self):
         return center(div(

@@ -3,7 +3,7 @@ function toggleLike(like_id) {
     var pos = $(document).scrollTop();
     $("input[name=scroll_pos]").val(pos);
     $("input[name=like]").val(like_id);
-    $("form[name=form1]").submit();
+    $("form[name=messages-form]").submit();
 }
 
 function toggleLikers(likes_id) {

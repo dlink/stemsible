@@ -76,10 +76,11 @@ class Feed(object):
         o += hidden_fields
         for m in messages:
             o += self._getMessageCard(m)
-        return div(o, id='messageArea')
+        return form(div(o, id='messageArea'), name='messages-form')
 
     def getNewMessageCard(self):
-        return open('new-message2.html', 'r').read()
+        return form(open('new-message2.html', 'r').read(),
+                    name='new-card-form')
 
     def _getMessageCard(self, message):
         message = odict(message)
