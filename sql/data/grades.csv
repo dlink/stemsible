@@ -1,19 +1,19 @@
 id,code,name,description,active,created,last_updated
-1,nursery,Nursery,Nursery,1,\N,\N
-2,pre-k,Pre-K,Pre-Kindergarten,1,\N,\N
-3,k,Kindergarten,Kindergarten,1,\N,\N
-4,1,1st,1st Grade,1,\N,\N
-5,2,2nd,2nd Grade,1,\N,\N
-6,3,3rd,3rd Grade,1,\N,\N
-7,4,4th,4th Grade,1,\N,\N
-8,5,5th,5th Grade,1,\N,\N
-9,6,6th,6th Grade,1,\N,\N
-10,7,7th,7th Grade,1,\N,\N
-11,8,8th,8th Grade,1,\N,\N
-12,9,9th,9th Grade,1,\N,\N
-13,10,10th,10th Grade,1,\N,\N
-14,11,11th,11th Grade,1,\N,\N
-15,12,12th,12th Grade,1,\N,\N
-16,college,College,College,1,\N,\N
-17,graduate,Graduate,Graduate,1,\N,\N
-18,other,Other,Other,1,\N,\N
+1,nursery,Nursery,Nursery,1,2016-01-01,\N
+2,pre-k,Pre-K,Pre-Kindergarten,1,2016-01-01,\N
+3,k,Kindergarten,Kindergarten,1,2016-01-01,\N
+4,1,1st,1st Grade,1,2016-01-01,\N
+5,2,2nd,2nd Grade,1,2016-01-01,\N
+6,3,3rd,3rd Grade,1,2016-01-01,\N
+7,4,4th,4th Grade,1,2016-01-01,\N
+8,5,5th,5th Grade,1,2016-01-01,\N
+9,6,6th,6th Grade,1,2016-01-01,\N
+10,7,7th,7th Grade,1,2016-01-01,\N
+11,8,8th,8th Grade,1,2016-01-01,\N
+12,9,9th,9th Grade,1,2016-01-01,\N
+13,10,10th,10th Grade,1,2016-01-01,\N
+14,11,11th,11th Grade,1,2016-01-01,\N
+15,12,12th,12th Grade,1,2016-01-01,\N
+16,college,College,College,1,2016-01-01,\N
+17,graduate,Graduate,Graduate,1,2016-01-01,\N
+18,other,Other,Other,1,2016-01-01,\N

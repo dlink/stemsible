@@ -1,6 +1,3 @@
-set foreign_key_checks = 0;
-
--- drop table /*! if exists */ user_schools;
 
 create table user_schools (
   id                 integer unsigned not null auto_increment primary key,
@@ -22,9 +19,8 @@ engine InnoDB default charset=utf8;
 
 show warnings;
 
-set foreign_key_checks = 1;
-
 create trigger user_schools_create before insert on user_schools
    for each row set new.created = now()
 ;
+
 desc user_schools;

@@ -1,6 +1,3 @@
-set foreign_key_checks = 0;
-
--- drop table /*! if exists */ addresses;
 
 create table addresses (
   id                 integer unsigned not null auto_increment primary key,
@@ -24,9 +21,13 @@ engine InnoDB default charset=utf8;
 
 show warnings;
 
-set foreign_key_checks = 1;
-
 create trigger addresses_create before insert on addresses
    for each row set new.created = now()
 ;
-desc addresses;
+
+load data local infile 'data/addresses.csv' into table addresses
+fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
+
+show warnings;
+
+select * from addresses;
