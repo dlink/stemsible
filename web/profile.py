@@ -90,13 +90,16 @@ class Profile(Base):
 
     def _getGeneralInfo(self):
         header = h3('Profile')
-        image = div(img(width='200px', src=getUserImage(self.user.id)))
+        image_ = div(img(width='200px', src=getUserImage(self.user.id)))
 
         if self.user.id == self.session.user.id:
-            o = input(type='file', name='filename', accept='image/*') 
-            o += input(type='submit')
-            image += form(o, enctype='multipart/form-data', action='', 
+            file = input(type='file', name='filename', accept='image/*',
+                         onchange='upload_form.submit();')
+            browse = span(image_ + file, class_='btn btn-file')
+            image = form(browse, enctype='multipart/form-data', action='',
                              method='post', name='upload_form')
+        else:
+            image = image_
 
         # build data
         data = [
