@@ -13,6 +13,8 @@ from messagelikes import MessageLikes, addHeaders as messageLikes_addHeaders
 from messagecomments import MessageComments, \
     addHeaders as messageComments_addHeaders
 
+from images import getUserImage
+
 class Feed(object):
 
     def __init__(self, page):
@@ -84,7 +86,8 @@ class Feed(object):
 
     def _getMessageCard(self, message):
         message = odict(message)
-        user_icon = div(img(src='images/generic_icon.png',
+        image = getUserImage(message.user_id)
+        user_icon = div(img(src=image, width='100px',
                             class_='img-thumbnail'),
                         class_='userIcon')
         username = div(message.author,  class_='messageAuthor')

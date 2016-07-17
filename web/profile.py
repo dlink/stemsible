@@ -3,8 +3,6 @@
 import os
 from copy import copy
 
-from PIL import Image
-
 from vlib import conf
 from vlib.utils import format_date
 from vweb.html import *
@@ -17,6 +15,7 @@ from encryptint import encrypt_int, decrypt_int
 from base import Base
 from feed import Feed
 from schoolinfo import SchoolInfo
+from images import getUserImage, saveUserImage
 
 class Profile(Base):
 
@@ -86,24 +85,12 @@ class Profile(Base):
             h4("We've got a problem.") +\
             p('Sorry we can not read profile')))
 
-    def _getImageForUser(self, user_id):
-        filename = '{}.jpg'.format(encrypt_int(user_id))
-        path = os.path.join(self.conf.basedir, 'web', 'uploads', filename)
-        if os.path.exists(path):
-            return 'uploads/{}'.format(filename)
-        return 'images/generic_icon.png'
-
     def _handleImageUpload(self, resize=True):
-        filename = '{}.jpg'.format(encrypt_int(self.session.user.id))
-        path = os.path.join(self.conf.basedir, 'web', 'uploads', filename)
-        image = Image.open(self.form['filename'].file)
-        if resize:
-            image.thumbnail((200, 200))
-        image.save(path, 'JPEG', quality=85)
+        saveUserImage(self.session.user.id, self.form['filename'].file)
 
     def _getGeneralInfo(self):
         header = h3('Profile')
-        image = div(img(width='200px', src=self._getImageForUser(self.user.id)))
+        image = div(img(width='200px', src=getUserImage(self.user.id)))
 
         if self.user.id == self.session.user.id:
             o = input(type='file', name='filename', accept='image/*') 
