@@ -1,6 +1,3 @@
-set foreign_key_checks = 0;
-
-drop table /*! if exists */ school_relationships;
 
 create table school_relationships (
   id                 integer unsigned not null auto_increment primary key,
@@ -18,8 +15,6 @@ engine InnoDB default charset=utf8;
 
 show warnings;
 
-set foreign_key_checks = 1;
-
 create trigger school_relationsihps_create before insert
    on school_relationships
    for each row set new.created = now();
@@ -27,5 +22,7 @@ create trigger school_relationsihps_create before insert
 load data local infile 'data/school_relationships.csv'
 into table school_relationships
 fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
+
+show warnings;
 
 select * from school_relationships;

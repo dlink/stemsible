@@ -1,9 +1,3 @@
--- v0.1.1 migration
-
--- Create user_statuses table
-set foreign_key_checks = 0;
-
-drop table if exists user_statuses;
 
 create table user_statuses (
   id                 integer unsigned not null auto_increment primary key,
@@ -20,8 +14,6 @@ engine InnoDB default charset=utf8
 
 show warnings;
 
-set foreign_key_checks = 1;
-
 create trigger user_statuses_create before insert on user_statuses
    for each row set new.created = now()
 ;
@@ -31,25 +23,3 @@ fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
 
 desc user_statuses;
 
--- drop username from users table
-
-alter table users drop column username;
-
--- add status_id to users table
-
-alter table users add column status_id int unsigned after password;
-alter table users add constraint fk_status_id foreign key (status_id)
-      references user_statuses (id);
-
--- increase password column to 80
-
-alter table users change column password password varchar(80);
-
--- Update School Releationships
-
-source create_school_relationships.sql
-
-
--- Add constraints on follows
-
-alter table follows add unique user_id_follows_id (user_id, follows_id);

@@ -1,6 +1,3 @@
-set foreign_key_checks = 0;
-
--- drop table /*! if exists */ school_districts;
 
 create table school_districts (
   id                 integer unsigned not null auto_increment primary key,
@@ -19,9 +16,14 @@ engine InnoDB default charset=utf8;
 
 show warnings;
 
-set foreign_key_checks = 1;
-
 create trigger school_districts_create before insert on school_districts
    for each row set new.created = now()
 ;
-desc school_districts;
+
+load data local infile 'data/school_districts.csv' into table school_districts
+fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
+
+show warnings;
+
+select * from school_districts;
+

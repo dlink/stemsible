@@ -1,6 +1,3 @@
-set foreign_key_checks = 0;
-
--- drop table /*! if exists */ address_types;
 
 create table follows (
   id                 integer unsigned not null auto_increment primary key,
@@ -16,19 +13,16 @@ create table follows (
   active             boolean          not null,
   created            datetime         not null ,
   last_updated       timestamp        not null 
-        default current_timestamp on update current_timestamp
+        default current_timestamp on update current_timestamp,
+
+  unique index user_id_follows_id (user_id, follows_id)
 ) 
 engine InnoDB default charset=utf8;
 ;
 
 show warnings;
 
-set foreign_key_checks = 1;
-
 create trigger follow_create before insert on follows
    for each row set new.created = now();
-
--- load data local infile 'data/follows.csv' into table follows
--- fields terminated by ',' optionally enclosed by '"' ignore 1 lines;
 
 desc follows;
