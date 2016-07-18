@@ -12,7 +12,7 @@ Development Site: http://dev.crowfly.net/stemsible/main.py
 ```
 apt-get install python-dev libmysqlclient-dev
 
-pip install MySQL-python vlib vweb passlib jinja2 pillow
+pip install MySQL-python vlib vweb passlib jinja2 pillow itsdangerous sender
 
 git clone git@github.com:dlink/stemsible.git
 ```

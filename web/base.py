@@ -126,7 +126,8 @@ class Base(HtmlPage):
                        class_='btn btn-default btn-sm',
                        value='Login')
 
-        return form(email + password + button, class_='form-inline')
+        return form(email + password + button, class_='form-inline',
+                    action='/home.py')
 
     def _getHeaderMenu(self):
 

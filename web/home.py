@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-from vlib.utils import format_date, valid_email
+from vlib.utils import format_date, valid_email, lazyproperty
+from vlib import logger
 from vweb.html import *
 from vweb.htmltable import HtmlTable
 
@@ -9,6 +10,7 @@ from grades import Grades
 from registration import Registration
 from schoolrelationships import SchoolRelationships
 from schoolinfo import SchoolInfo
+from emails import Emails
 
 USER_STATUS_PENDING = 8
 
@@ -18,9 +20,14 @@ SCHOOL_FIELDS = ['school_rel', 'school', 'grade']
 
 class Login(Base):
 
+    @lazyproperty
+    def logger(self):
+        return logger.getLogger('Login')
+
     def __init__(self):
         Base.__init__(self)
         self.schoolInfo = SchoolInfo()
+        self.emails = Emails()
 
         self.style_sheets.extend(['css/home.css', 'css/signup.css'])
         self.javascript_src.extend(['js/signup.js'])
@@ -105,13 +112,23 @@ class Login(Base):
         try:
             Registration().add(user_data, user_school_data)
         except Exception, e:
-            raise
             self.error_msg = 'Oops, there was a problem - Error Code 100'
             return
 
-        # registration complete
+        try:
+            self.emails.send_verification_email(email)
+        except Exception, e:
+            self.error_msg = 'Opps, unable to send confirmation email - ' \
+                             'Error Code 200'
+            self.logger.error('Unable to send_verification_email(%s): %s' \
+                              % (email, e))
+            return
+
+        # email verification sent
         self._clearFields()
-        self.su_user_msg = 'Registration Complete - you can now login'
+        self.su_user_msg = 'Great! An email was sent to %s.  Please ' \
+                           'open it and click on the link it contains ' \
+                           'to complete registraion.' % email
 
     def _getBody(self):
         return open('home.html', 'r').read() % self._getSignUpNow()
