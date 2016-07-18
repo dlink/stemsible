@@ -6,8 +6,8 @@ from vlib.datatable import DataTable
 
 from record import Record
 
-UNKNOWN_ADDRESS_ID = 0
-UNKNOWN_DISTRICT_ID = 0
+UNKNOWN_ADDRESS_ID = 1
+UNKNOWN_DISTRICT_ID = 1
 
 class SchoolError(Exception): pass
 
