@@ -11,3 +11,6 @@ DIV {
 .right {
     float: right;
 }
+.search-term {
+    background-color: #FFC31E; /* light Orange */
+}

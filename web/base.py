@@ -3,6 +3,7 @@
 import os
 
 from vlib.utils import lazyproperty
+from vlib import conf
 from vweb.html import *
 from vweb.htmlpage import HtmlPage
 
@@ -19,6 +20,8 @@ class Base(HtmlPage):
         HtmlPage.__init__(self, name, include_form_tag=0,
                           #favicon_path='/favicon.ico')
                       )
+        self.conf = conf.getInstance()
+
         self.style_sheets = [
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/' \
                 'bootstrap.min.css',
@@ -37,6 +40,7 @@ class Base(HtmlPage):
         self.debug_cgi = 0
         self.require_login = True
         self.user_msg = ''
+        self.search = None
 
     def process(self):
         HtmlPage.process(self)
@@ -84,7 +88,14 @@ class Base(HtmlPage):
         else:
             on_the_right = self._getLogin()
 
-        return open('header-section.html', 'r').read() % on_the_right
+        if self.conf.environment != 'prod':
+            sys_ind = font(' (%s)' % self.conf.environment, size=-1)
+        else:
+            sys_ind = ''
+
+        return open('header-section.html', 'r').read() % (sys_ind,
+                                                          self.search or '',
+                                                          on_the_right)
 
     def _getLogin(self):
         # email

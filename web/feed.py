@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import re
+
 from vlib import conf
 from vlib.odict import odict
 
@@ -58,15 +60,18 @@ class Feed(object):
             p = self.page.form['scroll_pos'].value
             self.scroll_pos = int(round(float(p),0))
 
-    def getMessages(self, user_id=None):
+    def getMessages(self, user_id=None, search=None):
         # TO DO: rename getMyMessages to something like getThisUsersMessages
 
-        if not user_id:
-            user_id = self.page.session.user.id
-        if self.page.name == 'profile':
-            messages = self.messages.getMyMessages(user_id)['messages']
+        if search:
+            messages = self.messages.getSearchMessages(search)['messages']
         else:
-            messages = self.messages.getUserMessages(user_id)['messages']
+            if not user_id:
+                user_id = self.page.session.user.id
+            if self.page.name == 'profile':
+                messages = self.messages.getMyMessages(user_id)['messages']
+            else:
+                messages = self.messages.getUserMessages(user_id)['messages']
 
         self.num_messages = len(messages)
 
@@ -77,14 +82,14 @@ class Feed(object):
         o = ''
         o += hidden_fields
         for m in messages:
-            o += self._getMessageCard(m)
+            o += self._getMessageCard(m, search=search)
         return form(div(o, id='messageArea'), name='messages-form')
 
     def getNewMessageCard(self):
         return form(open('new-message2.html', 'r').read(),
                     name='new-card-form')
 
-    def _getMessageCard(self, message):
+    def _getMessageCard(self, message, search=None):
         message = odict(message)
         image = getUserImage(message.user_id)
         user_icon = div(img(src=image, width='100px',
@@ -98,6 +103,8 @@ class Feed(object):
         username_and_date = div(name_link + reason + date,
                                 class_='usernameAndDate')
 
+        text = self._highlightKeyTerms(message.text, search)
+
         messageLikes = MessageLikes(message)
         messageComments = MessageComments(message)
         footer = \
@@ -106,9 +113,19 @@ class Feed(object):
 
         o = ''
         o += user_icon + username_and_date
-        o += div(message.text, class_='messageText')
+        o += div(text, class_='messageText')
         o += div(footer, class_='messageFooter')
         o += messageLikes.html_likersSection()
         o += messageComments.html_commentsSection(self.page.session.user)
 
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
+
+    def _highlightKeyTerms(self, text, search=None):
+        if not search:
+            return text
+
+        text2 = text
+        for term in search.split(' '):
+            term2 = r'(%s)' % term
+            text2 = re.sub(term2, r'<span class="search-term">\1</span>', text2, flags=re.IGNORECASE)
+        return text2
