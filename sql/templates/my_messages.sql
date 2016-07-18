@@ -1,3 +1,5 @@
+-- Messages posted by <user_id>
+
 select
    m.id,
    m.user_id,

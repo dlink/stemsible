@@ -10,3 +10,13 @@ function logout() {
     $("form[name=header-form]").submit();
 }
 
+/* submit search field on enter */
+
+$(document).ready(function() {
+  $('.submit-on-enter').keydown(function(event) {
+      if (event.keyCode == 13) {
+          $("form[name=header-search-form]").submit();
+          return false;
+      }
+  });
+});

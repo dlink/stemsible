@@ -22,9 +22,16 @@ class Main(Base):
         Base.process(self)
         self.feed.process()
 
+        if 'search' in self.form:
+            self.search = self.form['search'].value.strip()
+
     def _getBody(self):
         left   = self._getSchoolPanel()
-        center = self.feed.getNewMessageCard() + self.feed.getMessages()
+        if self.search:
+            center = self.feed.getMessages(search=self.search)
+        else:
+            center = self.feed.getNewMessageCard() + self.feed.getMessages()
+
         right  = self._getTagsPanel()
 
         # hack

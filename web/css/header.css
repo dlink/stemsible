@@ -12,7 +12,7 @@
 #header #header-login .btn {
    padding: 0 10px;
 }
-#header form {
+#header #header-login form {
    float: right;
 }
 #header #header-menu-triangle {
@@ -39,6 +39,14 @@
    background-color: gold;
 }
 @media (min-width: 768px) {
+   #header-search {
+      display: block;
+      margin-top: 12px;
+      padding-left: 35px;
+   }
+   #header-search input {
+      height: 25px;
+   }
    #header-login {
       display: block;
       text-align: right;

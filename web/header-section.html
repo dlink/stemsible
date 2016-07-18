@@ -1,10 +1,18 @@
 <div id='header' class="row">
   <div id='company-name' class='col-xs-12 col-sm-3' onclick="location.href='main.py'",
         class='cursor-pointer'>
-    <span>Stemsible<span>
+    <span>Stemsible%s<span>
   </div>
 
-  <div id='header-login' class='col-xs-12 col-sm-9'>
+
+  <div id='header-search' class='col-xs-12 col-sm-5'>
+     <form name='header-search-form' method='post' action='/main.py'>
+        <input class='form-control submit-on-enter' name='search'
+	       value='%s' placeholder="Search Stemsible" />
+     </form>
+  </div>
+
+  <div id='header-login' class='col-xs-12 col-sm-4'>
     %s
   </div>
 

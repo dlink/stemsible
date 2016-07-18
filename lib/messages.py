@@ -1,3 +1,6 @@
+
+import re
+
 from vlib import db
 from vlib import conf
 from vlib.datatable import DataTable
@@ -30,21 +33,30 @@ class Messages(DataTable):
             }
         return data
 
-    def getUserMessages(self, user_id, type=None):
+    def getUserMessages(self, user_id=None, type=None, search=None):
         '''Return a all messages this users follows
+           if search passed in then return search result messages.
            if type == 'my', then return this users messages.
+           otherwise return user feed messages
            Data structure:
            messages: [ {id: x, text: y, ...},
                        {id: z, text: a, ...},
                        ... ]
         '''
-        if type == 'my':
+        if search:
+            sql_file = 'search_messages.sql'
+        elif type == 'my':
             sql_file = 'my_messages.sql'
         else:
             sql_file = 'user_messages.sql'
 
         sql_filepath = '%s/sql/templates/%s' % (self.conf.basedir, sql_file)
-        sql = open(sql_filepath, 'r').read().replace('<user_id>', str(user_id))
+
+        if search:
+            sql = open(sql_filepath, 'r').read().replace('<search>', search)
+        else:
+            sql = open(sql_filepath, 'r').read().replace('<user_id>',
+                                                         str(user_id))
         data = {
             'messages': [
                 {'id'      : r['id'],
@@ -60,6 +72,13 @@ class Messages(DataTable):
 
     def getMyMessages(self, user_id):
         return self.getUserMessages(user_id, type='my')
+
+    def getSearchMessages(self, search):
+        # searchq will be like: '+mic* +jagger*'
+        search = re.sub('[+\-><\(\)~*\"@]', ' ', search)
+        searchq = ' '.join(['+%s*' % n for n in search.strip().split(' ')])
+
+        return self.getUserMessages(search=searchq)
 
     def add(self, data):
         try:
