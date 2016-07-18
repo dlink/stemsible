@@ -1,5 +1,5 @@
 environment: prod
-baseurl: crowfly.net/stemsible
+baseurl: stemsible.com
 basedir: /apps/stemsible
 serverurl: localhost:5000
 

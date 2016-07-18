@@ -17,7 +17,8 @@ class Base(HtmlPage):
 
     def __init__(self, name='Stemsible'):
         HtmlPage.__init__(self, name, include_form_tag=0,
-                          favicon_path='/stemsible/favicon.ico')
+                          #favicon_path='/favicon.ico')
+                      )
         self.style_sheets = [
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/' \
                 'bootstrap.min.css',

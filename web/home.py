@@ -105,6 +105,7 @@ class Login(Base):
         try:
             Registration().add(user_data, user_school_data)
         except Exception, e:
+            raise
             self.error_msg = 'Oops, there was a problem - Error Code 100'
             return
 

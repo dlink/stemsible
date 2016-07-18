@@ -1,5 +1,5 @@
 environment: dev
-baseurl: dev.crowfly.net/stemsible
+baseurl: dev.stemsible.com
 basedir: /home/dlink/stemsible
 serverurl: localhost:5000
 
