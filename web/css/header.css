@@ -34,6 +34,7 @@
 #header #header-menu li {
    padding: 7px;
    font-size: 12px;
+   cursor: pointer;
 }
 #header #header-menu li:hover {
    background-color: gold;
