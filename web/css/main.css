@@ -14,3 +14,9 @@ DIV {
 .search-term {
     background-color: #FFC31E; /* light Orange */
 }
+.visible {
+    visibility: block;
+}
+.not-visible {
+    visibility: hidden;
+}

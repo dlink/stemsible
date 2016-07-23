@@ -82,10 +82,12 @@ class Base(HtmlPage):
 
     def _getHeader(self):
         if self.session.logged_in:
+            search_class='visible'
             on_the_right = \
                 self._getProfileButton() + \
                 self._getHeaderMenu()
         else:
+            search_class='not-visible'
             on_the_right = self._getLogin()
 
         if self.conf.environment != 'prod':
@@ -94,6 +96,7 @@ class Base(HtmlPage):
             sys_ind = ''
 
         return open('header-section.html', 'r').read() % (sys_ind,
+                                                          search_class,
                                                           self.search or '',
                                                           on_the_right)
 
