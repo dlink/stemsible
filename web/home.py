@@ -8,7 +8,6 @@ from vweb.htmltable import HtmlTable
 from base import Base
 from grades import Grades
 from registration import Registration
-from schoolrelationships import SchoolRelationships
 from schoolinfo import SchoolInfo
 from emails import Emails
 
@@ -166,6 +165,9 @@ class Login(Base):
                        type='submit', value='Sign Up')
         o += div(signup, class_='form-group')
 
+        # message about more schools
+
+        o += p('Psst - You can add more schools after you sign up.')
 
         return head1 + head2 + su_user_msg + form(o, name='signup-form',
                                                   method='POST')
