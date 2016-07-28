@@ -101,4 +101,3 @@ if __name__ == '__main__':
 
     ml.add(3)
     print ml.likes[-1]['user_fullname']
-    

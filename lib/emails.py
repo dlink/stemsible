@@ -10,6 +10,7 @@ from itsdangerous import BadData
 
 USER_STATUS_ACTIVE = 10
 
+
 class Emails(object):
 
     SECRET = 'qLXFKsdYv8ycjRAd'
