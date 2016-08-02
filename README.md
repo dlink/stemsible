@@ -37,12 +37,6 @@ mysql -uroot -p
 
 cd ~/stemsible/sql
 cat build_all.sql | psdb --local-infile=1 -t
-
-# create development database
-
-cd ~/stemsible/sql
-cat dev_database_create.sql | mysql -uroot -p
-cat build_all.sql | dsdb --local-infile=1 -t
 ```
 
 Configure
