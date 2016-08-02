@@ -27,8 +27,7 @@ export aswj=$asw/js        ; alias aswj='cd $aswj'
 # database shortcuts
 
 # dev db:
-alias dsdb='mysql -ustemsible -p$STEMSIBLE_DB_PASS -hlocalhost --database=dev_stemsible --local-infile=1'
-alias d2sdb='mysql -ustemsible -p$STEMSIBLE_DB_PASS -hlocalhost --database=dev2_stemsible --local-infile=1'
+alias dsdb='mysql -udev_stemsible -p$STEM_DEV_DBPASS -hlocalhost --database=dev_stemsible --local-infile=1'
 
 # prod db:
-alias psdb='mysql -ustemsible -p$STEMSIBLE_DB_PASS -hlocalhost --database=stemsible --local-infile=1'
+alias psdb='mysql -ustemsible -p$STEM_DBPASS -hlocalhost --database=stemsible --local-infile=1'

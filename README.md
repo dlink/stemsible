@@ -30,8 +30,12 @@ Install Database
 
 # create production database
 
+mysql -uroot -p
+> create database stemsible;
+> grant all on stemsible.* to stemsible@localhost identified by 'change-me';
+> quit
+
 cd ~/stemsible/sql
-cat database_create.sql | mysql -uroot -p
 cat build_all.sql | psdb --local-infile=1 -t
 
 # create development database

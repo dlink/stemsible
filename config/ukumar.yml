@@ -7,8 +7,8 @@ database:
    engine : mysql
    db     : dev_stemsible
    host   : localhost
-   user   : stemsible
-   passwd : redXnapper56
+   user   : dev_stemsible
+   passwd : $STEM_DEV_DBPASS
    dictcursor: True
 
 logging:

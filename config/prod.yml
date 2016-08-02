@@ -8,7 +8,7 @@ database:
    db     : stemsible
    host   : localhost
    user   : stemsible
-   passwd : redXnapper56
+   passwd : $STEM_DBPASS
    dictcursor: True
 
 logging:
