@@ -5,6 +5,7 @@ export s=$HOME/stemsible   ; alias s='cd $s'
 export sb=$s/bin           ; alias sb='cd $sb'
 export sc=$s/config        ; alias sc='cd $sc'
 export sl=$s/lib           ; alias sl='cd $sl'
+export sls=$sl/sql         ; alias sls='cd $sls'
 export ss=$s/sql           ; alias ss='cd $ss'
 export st=$s/tests         ; alias st='cd $st'
 export sw=$s/web           ; alias sw='cd $sw'
@@ -17,12 +18,15 @@ export as=/apps/stemsible  ; alias as='cd $as'
 export asb=$as/bin         ; alias asb='cd $asb'
 export asc=$as/config      ; alias asc='cd $asc'
 export asl=$as/lib         ; alias asl='cd $asl'
+export asls=$asl/sql       ; alias asls='cd $asls'
 export ass=$as/sql         ; alias ass='cd $ass'
 export ast=$as/tests       ; alias ast='cd $ast'
 export asw=$as/web         ; alias asw='cd $asw'
 export aswc=$asw/css       ; alias aswc='cd $aswc'
 export aswi=$asw/images    ; alias aswi='cd $aswi'
 export aswj=$asw/js        ; alias aswj='cd $aswj'
+
+export vls='/var/log/stemsible' ; alias vls='cd $vls'
 
 # database shortcuts
 
