@@ -1,4 +1,6 @@
 
+-- drop table if exists messages_flat_new;
+
 create table
    messages_flat_new as
 select
@@ -14,8 +16,8 @@ select
              --   group_concat(distinct a.state separator ' '),
              group_concat(distinct a.zipcode separator ' '),
              m.text
-             ) as text,
-   now() as created
+             ) as text
+   -- now() as created
 from
    messages m
    join users u on m.user_id = u.id
@@ -24,10 +26,7 @@ from
    join school_districts sd on s.school_district_id = sd.id
    join addresses a on s.address_id = a.id
 group by
-   u.email,
-   u.first_name,
-   u.last_name,
-   m.text
+   m.id
 ;
 
 alter table messages_flat_new add fulltext (text);
