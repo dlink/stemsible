@@ -40,7 +40,7 @@ class Search(object):
                 self.db.execute(sql)
                 if 'create table' in sql:
                     rowcount = self.db.rowcount
-        return '%s message reindex' % rowcount
+        return '%s search message reindex' % rowcount
 
 if __name__ == '__main__':
     Search().run()
