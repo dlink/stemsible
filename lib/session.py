@@ -86,7 +86,7 @@ class Session(object):
 
       # get user
       self.users = Users()
-      results = self.users.getUsers({'email': email})
+      results = self.users.getUsers({'email': email, 'status_id': self.users.ACTIVE_STATUS})
       if not results or not sha256_crypt.verify(password, results[0].password):
          self.logger.info('Login Fail: %s' %  email)
          raise SessionErrorLoginFail('Incorrect Email or Password')

@@ -14,6 +14,8 @@ class UserError(Exception): pass
 
 class Users(DataTable):
 
+    ACTIVE_STATUS = 10
+
     def __init__(self):
         DataTable.__init__(self, db.getInstance(), 'users')
 
