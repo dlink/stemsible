@@ -29,6 +29,12 @@ group by
    m.id
 ;
 
+-- Add full_text index column
+alter table messages_flat_new
+   add column FTS_DOC_ID bigint unsigned auto_increment not null primary key
+   first
+;
+
 alter table messages_flat_new add fulltext (text);
 
 drop table if exists messages_flat;
