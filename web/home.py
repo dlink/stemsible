@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from copy import copy
+
 from vlib.utils import format_date, valid_email, lazyproperty
 from vlib import logger
 from vweb.html import *
@@ -111,6 +113,11 @@ class Login(Base):
         try:
             Registration().add(user_data, user_school_data)
         except Exception, e:
+            user_data2 = copy(user_data)
+            user_data2['password'] = 'password-removed'
+            self.logger.error('Unable to register user. user_data: %s; '
+                              'school_data: %s; Error (100): %s'
+                              % (user_data2, user_school_data, e))
             self.error_msg = 'Oops, there was a problem - Error Code 100'
             return
 
