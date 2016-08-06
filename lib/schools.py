@@ -3,7 +3,7 @@ from datetime import datetime
 
 from vlib import db
 from vlib.datatable import DataTable
-
+from vlib import conf
 from record import Record
 
 UNKNOWN_ADDRESS_ID = 1
@@ -15,6 +15,7 @@ class Schools(DataTable):
 
     def __init__(self):
         DataTable.__init__(self, db.getInstance(), 'schools')
+        self.conf = conf.getInstance()
 
     def getSchools(self, filters):
         '''Given a filter
@@ -35,6 +36,17 @@ class Schools(DataTable):
         id = self.insertRow(data)
         return School(id).data
 
+    def genTypeAheadData(self):
+        '''Generate the schools Json Data used by registration
+           typeahead buffer
+        '''
+        datafile = '%s/web/data/schools.json' % self.conf.basedir
+
+        sql = 'select name from schools order by name'
+        data = [str(s['name']) for s in self.db.query(sql)]
+        open(datafile, 'w').write(str(data) + '\n')
+        return '%s schools updated' % len(data)
+
 class School(Record):
     '''Preside over a single School'''
 
@@ -44,3 +56,12 @@ class School(Record):
 
     def _loadAdditionalData(self):
         pass
+
+if __name__ == '__main__':
+    import sys
+
+    if len(sys.argv) < 2 or sys.argv[1] != 'gen_typeahead_data':
+        print 'schools.py gen_typeahead_data'
+        sys.exit(1)
+
+    print Schools().genTypeAheadData()
