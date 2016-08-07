@@ -83,7 +83,7 @@ class Main(Base):
                 tag_buttons += mk_mock_button(tag)
 
         table = HtmlTable(class_='table borderless')
-        table.addHeader(['Trending Tags'])
+        table.addHeader(['Trending Topics'])
         table.addRow([tag_buttons])
         return table.getTable()
 
