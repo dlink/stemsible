@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 
 from datetime import datetime
 
@@ -36,7 +37,7 @@ class Schools(DataTable):
         id = self.insertRow(data)
         return School(id).data
 
-    def genTypeAheadData(self):
+    def genJson(self):
         '''Generate the schools Json Data used by registration
            typeahead buffer
         '''
@@ -60,8 +61,9 @@ class School(Record):
 if __name__ == '__main__':
     import sys
 
-    if len(sys.argv) < 2 or sys.argv[1] != 'gen_typeahead_data':
-        print 'schools.py gen_typeahead_data'
+    CMD = 'gen_json'
+    if len(sys.argv) < 2 or sys.argv[1] != CMD:
+        print 'schools.py %s' % CMD
         sys.exit(1)
 
-    print Schools().genTypeAheadData()
+    print Schools().genJson()
