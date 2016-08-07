@@ -51,7 +51,7 @@ class Main(Base):
 
         school_header = p('Schools', id='school-header')
 
-        schools = [s['school'] for s in self.session.user.schools]
+        schools = set([s['school'] for s in self.session.user.schools])
         links = ''
         for school in schools:
             links += li(mk_link(school), class_='cursor-pointer')
