@@ -45,20 +45,19 @@ class Main(Base):
         return form(o, name='form1', method='POST')
 
     def _getSchoolPanel(self):
-        schools = ['Creightons Corner Elementary',
-                   'Loudoun County Public Schools']
-        table = HtmlTable(class_='table borderless truncate')
-        table.addHeader(['School & County'])
-        for school in schools:
-            table.addRow([li(school)])
+        def mk_link(name):
+            name2 = name.replace("'", "\\\'")
+            return p(name, onclick="javascript:search('%s')" % name2)
 
-        groups = ['CCE PTA', 'CCE Garden Committee', 'LCPS Math Olympiad']
-        table2 = HtmlTable(class_='table borderless truncate')
-        table2.addHeader(['Groups'])
-        for group in groups:
-            table2.addRow([li(group)])
-        return div(p('') + table.getTable() + table2.getTable(),
-                   id='school-panel')
+        school_header = p('Schools', id='school-header')
+
+        schools = [s['school'] for s in self.session.user.schools]
+        links = ''
+        for school in schools:
+            links += li(mk_link(school), class_='cursor-pointer')
+        school_links = ul(links)
+
+        return div(school_header + school_links, id='school-panel')
 
     def _getTagsPanel(self):
         def mk_button(tag, class_=''):
@@ -87,9 +86,10 @@ class Main(Base):
         table.addRow([tag_buttons])
         return table.getTable()
 
-def tag_button(tag):
+def tag_button(tag, class_=''):
     return input(value=tag, type='button',
-                 class_='btn btn-default btn-xs disabled')
+                 class_='btn btn-default btn-xs',
+                 onclick="javascript: search('%s')" % tag)
 
 if __name__ == '__main__':
     Main().go()

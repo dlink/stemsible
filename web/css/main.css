@@ -20,3 +20,6 @@ DIV {
 .not-visible {
     visibility: hidden;
 }
+.cursor-pointer {
+    cursor: pointer;
+}

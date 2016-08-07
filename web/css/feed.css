@@ -64,10 +64,6 @@
 .inactive-text {
     color: grey;
 }
-.cursor-pointer {
-    cursor: pointer;
-}
-
 .errorMsg {
     // background-color: #EAC117; // golden brown;
     background-color: lightyellow;
@@ -80,13 +76,27 @@
 
 #school-panel {
     color: gray;
-    margin: 0 0 0 85px;
+    padding: 20px 10px;
 }
 
-#school-panel td {
-    font-size: 80%;
+.rightPanel {
+    padding-top: 16px;
 }
 
+.rightPanel h3 {
+    margin-left: 10px;
+}
+
+#school-panel #school-header {
+    color: black;
+    font-weight: bold;
+}
+#school-panel ul {
+    padding-left: 16px;
+}
+#school-panel li {
+    font-size: 12px;
+}
 .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
     border: none;
 }

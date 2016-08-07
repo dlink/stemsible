@@ -74,6 +74,9 @@ class Messages(DataTable):
         return self.getUserMessages(user_id, type='my')
 
     def getSearchMessages(self, search):
+        # deal with apostrophes (')
+        search = search.replace("'", "\\'")
+
         # searchq will be like: '+mic* +jagger*'
         search = re.sub('[+\-><\(\)~*\"@]', ' ', search)
         searchq = ' '.join(['+%s*' % n for n in search.strip().split(' ')])
