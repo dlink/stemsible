@@ -44,9 +44,11 @@ class Schools(DataTable):
         datafile = '%s/web/data/schools.json' % self.conf.basedir
 
         sql = 'select name from schools order by name'
-        data = [str(s['name']) for s in self.db.query(sql)]
-        open(datafile, 'w').write(str(data) + '\n')
-        return '%s schools updated' % len(data)
+        names = [s['name'] for s in self.db.query(sql)]
+        names_str = ",".join(['"%s"' % n for n in names])
+        json = '[' + names_str + ']\n'
+        open(datafile, 'w').write(json)
+        return '%s schools updated' % len(names)
 
 class School(Record):
     '''Preside over a single School'''
