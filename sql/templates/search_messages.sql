@@ -24,5 +24,6 @@ where
   match(mf.text) against ('<search>' in boolean mode)
 
 order by
-  match(mf.text) against ('<search>' in boolean mode) desc
+  -- match(mf.text) against ('<search>' in boolean mode) desc
+  m.id desc
 ;
