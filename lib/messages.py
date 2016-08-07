@@ -3,6 +3,7 @@ import re
 
 from vlib import db
 from vlib import conf
+from vlib import logger
 from vlib.datatable import DataTable
 from vlib.utils import lazyproperty
 
@@ -12,6 +13,10 @@ from users import User
 from jinja2.utils import urlize
 
 class Messages(DataTable):
+
+    @lazyproperty
+    def logger(self):
+        return logger.getLogger('Messages')
 
     def __init__(self):
         self.db = db.getInstance()
@@ -89,8 +94,15 @@ class Messages(DataTable):
             message = Message(id)
             results = message.data
             results['user'] = message.user.data
+
+            text = message.data['text']
+            text = text if len(text) < 40 else text[0:40] + ' ...'
+            self.logger.info('%s: new message: %s, %s'
+                             % (results['user']['email'], id, text))
             return results
+
         except Exception, e:
+            self.logger.error("new message failed: %s: %s" % (data, e))
             return {'error': str(e),
                     'data': str(data)}
 
