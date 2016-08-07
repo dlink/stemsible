@@ -14,6 +14,7 @@ class Main(Base):
     def __init__(self):
         Base.__init__(self)
         self.style_sheets.append('css/feed.css')
+        self.javascript_src.extend(['js/tags.js'])
 
         self.feed = Feed(self)
         self.debug_cgi = 0
@@ -60,14 +61,26 @@ class Main(Base):
                    id='school-panel')
 
     def _getTagsPanel(self):
-        def mkbutton(tag):
+        def mk_button(tag, class_=''):
+            return input(value=tag, type='button',
+                         class_='btn btn-default btn-xs',
+                         onclick="javascript: search('%s')" % tag)
+        def mk_mock_button(tag, class_=''):
+            class_ += ' btn btn-default btn-xs'
             return input(value=tag, type='button',
                          class_='btn btn-default btn-xs disabled')
 
-        tags = ['SAT', 'Snow Days', 'Special Needs', 'Basketball', 'Economics',
-                'Cafeteria', 'ESL', 'AP Latin', 'Programming', 'Movies',
-                'Field Trips']
-        tag_buttons = ''.join([mkbutton(t) for t in tags])
+        tags = ['Saxophone', 'SAT', 'Snow Days', 'Special Needs', 'Basketball',
+                'Economics', 'Cafeteria', 'ESL', 'AP Latin', 'Programming',
+                'Movies', 'Field Trips']
+        real_tags = ['Saxophone']
+
+        tag_buttons = ''
+        for tag in tags:
+            if tag in real_tags:
+                tag_buttons += mk_button(tag)
+            else:
+                tag_buttons += mk_mock_button(tag)
 
         table = HtmlTable(class_='table borderless')
         table.addHeader(['Trending Tags'])
