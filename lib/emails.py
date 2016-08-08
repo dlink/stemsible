@@ -27,9 +27,10 @@ class Emails(object):
                           username=self.config.emails.username,
                           password=self.config.emails.password)
 
-    def send_email(self, to, subject, body):
-        message = Message(subject=subject, body=body,
-                          to=to, fromaddr=self.config.emails.username)
+    def send_email(self, to, subject, body, html=None):
+        message = Message(subject=subject, body=body, html=html,
+                          to=to, fromaddr=(self.config.emails.name,
+                                           self.config.emails.username))
         try:
             self.gmail.send(message)
         except SenderError as e:
@@ -44,7 +45,10 @@ class Emails(object):
         user = user[0]
         token = self.serializer.dumps(email)
         url = 'http://{}/verify.py?t={}'.format(self.config.baseurl, token)
-        self.send_email(email, 'Please verify your email', url)
+        path = '%s/lib/emails' % self.config.basedir
+        body = open('%s/verification.txt' % path).read() % url
+        html = open('%s/verification.html' % path).read() % url
+        self.send_email(email, 'Please verify your email', body, html=html)
 
     def verify_email_token(self, token):
         try:
@@ -59,6 +63,6 @@ class Emails(object):
 
 
 if __name__ == '__main__':
-    # Emails().send_verification_email(sys.argv[1])
+    #Emails().send_verification_email(sys.argv[1])
     #print Emails().verify_email_token(sys.argv[1])
-    print Emails().send_email(sys.argv[1], 'test1', 'test body')
+    print Emails().send_email(sys.argv[1], 'test1', 'test body', html='<h3>test body</h3>')
