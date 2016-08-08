@@ -28,8 +28,8 @@ class Verify(Base):
 
     def _getBody(self):
         if self.verified:
-            return div('Your email is verified.')
-        return div('Something went wrong.')
+            return open('verification_success.html', 'r').read()
+        return open('verification_fail.html', 'r').read()
 
 
 if __name__ == '__main__':

@@ -1,0 +1,13 @@
+Welcome to Stemsible
+
+Your almost done ...
+
+Please click on the following link to complete your registration
+
+%s
+
+Thanks,
+
+The Stemsible Team
+
+- Empowering parents and teachers to improve our children's learning and growth outcomes.
