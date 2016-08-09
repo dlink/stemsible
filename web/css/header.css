@@ -1,19 +1,11 @@
+/* Header Styling */
+
 #header {
     background-color: #4090bf;
     color: white;
 }
-#header #company-name {
-    font-size: 35px;
-    cursor: pointer;
-}
-#header #header-login {
-   margin-bottom: 10px;
-}
-#header #header-login .btn {
-   padding: 0 10px;
-}
-#header #header-login form {
-   float: right;
+#header.homepage-header {
+    background-color: transparent;
 }
 #header #header-menu-triangle {
    padding-left: 40px;
@@ -67,4 +59,35 @@
 }
 .arrow-down:hover {
   border-top: 10px solid gold;
+}
+
+/* home page specific header */
+
+#header #company-name {
+    font-size: 35px;
+    cursor: pointer;
+    padding-left: 50px;
+}
+#header #company-name span.small {
+    font-size: 0.5em;
+}
+#header.homepage-header #company-name {
+    margin-top: 40px;
+}
+#header.homepage-header #company-name span{
+    background-color: white;
+    color: #5e5e5e; /* grey */
+    padding: 20px;
+    font-family: san-sarif;
+    font-size: 40px;
+    font-weight: bold;
+}
+#header #header-login {
+    margin-bottom: 10px;
+}
+#header #header-login .btn {
+   padding: 0 10px;
+}
+#header #header-login form {
+   float: right;
 }

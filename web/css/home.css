@@ -1,10 +1,21 @@
-#home-page #head1 {
-   margin-bottom: 0px;
+.container {
+   background-image: url("../images/boy.jpg");
+}
+#home-page #header1 {
+    margin-top: 70px;
+    margin-left: 40px;
+    margin-bottom: 20px;
 }
 #home-page #head2 {
    margin-top: 0px;
 }
-
+#home-page h2,h3,h4,p {
+    color: white;
+    margin-left: 20px;
+}
+#home-page #head2 small {
+    color: white;
+}
 /* expand width of school typeahead field */
 .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
    width: 100%;
