@@ -81,24 +81,23 @@ class Base(HtmlPage):
         return div(o, class_='container')
 
     def _getHeader(self):
-        if self.session.logged_in:
-            search_class='visible'
-            on_the_right = \
-                self._getProfileButton() + \
-                self._getHeaderMenu()
-        else:
-            search_class='not-visible'
-            on_the_right = self._getLogin()
-
         if self.conf.environment != 'prod':
             sys_ind = font(' (%s)' % self.conf.environment, size=-1)
         else:
             sys_ind = ''
 
-        return open('header-section.html', 'r').read() % (sys_ind,
-                                                          search_class,
-                                                          self.search or '',
-                                                          on_the_right)
+        if not self.session.logged_in:
+            on_the_right = self._getLogin()
+            return open('header1.html', 'r').read() % (
+                sys_ind,
+                on_the_right)
+        else:
+            on_the_right = self._getProfileButton() + \
+                           self._getHeaderMenu()
+            return open('header2.html', 'r').read() % (
+                sys_ind,
+                self.search or '',
+                on_the_right)
 
     def _getLogin(self):
         # email

@@ -5,7 +5,6 @@ from copy import copy
 from vlib.utils import format_date, valid_email, lazyproperty
 from vlib import logger
 from vweb.html import *
-from vweb.htmltable import HtmlTable
 
 from base import Base
 from grades import Grades
