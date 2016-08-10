@@ -16,6 +16,11 @@ class Base(HtmlPage):
         from users import Users
         return Users()
 
+    @lazyproperty
+    def emails(self):
+        from emails import Emails
+        return Emails()
+
     def __init__(self, name='Stemsible'):
         HtmlPage.__init__(self, name, include_form_tag=0,
                           #favicon_path='/favicon.ico')
@@ -38,6 +43,7 @@ class Base(HtmlPage):
                 'js/header.js',
                 ])
         self.debug_cgi = 0
+        self.reset_pw_msg = None
         self.require_login = True
         self.user_msg = ''
         self.search = None
@@ -64,10 +70,22 @@ class Base(HtmlPage):
                 self.session.login(self.form['email'].value,
                                    self.form['password'].value)
             except SessionErrorLoginFail, e:
-                self.user_msg += p(str(e), class_='right red')
+                self.user_msg += p(str(e), class_='right user-msg error')
 
         # close session
         self.session.close()
+
+        # reset password?
+        if 'forgot_password_submit' in self.form and 'email-fpw' in self.form:
+            email_fpw = self.form['email-fpw'].value
+            try:
+                self.emails.send_new_password(email_fpw)
+                self.reset_pw_msg = p('Okay. Your password was reset. '
+                                      'An email was sent to: %s' %
+                                      email_fpw, class_='user-msg')
+            except Exception, e:
+                self.reset_pw_msg =p("Sorry we couldn't reset password. %s" % e,
+                                     id='pw-reset-msg', class_='user-msg error')
 
         # need to be logged in?
         if self.require_login and not self.session.logged_in:
@@ -86,8 +104,11 @@ class Base(HtmlPage):
         else:
             sys_ind = ''
 
+
         if not self.session.logged_in:
-            on_the_right = self._getLogin()
+            on_the_right = self._getLogin() + \
+                           self._getForgotPW() + \
+                           self._getPasswordReset()
             return open('header1.html', 'r').read() % (
                 sys_ind,
                 on_the_right)
@@ -98,6 +119,25 @@ class Base(HtmlPage):
                 sys_ind,
                 self.search or '',
                 on_the_right)
+
+    def _getForgotPassword(self):
+        #email
+        email_label = label('Email',
+                            for_='email-input')
+        email_field = input(type='email',
+                            name='email',
+                            class_='form-control input-sm',
+                            id='email-input',
+                            placeholder="Email")
+        email = div(email_label + email_field, class_='form-group')
+
+        button = input(type='submit',
+                       name='forgot_password_submit',
+                       class_='btn btn-default btn-sm',
+                       value='Forgot_password')
+
+        return form(email + button, class_='form-inline',
+                    action='/home.py')
 
     def _getLogin(self):
         # email
@@ -125,9 +165,43 @@ class Base(HtmlPage):
                        class_='btn btn-default btn-sm',
                        value='Login')
 
-        return form(email + password + button, class_='form-inline',
+        return form(email + password + button,
+                    class_='form-inline',
                     action='/home.py')
 
+    def _getForgotPW(self):
+        # forgot password
+        link = p('Forgot Password?', id='forgotpw-link', class_='clear')
+
+        # header
+        header = h3('Forgot Password')
+
+        # text
+        text = p("No problem. Enter your email and we'll reset your password")
+
+        #email
+        email_label = ''#label('Email',
+                        #    for_='email-input')
+        email_field = input(type='email',
+                            name='email-fpw',
+                            class_='form-control',
+                            id='email-input',
+                            placeholder="Email")
+
+        button = input(type='submit',
+                       name='forgot_password_submit',
+                       class_='btn btn-default btn-sm',
+                       value='Reset Password')
+
+        fields = div(header + text + email_label + email_field + button,
+                     class_='form-group', id='forgotpw-panel')
+        forgotPWform = form(fields, class_='form-inline', action='/home.py')
+
+        return link + div(forgotPWform, id='forgotpw')
+
+    def _getPasswordReset(self):
+        return self.reset_pw_msg if self.reset_pw_msg else ''
+    
     def _getHeaderMenu(self):
 
         # menu triangle

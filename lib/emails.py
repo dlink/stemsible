@@ -1,3 +1,5 @@
+from passlib.hash import sha256_crypt
+
 import sys
 from vlib import conf
 from vlib import db
@@ -7,8 +9,19 @@ from sender import Mail, Message, SenderError
 from users import Users
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadData
+from passlib.utils import generate_password
 
 USER_STATUS_ACTIVE = 10
+forgot_password_text = """
+Hello,
+
+Your new password is: {}
+
+Thanks,
+Stemsible Team
+"""
+
+class EmailError(Exception): pass
 
 class Emails(object):
 
@@ -61,8 +74,30 @@ class Emails(object):
         except BadData:
             return False
 
+    def send_new_password(self, email):
+        user = Users().getUsers({'email': email})
+        if not user:
+            raise EmailError('Email %s not on file' % email)
+        password = generate_password(size=10)
+        user = user[0]
+        self.db.startTransaction()
+        try:
+            encrypt_password = sha256_crypt.encrypt(password)
+            user = Users().update({'password': encrypt_password}, email)
+            self.db.commit()
+        except Exception, e:
+            emsg = \
+                'Unable to change user password: ' \
+                'Error: %s' \
+                % (e)
+            self.logger.error(emsg)
+            self.db.rollback()
+            raise
+        self.send_email(email,'Your stemsible password',
+                        forgot_password_text.format(password))
 
 if __name__ == '__main__':
-    #Emails().send_verification_email(sys.argv[1])
+    # Emails().send_verification_email(sys.argv[1])
     #print Emails().verify_email_token(sys.argv[1])
-    print Emails().send_email(sys.argv[1], 'test1', 'test body', html='<h3>test body</h3>')
+    # print Emails().send_email(sys.argv[1], 'test1', 'test body')
+    print Emails().send_new_password(sys.argv[1])
