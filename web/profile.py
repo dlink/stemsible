@@ -78,6 +78,7 @@ class Profile(Base):
         left = \
             self._getGeneralInfo() + \
             self._getUserReachInfo() + \
+            self._getUserReachInfo2() + \
             self._getFollowingInfo()
 
         return open('profile-section.html', 'r').read() % (left, right)
@@ -134,6 +135,26 @@ class Profile(Base):
         for f in self.user.following:
             for s in f.schools:
                 name = s['school']
+                if name not in schools:
+                    schools[name] = 0
+                schools[name] += 1
+
+        o = ''
+        for name in sorted(schools.keys()):
+            name2 = name.replace("'", "\\\'")
+            name_link = span(name, onclick="javascript:search('%s')" % name2,
+                             class_='cursor-pointer')
+            o += p('%s - %s' % (name_link, schools[name]))
+
+        return header + o
+
+    def _getUserReachInfo2(self):
+        header = h3('Schools Reached-2')
+
+        schools = {}
+        for f in self.user.following:
+            for s in f.schools:
+                name = s['district']
                 if name not in schools:
                     schools[name] = 0
                 schools[name] += 1
