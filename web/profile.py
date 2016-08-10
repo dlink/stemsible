@@ -30,6 +30,7 @@ class Profile(Base):
         self.style_sheets.extend(['css/profile.css', 'css/feed.css'])
         self.style_sheets.extend(self.schoolInfo.getCssFile())
         self.javascript_src.extend(['js/signup.js'])
+        self.javascript_src.extend(['js/tags.js'])
         self.javascript_src.extend(self.schoolInfo.getJsFile())
         self.cannot_read_profile = 0
         self.debug_cgi = 0
@@ -76,6 +77,7 @@ class Profile(Base):
 
         left = \
             self._getGeneralInfo() + \
+            self._getUserReachInfo() + \
             self._getFollowingInfo()
 
         return open('profile-section.html', 'r').read() % (left, right)
@@ -124,17 +126,30 @@ class Profile(Base):
 
         return header + image + table.getTable() + table2.getTable()
 
+
+    def _getUserReachInfo(self):
+        header = h3('Schools Reached')
+
+        schools = {}
+        for f in self.user.following:
+            for s in f.schools:
+                name = s['school']
+                if name not in schools:
+                    schools[name] = 0
+                schools[name] += 1
+
+        o = ''
+        for name in sorted(schools.keys()):
+            name2 = name.replace("'", "\\\'")
+            name_link = span(name, onclick="javascript:search('%s')" % name2,
+                             class_='cursor-pointer')
+            o += p('%s - %s' % (name_link, schools[name]))
+
+        return header + o
+
     def _getFollowingInfo(self):
         header = h3('Following')
-        '''
-        table = HtmlTable(class_='profileTable')
-        table.addHeader(['Posts', 'Followers', 'Following'])
-        table.addRow([str(self.feed.num_messages),
-                      str(len(self.user.followers)),
-                      str(len(self.user.following))])
-        return header + table.getTable()
 
-        '''
         table = HtmlTable(class_='profileTable')
         data = []
         followings = []
