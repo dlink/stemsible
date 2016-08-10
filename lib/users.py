@@ -38,6 +38,11 @@ class Users(DataTable):
         id = self.insertRow(data)
         return User(id)
 
+    def update(self, data, email):
+        user = self.getUsers({'email': email})
+        rows = self.updateRows(data)
+        return rows
+        
 class User(Record):
     '''Preside over a single User'''
 
