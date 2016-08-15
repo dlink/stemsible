@@ -2,11 +2,13 @@ TABLE.profileTable tr td {
    padding: 5px;
 }
 TABLE.profileTable tr th {
-   padding: 5px;
+   padding: 8px;
+   background-color: lightgrey;
+   border: solid 1px #e8e8e8;
 }
 
 .profileRowHeader {
-   font-weight: bold;
+    font-weight: bold;
 }
 .smaller-text {
     font-size: smaller;

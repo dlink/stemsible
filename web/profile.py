@@ -121,11 +121,25 @@ class Profile(Base):
         table.setColVAlign(1, 'top')
 
         table2 = HtmlTable(class_='profileTable')
-        table2.addHeader(['Posts', 'Followers', 'Following'])
-        table2.addRow([str(self.feed.num_messages),
-                      str(len(self.user.followers)),
-                      str(len(self.user.following))])
+        table2.addHeader(['Posts', 'Member</br>Reach', 'School<br/>Reach',
+                          'Following'])
 
+        # school reach
+        school_reach = []
+        for f in self.user.followers:
+            for s in f.schools:
+                school_reach.append(s['school'])
+        school_reach = set(school_reach)
+
+        table2.addRow([str(self.feed.num_messages),
+                       str(len(self.user.followers)),
+                       str(len(school_reach)),
+                       str(len(self.user.following))])
+        table2.setRowVAlign(1, 'bottom')
+        table2.setCellAlign(2, 1, 'center')
+        table2.setCellAlign(2, 2, 'center')
+        table2.setCellAlign(2, 3, 'center')
+        table2.setCellAlign(2, 4, 'center')
         return header + image + table.getTable() + table2.getTable()
 
 
