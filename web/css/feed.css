@@ -11,9 +11,6 @@
     float: left;
     margin: 0 15px 0 0;
 }
-.messageCard img {
-    width: 70px;
-}
 .messageCard .usernameAndDate {
     float: left;
     font-family: Arial;
