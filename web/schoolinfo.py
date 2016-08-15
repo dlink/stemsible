@@ -1,10 +1,11 @@
-
 from vweb.htmltable import HtmlTable
 from vweb.html import *
 
 from grades import Grades
-from schoolrelationships import SchoolRelationships
 from registration import Registration
+from schoolrelationships import SchoolRelationships
+from utils import js_arg
+
 
 class SchoolInfo(object):
 
@@ -78,7 +79,7 @@ class SchoolInfo(object):
                 school_info = '%s - %s - %s Grade' % tuple(row)
                 row.append(a('X', class_ = 'delete',
                              onclick="javascript:deleteSchool(%s, '%s');"
-                             % (s['id'], school_info)))
+                             % (s['id'], js_arg(school_info))))
             table.addRow(row)
             table.setColClass(3, 'right-center')
 
