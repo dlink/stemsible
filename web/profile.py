@@ -93,7 +93,7 @@ class Profile(Base):
 
     def _getGeneralInfo(self):
         header = h3('Profile')
-        image_ = div(img(width='200px', src=getUserImage(self.user.id)))
+        image_ = div(img(width='150px', src=getUserImage(self.user.id)))
 
         if self.user.id == self.session.user.id:
             file = input(type='file', name='filename', accept='image/*',
