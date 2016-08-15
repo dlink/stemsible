@@ -77,9 +77,10 @@ class Profile(Base):
 
         left = \
             self._getGeneralInfo() + \
-            self._getUserReachInfo() + \
-            self._getUserReachInfo2() + \
-            self._getFollowingInfo()
+            self._getUserReachInfo2()
+
+            #self._getUserReachInfo() + \
+            #self._getFollowingInfo()
 
         return open('profile-section.html', 'r').read() % (left, right)
 
@@ -128,6 +129,7 @@ class Profile(Base):
         return header + image + table.getTable() + table2.getTable()
 
 
+    '''
     def _getUserReachInfo(self):
         header = h3('Schools Reached')
 
@@ -147,6 +149,7 @@ class Profile(Base):
             o += p('%s - %s' % (name_link, schools[name]))
 
         return header + o
+    '''
 
     def _getUserReachInfo2(self):
         header = h3('Schools Reached-2')
