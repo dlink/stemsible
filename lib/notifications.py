@@ -7,6 +7,8 @@ from jinja2 import Template
 from datetime import datetime, timedelta
 import json
 
+from images import getUserImage
+
 NUM_DAYS_BACK = 1
 
 class Notifications(object):
@@ -18,37 +20,43 @@ class Notifications(object):
         self.messages = Messages()
         self.email = Emails()
 
-    def emailNotification(self):
-        '''Send email notifications. Collect stats of last 24 hours and
-           send email.
+    def emailNotification(self, user=None):
+        '''Given a user as a User Object, Send them an email notifications.
+           Collect stats of last 24 hours and send email.
+
+           Send to all users if no user is passed in
         '''
-        print 'emailNotifications()'
+        # one or all users?
+        if not user:
+            users = Users().getUsers('1=1')
+        else:
+            users = [user]
+
         time_since = datetime.now() - timedelta(NUM_DAYS_BACK)
-        users = self.users.getTable()
         for user in users:
-            print 'user:'
-            total_posts = self._getInterestingPosts(user_id=user['id'],
+            print 'user:', user
+            total_posts = self._getInterestingPosts(user_id=user.id,
                                                     created_after=time_since)
-            total_comments = self._getTotalComments(user_id=user['id'],
+            total_comments = self._getTotalComments(user_id=user.id,
                                                     created_after=time_since)
-            total_likes = self._getTotalLikes(user_id=user['id'],
+            total_likes = self._getTotalLikes(user_id=user.id,
                                               created_after=time_since)
             html = open('email.html').read()
             posts = []
             for p in total_posts:
-                u = list(filter(lambda x: x['id']==p['user_id'], users))[0]
                 posts.append({
                     'timestamp': p['last_updated'],
                     'text': p['text'],
-                    'name': u['first_name'] + " " + u['last_name']
+                    'name': p['author'],
+                    'profile_image': getUserImage(p['user_id'])
                 })
             html = Template(html)
             html = html.render(likes=total_likes, comments=total_comments,
                                posts=posts, plength=len(posts))
-            self.email.send_email(to=user['email'],
-                                  subject='While you were away',
-                                  body="",
-                                  html=html)
+            self.email.send_email(to=user.email,
+                                      subject='While you were away',
+                                      body="",
+                                      html=html)
 
     def _getTotalLikes(self, user_id, created_after):
         '''Get total likes after 'created_after' on all the posts of a user.
@@ -65,7 +73,8 @@ class Notifications(object):
         Given a user_id of type integer and a created_after of type datetime,
         return the total number of comments as integer.
         '''
-        sql_file = '%s/sql/templates/email_total_comments.sql' % self.conf.basedir
+        sql_file = '%s/sql/templates/email_total_comments.sql' \
+                   % self.conf.basedir
         sql = open(sql_file, 'r').read()
         resp = self.db.query(sql, params=(user_id, created_after))
         return resp[0]['total_comments']
@@ -79,3 +88,9 @@ class Notifications(object):
         sql = open(sql_file, 'r').read()
         resp = self.db.query(sql)
         return resp
+
+if __name__ == '__main__':
+    import sys
+    email = sys.argv[1]
+    user = Users().getUsers({'email': email})[0]
+    Notifications().emailNotification(user)
