@@ -152,7 +152,7 @@ class Profile(Base):
     '''
 
     def _getUserReachInfo2(self):
-        header = h3('Schools Reached-2')
+        header = h3('Schools Reached')
 
         schools = {}
         for f in self.user.following:
