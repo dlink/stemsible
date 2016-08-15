@@ -6,8 +6,8 @@ function addComment() {
 
 function toggleComments(comments_id) {
     if ($('#'+comments_id).css('display') == 'none') {
-	$('#'+comments_id).show();
+        $('#'+comments_id).show();
     } else {
-	$('#'+comments_id).hide();
+        $('#'+comments_id).hide();
     }
 }

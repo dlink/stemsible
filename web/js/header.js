@@ -1,9 +1,9 @@
 function toggleHeaderMenu() {
     if ($('#header-menu').css('display') == 'none') {
-	$('#header-menu').show();
+        $('#header-menu').show();
     } else {
-	$('#header-menu').hide();
-    }	
+        $('#header-menu').hide();
+    }   
 }
 function logout() {
     $("input[name=logout]").val('Logout');

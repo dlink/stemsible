@@ -8,9 +8,9 @@ function toggleLike(like_id) {
 
 function toggleLikers(likes_id) {
     if ($('#'+likes_id).css('display') == 'none') {
-	showLikers(likes_id);
+        showLikers(likes_id);
     } else {
-	hideLikers(likes_id);
+        hideLikers(likes_id);
     }
 }
 
