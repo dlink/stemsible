@@ -46,6 +46,9 @@ class User(Record):
         self.conf = conf.getInstance()
         self._loadAdditionalData()
 
+    def __repr__(self):
+        return '<user.User object: %s, %s>' % (self.id, self.email)
+
     def _loadAdditionalData(self):
         '''Add fullnames to self and to self.data
         '''
