@@ -146,6 +146,7 @@ class Base(HtmlPage):
         options = [['About Stemsible', 'about.py'],
                    ['Help', 'help.py'],
                    ['Terms and Conditions', 'terms.py'],
+                   ['Privacy Policy', 'privacy.py'],
                    ['Logout', 'logout']]
         o = ''
         for option, url in options:
