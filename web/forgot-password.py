@@ -11,6 +11,7 @@ class Forgot_password(Base):
 
     def __init__(self):
         Base.__init__(self)
+        self.require_login = False
 
     def _getBody(self):
         return open('forgot.html', 'r').read()

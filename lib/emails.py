@@ -98,4 +98,4 @@ if __name__ == '__main__':
     # Emails().send_verification_email(sys.argv[1])
     #print Emails().verify_email_token(sys.argv[1])
     # print Emails().send_email(sys.argv[1], 'test1', 'test body')
-    print Emails().send_new_password('varunshah1106@gmail.com')
+    print Emails().send_new_password(sys.argv[1])
