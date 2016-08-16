@@ -69,10 +69,14 @@ class Main(Base):
             return input(value=tag, type='button',
                          class_='btn btn-default btn-xs disabled')
 
-        tags = ['Saxophone', 'SAT', 'Snow Days', 'Special Needs', 'Basketball',
+        tags = ['Saxophone', 'SAT', 'Devices', 'PTA', 'Transportation', 'Honors Class',
+                'Olympics', 'Health', 'Programming', 'Volunteer', 'Soccer', 'Supplies',
+                'Snow Days', 'Special Needs', 'Basketball',
                 'Economics', 'Cafeteria', 'ESL', 'AP Latin', 'Programming',
                 'Movies', 'Field Trips']
-        real_tags = ['Saxophone']
+        real_tags = ['Saxophone', 'SAT', 'Devices', 'PTA', 'Transportation',
+                     'Honors Class', 'Olympics', 'Health', 'Programming', 'Volunteer',
+                     'Soccer', 'Supplies']
 
         tag_buttons = ''
         for tag in tags:
