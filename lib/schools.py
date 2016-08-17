@@ -47,7 +47,7 @@ class Schools(DataTable):
         names = [s['name'] for s in self.db.query(sql)]
         names_str = ",".join(['"%s"' % n for n in names])
         json = '[' + names_str + ']\n'
-        open(datafile, 'w').write(json)
+        open(datafile, 'w').write(json.encode('utf-8'))
         return '%s schools updated' % len(names)
 
 class School(Record):
