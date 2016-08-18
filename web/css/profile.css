@@ -33,3 +33,7 @@ TABLE.profileTable tr th {
     cursor: inherit;
     display: block;
 }
+
+#schoolsReached .schoolName {
+    color: grey;
+}

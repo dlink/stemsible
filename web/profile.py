@@ -77,9 +77,9 @@ class Profile(Base):
 
         left = \
             self._getGeneralInfo() + \
-            self._getUserReachInfo2()
+            self._getUserReachInfo()
 
-            #self._getUserReachInfo() + \
+            #self._getUserReachInfo2()
             #self._getFollowingInfo()
 
         return open('profile-section.html', 'r').read() % (left, right)
@@ -143,7 +143,6 @@ class Profile(Base):
         return header + image + table.getTable() + table2.getTable()
 
 
-    '''
     def _getUserReachInfo(self):
         header = h3('Schools Reached')
 
@@ -151,6 +150,8 @@ class Profile(Base):
         for f in self.user.following:
             for s in f.schools:
                 name = s['school']
+                #if s['state']:
+                #    name += ', ' + s['state']
                 if name not in schools:
                     schools[name] = 0
                 schools[name] += 1
@@ -160,11 +161,12 @@ class Profile(Base):
             name2 = name.replace("'", "\\\'")
             name_link = span(name, onclick="javascript:search('%s')" % name2,
                              class_='cursor-pointer')
-            o += p('%s - %s' % (name_link, schools[name]))
+            o += p('%s - %s' % (name_link, schools[name]),
+                   class_='schoolName')
 
-        return header + o
+        return div(header + o, id='schoolsReached')
+
     '''
-
     def _getUserReachInfo2(self):
         header = h3('Schools Reached')
 
@@ -184,6 +186,7 @@ class Profile(Base):
             o += p('%s - %s' % (name_link, schools[name]))
 
         return header + o
+    '''
 
     def _getFollowingInfo(self):
         header = h3('Following')
