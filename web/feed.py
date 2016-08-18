@@ -92,7 +92,7 @@ class Feed(object):
     def _getMessageCard(self, message, search=None):
         message = odict(message)
         image = getUserImage(message.user_id)
-        user_icon = div(img(src=image, width='100px',
+        user_icon = div(img(src=image, width='70px',
                             class_='img-thumbnail'),
                         class_='userIcon')
         username = div(message.author,  class_='messageAuthor')
