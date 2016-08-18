@@ -34,6 +34,11 @@ TABLE.profileTable tr th {
     display: block;
 }
 
+#schoolsReached #schoolsReachedHeader {
+    color: black;
+    font-weight: bold;
+    margin-top: 20px;
+}
 #schoolsReached .schoolName {
     color: grey;
 }

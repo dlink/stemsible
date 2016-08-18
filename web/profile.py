@@ -140,11 +140,12 @@ class Profile(Base):
         table2.setCellAlign(2, 2, 'center')
         table2.setCellAlign(2, 3, 'center')
         table2.setCellAlign(2, 4, 'center')
+
         return header + image + table.getTable() + table2.getTable()
 
 
     def _getUserReachInfo(self):
-        header = h3('Schools Reached')
+        header = p('Schools Reached', id='schoolsReachedHeader')
 
         schools = {}
         for f in self.user.following:
