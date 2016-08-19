@@ -74,10 +74,8 @@
 }
 
 #school-panel {
-    color: gray;
     padding: 20px 10px;
 }
-
 .rightPanel {
     padding-top: 16px;
 }
@@ -95,6 +93,10 @@
 }
 #school-panel li {
     font-size: 12px;
+}
+#school-panel li:hover {
+    /* background-color: lightgrey; */
+    color: blue;
 }
 .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
     border: none;

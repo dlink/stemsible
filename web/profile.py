@@ -145,7 +145,7 @@ class Profile(Base):
 
 
     def _getUserReachInfo(self):
-        header = p('Schools Reached', id='schoolsReachedHeader')
+        header = p('Schools Reached', id='school-header')
 
         schools = {}
         for f in self.user.following:
@@ -162,10 +162,10 @@ class Profile(Base):
             name2 = name.replace("'", "\\\'")
             name_link = span(name, onclick="javascript:search('%s')" % name2,
                              class_='cursor-pointer')
-            o += p('%s - %s' % (name_link, schools[name]),
-                   class_='schoolName')
+            o += li(p('%s - %s' % (name_link, schools[name]),
+                      class_='schoolName'))
 
-        return div(header + o, id='schoolsReached')
+        return div(header + o, id='school-panel')
 
     '''
     def _getUserReachInfo2(self):
