@@ -69,14 +69,21 @@ class Main(Base):
             return input(value=tag, type='button',
                          class_='btn btn-default btn-xs disabled')
 
-        tags = ['Saxophone', 'SAT', 'Devices', 'PTA', 'Transportation', 'Honors Class',
+        tags = ['Music', 'SAT', 'Devices', 'PTA', 'Transportation', 'Honors Class',
                 'Olympics', 'Health', 'Programming', 'Volunteer', 'Soccer', 'Supplies',
-                'Snow Days', 'Special Needs', 'Basketball',
-                'Economics', 'Cafeteria', 'ESL', 'AP Latin', 'Programming',
-                'Movies', 'Field Trips']
-        real_tags = ['Saxophone', 'SAT', 'Devices', 'PTA', 'Transportation',
+                'Meals', 'Math', 'Futura', 'Health', 'Bullying', 'Kindergarten',
+                'Science', 'Spectrum', 'AOS','Safety', 'Beach', 'CommonCore',
+                'Economics', 'Cafeteria', 'ESL', 'AP Latin','IB', 'Field Trips',
+                'ACT', 'Movies', 'Parks', 'Technology', 'History', 'Geography',
+                'Engineering', 'Economics', 'Art', 'Literature', 'Geography', 'Drama',
+                'Football', 'Lacrosse', 'Basketball', 'Softball,' 'Drones', 'Halloween',
+                'Camping', 'Internship', 'Weather', 'Culture', 'Projects', 'Space', 
+                'SnowDays', 'SpecialNeeds' ]
+        real_tags = ['Music', 'SAT', 'Devices', 'PTA', 'Transportation',
                      'Honors Class', 'Olympics', 'Health', 'Programming', 'Volunteer',
-                     'Soccer', 'Supplies']
+                     'Soccer', 'Supplies', 'Meals', 'Math', 'Futura', 'Health', 
+                     'Bullying', 'Kindergarten','Science', 'Spectrum', 'AOS', 'Safety',
+                     'Beach', 'CommonCore']
 
         tag_buttons = ''
         for tag in tags:
