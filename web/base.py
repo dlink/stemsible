@@ -70,7 +70,7 @@ class Base(HtmlPage):
                 self.session.login(self.form['email'].value,
                                    self.form['password'].value)
             except SessionErrorLoginFail, e:
-                self.user_msg += p(str(e), class_='right red')
+                self.user_msg += p(str(e), class_='right user-msg error')
 
         # close session
         self.session.close()
@@ -82,11 +82,10 @@ class Base(HtmlPage):
                 self.emails.send_new_password(email_fpw)
                 self.reset_pw_msg = p('Okay. Your password was reset. '
                                       'An email was sent to: %s' %
-                                      email_fpw, id='pw-reset-msg')
+                                      email_fpw, class_='user-msg')
             except Exception, e:
-                self.reset_pw_msg = p("Sorry we couldn't reset password.  "
-                                      "%s" % e,
-                                      id='pw-reset-msg', class_='error')
+                self.reset_pw_msg =p("Sorry we couldn't reset password. %s" % e,
+                                     id='pw-reset-msg', class_='user_msg error')
 
         # need to be logged in?
         if self.require_login and not self.session.logged_in:
@@ -172,7 +171,7 @@ class Base(HtmlPage):
 
     def _getForgotPW(self):
         # forgot password
-        link = p('Forgot Password?', id='forgotpw-link')
+        link = p('Forgot Password?', id='forgotpw-link', class_='clear')
 
         # header
         header = h3('Forgot Password')
