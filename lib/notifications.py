@@ -3,6 +3,7 @@ from messages import Messages
 from emails import Emails
 
 from vlib import db, conf
+from vlib.utils import format_datetime
 from jinja2 import Template
 from datetime import datetime, timedelta
 import json
@@ -45,7 +46,7 @@ class Notifications(object):
             posts = []
             for p in total_posts:
                 posts.append({
-                    'timestamp': p['last_updated'],
+                    'created': format_datetime(p['last_updated']),
                     'text': ' '.join(p['text'].split(' ')[0:80]), # 80 words
                     'name': p['author'],
                     'profile_image': getUserImage(p['user_id'])

@@ -7,6 +7,7 @@ from
     messages m
     join users mu on m.user_id = mu.id
 where
+    m.reference_id is null and
     m.user_id != %s
 order by
     m.id desc
