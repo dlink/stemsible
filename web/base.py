@@ -121,6 +121,25 @@ class Base(HtmlPage):
                 self.search or '',
                 on_the_right)
 
+    def _getForgotPassword(self):
+        #email
+        email_label = label('Email',
+                            for_='email-input')
+        email_field = input(type='email',
+                            name='email',
+                            class_='form-control input-sm',
+                            id='email-input',
+                            placeholder="Email")
+        email = div(email_label + email_field, class_='form-group')
+
+        button = input(type='submit',
+                       name='forgot_password_submit',
+                       class_='btn btn-default btn-sm',
+                       value='Forgot_password')
+
+        return form(email + button, class_='form-inline',
+                    action='/home.py')
+
     def _getLogin(self):
         # email
         email_label = label('Email',

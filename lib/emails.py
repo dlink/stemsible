@@ -20,6 +20,7 @@ Your new password is: {}
 Thanks,
 Stemsible Team
 """
+
 class EmailError(Exception): pass
 
 class Emails(object):
