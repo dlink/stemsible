@@ -42,7 +42,7 @@ class Notifications(object):
                                                     created_after=time_since)
             total_likes = self._getTotalLikes(user_id=user.id,
                                               created_after=time_since)
-            html = open('email.html').read()
+            html = open('%s/lib/email.html' % self.conf.basedir).read()
             posts = []
             for p in total_posts:
                 posts.append({
