@@ -46,10 +46,11 @@ class Notifications(object):
             for p in total_posts:
                 posts.append({
                     'timestamp': p['last_updated'],
-                    'text': p['text'],
+                    'text': ' '.join(p['text'].split(' ')[0:80]), # 80 words
                     'name': p['author'],
                     'profile_image': getUserImage(p['user_id'])
                 })
+
             html = Template(html)
             html = html.render(likes=total_likes, comments=total_comments,
                                posts=posts, plength=len(posts))
@@ -86,7 +87,7 @@ class Notifications(object):
         # or created_after
         sql_file = '%s/sql/templates/email_posts.sql' % self.conf.basedir
         sql = open(sql_file, 'r').read()
-        resp = self.db.query(sql)
+        resp = self.db.query(sql, params=[user_id])
         return resp
 
 if __name__ == '__main__':

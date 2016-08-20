@@ -6,6 +6,8 @@ select
 from
     messages m
     join users mu on m.user_id = mu.id
+where
+    m.user_id != %s
 order by
     m.id desc
 limit
