@@ -20,6 +20,7 @@ Your new password is: {}
 Thanks,
 Stemsible Team
 """
+class EmailError(Exception): pass
 
 class Emails(object):
 
@@ -75,7 +76,7 @@ class Emails(object):
     def send_new_password(self, email):
         user = Users().getUsers({'email': email})
         if not user:
-            raise Exception('User not found')
+            raise EmailError('Email %s not on file' % email)
         password = generate_password(size=10)
         user = user[0]
         self.db.startTransaction()

@@ -19,4 +19,7 @@ $(document).ready(function() {
           return false;
       }
   });
+  $('#forgotpw-link').click(function(){
+      $('#forgotpw-panel').toggle();
+  });
 });

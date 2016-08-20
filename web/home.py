@@ -10,7 +10,6 @@ from base import Base
 from grades import Grades
 from registration import Registration
 from schoolinfo import SchoolInfo
-from emails import Emails
 
 USER_STATUS_PENDING = 8
 
@@ -27,7 +26,6 @@ class Login(Base):
     def __init__(self):
         Base.__init__(self)
         self.schoolInfo = SchoolInfo()
-        self.emails = Emails()
 
         self.style_sheets.extend(['css/home.css', 'css/signup.css'])
         self.javascript_src.extend(['js/signup.js'])
