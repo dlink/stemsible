@@ -13,13 +13,26 @@ export swc=$sw/css         ; alias swc='cd $swc'
 export swi=$sw/images      ; alias swi='cd $swi'
 export swj=$sw/js          ; alias swj='cd $swj'
 
+# stage
+export ass=/apps/stage_stemsible  ; alias ass='cd $ass'
+export assb=$ass/bin         ; alias assb='cd $assb'
+export assc=$ass/config      ; alias assc='cd $assc'
+export assl=$ass/lib         ; alias assl='cd $assl'
+export assls=$assl/sql       ; alias assls='cd $assls'
+export asss=$ass/sql         ; alias asss='cd $asss'
+export asst=$ass/tests       ; alias asst='cd $asst'
+export assw=$ass/web         ; alias assw='cd $assw'
+export asswc=$assw/css       ; alias asswc='cd $asswc'
+export asswi=$assw/images    ; alias asswi='cd $asswi'
+export asswj=$assw/js        ; alias asswj='cd $asswj'
+
 # prod
 export as=/apps/stemsible  ; alias as='cd $as'
 export asb=$as/bin         ; alias asb='cd $asb'
 export asc=$as/config      ; alias asc='cd $asc'
 export asl=$as/lib         ; alias asl='cd $asl'
 export asls=$asl/sql       ; alias asls='cd $asls'
-export ass=$as/sql         ; alias ass='cd $ass'
+#export ass=$as/sql         ; alias ass='cd $ass'
 export ast=$as/tests       ; alias ast='cd $ast'
 export asw=$as/web         ; alias asw='cd $asw'
 export aswc=$asw/css       ; alias aswc='cd $aswc'
@@ -32,6 +45,9 @@ export vls='/var/log/stemsible' ; alias vls='cd $vls'
 
 # dev db:
 alias dsdb='mysql -udev_stemsible -p$STEM_DEV_DBPASS -hlocalhost --database=dev_stemsible --local-infile=1'
+
+# stage db:
+alias ssdb='mysql -ustage_stemsible -p$STEM_STAGE_DBPASS -hlocalhost --database=stage_stemsible --local-infile=1'
 
 # prod db:
 alias psdb='mysql -ustemsible -p$STEM_DBPASS -hlocalhost --database=stemsible --local-infile=1'

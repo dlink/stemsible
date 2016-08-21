@@ -85,7 +85,7 @@ class Base(HtmlPage):
                                       email_fpw, class_='user-msg')
             except Exception, e:
                 self.reset_pw_msg =p("Sorry we couldn't reset password. %s" % e,
-                                     id='pw-reset-msg', class_='user_msg error')
+                                     id='pw-reset-msg', class_='user-msg error')
 
         # need to be logged in?
         if self.require_login and not self.session.logged_in:

@@ -1,0 +1,20 @@
+environment: stage
+baseurl: stage.stemsible.com
+basedir: /apps/stage_stemsible
+serverurl: localhost:5000
+
+database:
+   engine : mysql
+   db     : stage_stemsible
+   host   : localhost
+   user   : stage_stemsible
+   passwd : $STEM_STAGE_DBPASS
+   dictcursor: True
+
+sessions:
+   dir: /data/stemsible/stage-sessions
+
+emails:
+   name: Stage Stemsible
+   username: info@stemsible.com
+   password: $STEMSIBLE_EMAIL_PASS
