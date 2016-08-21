@@ -4,8 +4,6 @@ from vlib import conf
 from vweb.html import *
 
 from base import Base
-from emails import Emails
-
 
 class Verify(Base):
 
@@ -14,9 +12,11 @@ class Verify(Base):
 
     def __init__(self):
         Base.__init__(self)
+        #self.style_sheets.extend(['css/home.css'])
+
         self.conf = conf.getInstance()
+
         self.verified = False
-        self.emails = Emails()
 
         self.require_login = False
 
