@@ -17,9 +17,7 @@ class Base(HtmlPage):
         return Users()
 
     def __init__(self, name='Stemsible'):
-        HtmlPage.__init__(self, name, include_form_tag=0,
-                          #favicon_path='/favicon.ico')
-                      )
+        HtmlPage.__init__(self, name, include_form_tag=0)
         self.conf = conf.getInstance()
 
         self.style_sheets = [

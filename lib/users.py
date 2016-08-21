@@ -56,6 +56,10 @@ class User(Record):
         self.data['fullname'] = fullname
         self.__dict__.update({'fullname': fullname})
 
+    def update(self, field, value):
+        self.setFilters('id=%s' % self.id)
+        self.updateRows({field: value})
+
     @lazyproperty
     def following(self):
         '''Return a list of User Objects of those this user follows'''

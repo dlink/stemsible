@@ -33,3 +33,17 @@ TABLE.profileTable tr th {
     cursor: inherit;
     display: block;
 }
+#change-pw {
+    padding: 10px 0px 20px;
+    width: 275px;
+}
+#change-pw-fields {
+    padding: 10px 10px;
+    border: solid 1px grey;
+}
+#change-pw-form {
+    /* display: none; */
+}
+#change-pw .missing-value {
+   border-color: red;
+}
