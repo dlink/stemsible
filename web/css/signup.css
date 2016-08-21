@@ -1,12 +1,6 @@
 #sign_up .missing-value {
    border-color: red;
 }
-.user-message {
-    color: green;
-}
-.error-message {
-    color: red;
-}
 
 /*.tt-query {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);

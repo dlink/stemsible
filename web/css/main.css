@@ -23,3 +23,6 @@ DIV {
 .cursor-pointer {
     cursor: pointer;
 }
+.clear {
+    clear: both;
+}

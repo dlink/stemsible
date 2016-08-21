@@ -10,7 +10,6 @@ from base import Base
 from grades import Grades
 from registration import Registration
 from schoolinfo import SchoolInfo
-from emails import Emails
 
 USER_STATUS_PENDING = 8
 
@@ -27,7 +26,6 @@ class Login(Base):
     def __init__(self):
         Base.__init__(self)
         self.schoolInfo = SchoolInfo()
-        self.emails = Emails()
 
         self.style_sheets.extend(['css/home.css', 'css/signup.css'])
         self.javascript_src.extend(['js/signup.js'])
@@ -132,7 +130,7 @@ class Login(Base):
         # email verification sent
         self._clearFields()
         self.su_user_msg = 'Great! An email was sent to %s.  Please ' \
-                           'open it and click on the link it contains ' \
+                           'open it and click on the link ' \
                            'to complete registraion.' % email
 
     def _getBody(self):
@@ -223,9 +221,9 @@ class Login(Base):
     def _getSUUserMsg(self):
         o = ''
         if self.su_user_msg:
-            o += p(self.su_user_msg, class_='user-message')
+            o += p(self.su_user_msg, class_='user-msg')
         if self.error_msg:
-            o += p(self.error_msg, class_='error-message')
+            o += p(self.error_msg, class_='user-msg error')
         return o
 
     def _clearFields(self):

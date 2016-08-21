@@ -89,5 +89,35 @@
    padding: 0 10px;
 }
 #header #header-login form {
-   float: right;
+    clear: both;
+    float: right;
+}
+#header #forgotpw-link {
+    color: blue;
+}
+#header #forgotpw-panel {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    width: 500px;
+    background-color: white;
+    padding: 5px 15px 40px;
+    text-align: center;
+}
+#header #forgotpw p {
+    padding: 10px;
+    color: black;
+}
+#header #forgotpw h3 {
+    color: black;
+}
+.user-msg {
+    background-color: white;
+    color: green;
+    text-align: center;
+    padding: 10px;
+}
+.user-msg.error {
+    color: #c93838; /*red */
 }

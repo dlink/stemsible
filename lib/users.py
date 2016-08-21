@@ -38,6 +38,11 @@ class Users(DataTable):
         id = self.insertRow(data)
         return User(id)
 
+    def update(self, data, email):
+        user = self.getUsers({'email': email})
+        rows = self.updateRows(data)
+        return rows
+        
 class User(Record):
     '''Preside over a single User'''
 
@@ -55,6 +60,10 @@ class User(Record):
         fullname = '%s %s' % (self.first_name, self.last_name)
         self.data['fullname'] = fullname
         self.__dict__.update({'fullname': fullname})
+
+    def update(self, field, value):
+        self.setFilters('id=%s' % self.id)
+        self.updateRows({field: value})
 
     @lazyproperty
     def following(self):
