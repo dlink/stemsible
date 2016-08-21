@@ -221,9 +221,9 @@ class Login(Base):
     def _getSUUserMsg(self):
         o = ''
         if self.su_user_msg:
-            o += p(self.su_user_msg, class_='user-message')
+            o += p(self.su_user_msg, class_='user-msg')
         if self.error_msg:
-            o += p(self.error_msg, class_='error-message')
+            o += p(self.error_msg, class_='user-msg error')
         return o
 
     def _clearFields(self):
