@@ -11,6 +11,11 @@ database:
    passwd : $STEM_STAGE_DBPASS
    dictcursor: True
 
+logging:
+   dir: /var/log/stage-stemsible
+   filename: /var/log/stage-stemsible/stage-stemsible.log
+   level: DEBUG
+
 sessions:
    dir: /data/stemsible/stage-sessions
 
