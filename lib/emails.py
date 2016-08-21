@@ -1,15 +1,15 @@
 from passlib.hash import sha256_crypt
 
 import sys
+
+from sender import Mail, Message, SenderError
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import BadData
+
 from vlib import conf
 from vlib import db
 from vlib import logger
 from vlib.utils import lazyproperty
-from sender import Mail, Message, SenderError
-from users import Users
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from itsdangerous import BadData
-from passlib.utils import generate_password
 
 USER_STATUS_ACTIVE = 10
 forgot_password_text = """
@@ -27,7 +27,12 @@ class Emails(object):
 
     SECRET = 'qLXFKsdYv8ycjRAd'
     EXPIRATION = 3600 * 4
-
+    
+    @lazyproperty
+    def users(self):
+        from users import Users
+        return Users()
+    
     @lazyproperty
     def logger(self):
         return logger.getLogger('Emails')
@@ -52,7 +57,7 @@ class Emails(object):
             self.logger.info('Email sent to: {}'.format(to))
 
     def send_verification_email(self, email):
-        user = Users().getUsers({'email': email})
+        user = self.users.getUsers({'email': email})
         if not user:
             raise Exception('user not found')
         user = user[0]
@@ -66,11 +71,15 @@ class Emails(object):
     def verify_email_token(self, token):
         try:
             email = self.serializer.loads(token)
-            user = Users()
-            user.setFilters('email = "%s"' % email)
-            user.updateRows({'status_id': USER_STATUS_ACTIVE})
+            user = self.users.getUsers('email = "%s"' % email)[0]
+            user.update('status_id', USER_STATUS_ACTIVE)
+            
+            #user = Users()
+            #user.setFilters('email = "%s"' % email)
+            #user.updateRows({'status_id': USER_STATUS_ACTIVE})
+            
             self.logger.info('User is verified: {}'.format(email))
-            return True
+            return user
         except BadData:
             return False
 
@@ -96,8 +105,19 @@ class Emails(object):
         self.send_email(email,'Your stemsible password',
                         forgot_password_text.format(password))
 
+    def send_welcome_email(self, user):
+        path = '%s/lib/emails' % self.config.basedir
+        
+        body = open('%s/welcome.txt' % path).read() % user.first_name
+        html = open('%s/welcome.html' % path).read() % user.first_name
+        
+        self.send_email(user.email, 'Welcome to Stemsible!', body, html=html)
+    
 if __name__ == '__main__':
     # Emails().send_verification_email(sys.argv[1])
     #print Emails().verify_email_token(sys.argv[1])
     # print Emails().send_email(sys.argv[1], 'test1', 'test body')
-    print Emails().send_new_password(sys.argv[1])
+    #print Emails().send_new_password(sys.argv[1])
+    #print Emails().send_email(sys.argv[1], 'test1', 'test body', html='<h3>test body</h3>')
+    from users import User
+    print Emails().send_welcome_email(User(sys.argv[1]))

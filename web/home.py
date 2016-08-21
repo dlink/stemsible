@@ -130,7 +130,7 @@ class Login(Base):
         # email verification sent
         self._clearFields()
         self.su_user_msg = 'Great! An email was sent to %s.  Please ' \
-                           'open it and click on the link it contains ' \
+                           'open it and click on the link ' \
                            'to complete registraion.' % email
 
     def _getBody(self):

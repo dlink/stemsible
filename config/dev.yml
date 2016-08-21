@@ -20,6 +20,6 @@ sessions:
    dir: /data/stemsible/dev-sessions
 
 emails:
-   name: Stemsible
+   name: Dev Stemsible
    username: info@stemsible.com
    password: $STEMSIBLE_EMAIL_PASS

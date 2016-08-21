@@ -15,19 +15,19 @@ class Verify(Base):
         #self.style_sheets.extend(['css/home.css'])
 
         self.conf = conf.getInstance()
-
-        self.verified = False
-
+        self.verified_user = None
         self.require_login = False
 
     def process(self):
         Base.process(self)
         if 't' in self.form:
             token = self.form['t'].value
-            self.verified = self.emails.verify_email_token(token)
-
+            self.verified_user = self.emails.verify_email_token(token)
+            if self.verified_user:
+                self.emails.send_welcome_email(self.verified_user)
+                                           
     def _getBody(self):
-        if self.verified:
+        if self.verified_user:
             return open('verification_success.html', 'r').read()
         return open('verification_fail.html', 'r').read()
 
