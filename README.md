@@ -8,72 +8,49 @@ Production Site: http://crowfly.net/stemsible/main.py
 
 Development Site: http://dev.crowfly.net/stemsible/main.py
 
-## Installation:
+## Installation (using Vagrant):
+
+Clone the project:
+
 ```
-apt-get install python-dev libmysqlclient-dev
-
-pip install MySQL-python vlib vweb passlib jinja2 pillow itsdangerous sender
-
 git clone git@github.com:dlink/stemsible.git
+cd stemsible
 ```
 
-Set Environement Variables
+With [Vagrant](https://www.vagrantup.com/) and
+[VirtualBox](https://www.virtualbox.org/) installed:
 ```
-cd ~/stemsible/bin
-. ./aliases     # this creates the psdb, and dsdb aliases
-. ./set_env.sh  # this sets PYTHONPATH, and VCONF
-```
-
-Install Database
-```
-# create a database on local host:
-
-# create production database
-
-mysql -uroot -p
-> create database stemsible;
-> grant all on stemsible.* to stemsible@localhost identified by 'change-me';
-> quit
-
-cd ~/stemsible/sql
-cat build_all.sql | psdb --local-infile=1 -t
+vagrant up
 ```
 
-Configure
+This may take up to 5-10 minutes depending on your machine and internet
+connection. In the meantime add the line below to your hosts file:
 ```
-# review ~/stemsible/conf/dev.yml
-# change your database settings if not on localhost
-```
-
-Test
-```
-cd ~/stemsible/tests
-./test_all.sh
+192.168.33.22 local.stemsible.com
 ```
 
-Apache Setup
+After your vm is provisioned go to the http://local.stemsible.com/
+
+
+## Development
+
+SSH console to the vm
 ```
-cd /etc/apache2/sites-available
-cp /home/USERNAME/stemsible/config/apache/stemsible.conf .
+vagrant ssh
 ```
 
-Create Session Data Folder
+MySQL console
 ```
-mkdir -p /data/stemsible/sessions
-chgrp -R www-data /data/stemsible
-chmod g+w /data/stemsible/sessions
+$ dsdb
 ```
 
-Create Session Data Folder
+App logs
 ```
-mkdir -p /data/stemsible/sessions
+$ tail -f log/stemsible.log
 ```
 
-Other python modules that will be needed
+Run tests
 ```
-Cookie
-json
-sha
-shelve
-unittest
+$ cd stemsible/tests/
+$ source test_all.sh
 ```

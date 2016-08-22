@@ -94,8 +94,8 @@
       dest: /home/vagrant/.profile
       block: |
         source /home/vagrant/stemsible/bin/aliases
-        export PYTHONPATH=home/vagrant/vlib:home/vagrant/vweb:home/vagrant/stemsible/lib
-        export VCONF=home/vagrant/stemsible/config/vagrant.yml
+        export PYTHONPATH=/home/vagrant/vlib:/home/vagrant/vweb:/home/vagrant/stemsible/lib
+        export VCONF=/home/vagrant/stemsible/config/vagrant.yml
         export STEM_DEV_DBPASS=dev_stemsible
 
   handlers:
