@@ -1,0 +1,82 @@
+---
+
+- name: Install smemsible project for development in a vagrant environment
+  hosts: all
+  become: yes
+  become_user: root
+  remote_user: vagrant
+
+  tasks:
+
+  # Dependencies installation
+  - name: Run apt-get update
+    apt: update_cache=yes
+
+  - name: Ensure required dependencies available with apt are installed
+    apt: name={{ item }} state=latest
+    with_items:
+      - apache2
+      - apache2-doc
+      - apache2-utils
+      - git
+      - libjpeg-dev
+      - libjpeg8-dev
+      - libmysqlclient-dev
+      - mysql-server-5.6
+      - python-dev
+      - python-pip
+
+  - name: Ensure required python dependencies are installed
+    pip: name={{ item }} state=latest
+    tags: packages
+    with_items:
+      - itsdangerous
+      - jinja2
+      - MySQL-python
+      - passlib
+      - pillow
+      - sender
+      - vlib
+      - vweb
+
+  - name: Get latest vlib and vweb
+    git: repo=https://github.com/dlink/{{ item }}.git
+         dest=/home/vagrant/{{ item }}
+    with_items:
+      - vlib
+      - vweb
+
+  # Database
+  - name: Ensure mysql database is present
+    mysql_db: name=dev_stemsible state=present
+    register: dbpresent
+
+  - name: Ensure vagrant mysql user exists
+    mysql_user: name=vagrant password=vagrant priv=*.*:ALL state=present
+
+  - name: Create tables if the database was just created
+    when: dbpresent.changed
+    shell: >
+      cd /home/vagrant/stemsible/sql/ && cat build_all.sql | mysql -uvagrant
+      -pvagrant -hlocalhost --database=dev_stemsible --local-infile=1 -t
+
+  # Web
+  - name: Enable apache cgi module
+    apache2_module: name=cgid state=present
+    notify:
+    - restart apache
+
+  - name: Copy apache config
+    copy:
+      src: /home/vagrant/stemsible/config/apache/local.stemsible.com.conf
+      dest: /etc/apache2/sites-available/local.stemsible.com.conf
+    notify:
+    - restart apache
+
+  - name: Ensures sessions dir exists
+    file: path=/data/stemsible/sessions state=directory group=www-data mode=g+w
+
+
+  handlers:
+  - name: restart apache
+    service: name=apache2 state=restarted
