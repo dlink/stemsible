@@ -7,8 +7,8 @@ database:
    engine : mysql
    db     : dev_stemsible
    host   : localhost
-   user   : vagrant
-   passwd : vagrant
+   user   : dev_stemsible
+   passwd : dev_stemsible
    dictcursor: True
 
 logging:

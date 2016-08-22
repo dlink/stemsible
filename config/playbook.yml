@@ -52,13 +52,15 @@
     register: dbpresent
 
   - name: Ensure vagrant mysql user exists
-    mysql_user: name=vagrant password=vagrant priv=*.*:ALL state=present
+    mysql_user:
+      name=dev_stemsible password=dev_stemsible priv=*.*:ALL state=present
 
   - name: Create tables if the database was just created
     when: dbpresent.changed
     shell: >
-      cd /home/vagrant/stemsible/sql/ && cat build_all.sql | mysql -uvagrant
-      -pvagrant -hlocalhost --database=dev_stemsible --local-infile=1 -t
+      cd /home/vagrant/stemsible/sql/ && cat build_all.sql |
+      mysql -udev_stemsible -pdev_stemsible -hlocalhost
+      --database=dev_stemsible --local-infile=1 -t
 
   # Web
   - name: Enable apache cgi module
@@ -79,9 +81,22 @@
     notify:
     - restart apache
 
-  - name: Ensures sessions dir exists
-    file: path=/data/stemsible/sessions state=directory group=www-data mode=g+w
+  - name: Ensure nessesary directories exist with proper permissions
+    file: path={{ item.path }} state={{ item.state }} group=www-data mode=g+w
+    with_items:
+    - { path: '/data/stemsible/sessions', state: 'directory' }
+    - { path: '/home/vagrant/log', state: 'directory' }
+    - { path: '/home/vagrant/log/stemsible.log', state: 'touch' }
 
+  # Utils
+  - name: Shell tweaks
+    blockinfile:
+      dest: /home/vagrant/.profile
+      block: |
+        source /home/vagrant/stemsible/bin/aliases
+        export PYTHONPATH=home/vagrant/vlib:home/vagrant/vweb:home/vagrant/stemsible/lib
+        export VCONF=home/vagrant/stemsible/config/vagrant.yml
+        export STEM_DEV_DBPASS=dev_stemsible
 
   handlers:
   - name: restart apache
