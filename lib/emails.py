@@ -5,6 +5,7 @@ import sys
 from sender import Mail, Message, SenderError
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadData
+from passlib.utils import generate_password
 
 from vlib import conf
 from vlib import db
@@ -84,7 +85,7 @@ class Emails(object):
             return False
 
     def send_new_password(self, email):
-        user = Users().getUsers({'email': email})
+        user = self.users.getUsers({'email': email})
         if not user:
             raise EmailError('Email %s not on file' % email)
         password = generate_password(size=10)
@@ -92,7 +93,7 @@ class Emails(object):
         self.db.startTransaction()
         try:
             encrypt_password = sha256_crypt.encrypt(password)
-            user = Users().update({'password': encrypt_password}, email)
+            user = self.users.update({'password': encrypt_password}, email)
             self.db.commit()
         except Exception, e:
             emsg = \
