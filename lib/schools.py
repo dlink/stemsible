@@ -5,6 +5,7 @@ from datetime import datetime
 from vlib import db
 from vlib.datatable import DataTable
 from vlib import conf
+from vlib.utils import format_datetime
 from record import Record
 
 UNKNOWN_ADDRESS_ID = 1
@@ -49,6 +50,17 @@ class Schools(DataTable):
         json = '[' + names_str + ']\n'
         open(datafile, 'w').write(json.encode('utf-8'))
         return '%s schools updated' % len(names)
+
+    def missingAddresses(self):
+        '''Return a csv formated table as a STR of
+           All schools with unknown address_id
+        '''
+        sql = 'select id, name, created from schools where address_id = 0'
+        o = ''
+        for row in self.db.query(sql):
+            row['created'] = format_datetime(row['created'])
+            o += '{id}, {name}, {created}\n'.format(**row)
+        return o
 
 class School(Record):
     '''Preside over a single School'''
