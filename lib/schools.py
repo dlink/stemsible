@@ -55,11 +55,12 @@ class Schools(DataTable):
         '''Return a csv formated table as a STR of
            All schools with unknown address_id
         '''
-        sql = 'select id, name, created from schools where address_id = 0'
+        file = '%s/lib/sql/missing_school_addresses.sql' % self.conf.basedir
+        sql = open(file, 'r').read()
         o = ''
         for row in self.db.query(sql):
             row['created'] = format_datetime(row['created'])
-            o += '{id}, {name}, {created}\n'.format(**row)
+            o += '{num_users}, {school_id}, {name}, {created}\n'.format(**row)
         return o
 
 class School(Record):
