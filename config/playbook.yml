@@ -70,6 +70,12 @@
     copy:
       src: /home/vagrant/stemsible/config/apache/local.stemsible.com.conf
       dest: /etc/apache2/sites-available/local.stemsible.com.conf
+
+  - name: Make sure the config is enabled
+    file:
+      src: /etc/apache2/sites-available/local.stemsible.com.conf
+      dest: /etc/apache2/sites-enabled/local.stemsible.com.conf
+      state: link
     notify:
     - restart apache
 
