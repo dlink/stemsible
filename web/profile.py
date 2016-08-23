@@ -69,7 +69,8 @@ class Profile(Base):
             self._handleImageUpload()
 
         # change pw
-        if 'submit-change-pw' in self.form:
+        if 'submit-change-pw' in self.form and \
+           self.user.id == self.session.user.id:
             self._processChangePW()
 
     def _getBody(self):
@@ -170,8 +171,11 @@ class Profile(Base):
     def _getChangePW(self):
         '''Return Change Password UX as HTML'''
 
+        if self.user.id != self.session.user.id:
+            return ''
+
         def getFieldClass(field):
-            '''Return input field class(es) - add missing-value class if nec.'''
+            '''Return input field class(es) -add missing-value class if nec.'''
             class_ = 'form-control'
             if field in self.missing_fields:
                 class_ += ' missing-value'
