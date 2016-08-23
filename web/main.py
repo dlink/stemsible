@@ -6,6 +6,7 @@ from vweb.htmltable import HtmlTable
 from base import Base
 from feed import Feed
 
+
 class Main(Base):
 
     @property
@@ -27,16 +28,16 @@ class Main(Base):
             self.search = self.form['search'].value.strip()
 
     def _getBody(self):
-        left   = self._getSchoolPanel()
+        left = self._getSchoolPanel()
         if self.search:
             center = self.feed.getMessages(search=self.search)
         else:
             center = self.feed.getNewMessageCard() + self.feed.getMessages()
 
-        right  = self._getTagsPanel()
+        right = self._getTagsPanel()
 
         # hack
-        #bot = '<script>$(document).scrollTop(%s);</script>' \
+        # bot = '<script>$(document).scrollTop(%s);</script>' \
         #    % self.feed.scroll_pos
         bot = ''
 
@@ -64,6 +65,7 @@ class Main(Base):
             return input(value=tag, type='button',
                          class_='btn btn-default btn-xs',
                          onclick="javascript: search('%s')" % tag)
+
         def mk_mock_button(tag, class_=''):
             class_ += ' btn btn-default btn-xs'
             return input(value=tag, type='button',
@@ -72,17 +74,17 @@ class Main(Base):
         tags = ['Music', 'SAT', 'Devices', 'PTA', 'Transportation', 'Honors Class',
                 'Olympics', 'Health', 'Programming', 'Volunteer', 'Soccer', 'Supplies',
                 'Meals', 'Math', 'Futura', 'Health', 'Bullying', 'Kindergarten',
-                'Science', 'Spectrum', 'AOS','Safety', 'Beach', 'CommonCore',
-                'Economics', 'Cafeteria', 'ESL', 'AP Latin','IB', 'Field Trips',
+                'Science', 'Spectrum', 'AOS', 'Safety', 'Beach', 'CommonCore',
+                'Economics', 'Cafeteria', 'ESL', 'AP Latin', 'IB', 'Field Trips',
                 'ACT', 'Movies', 'Parks', 'Technology', 'History', 'Geography',
                 'Engineering', 'Economics', 'Art', 'Literature', 'Geography', 'Drama',
                 'Football', 'Lacrosse', 'Basketball', 'Softball,' 'Drones', 'Halloween',
-                'Camping', 'Internship', 'Weather', 'Culture', 'Projects', 'Space', 
-                'SnowDays', 'SpecialNeeds' ]
+                'Camping', 'Internship', 'Weather', 'Culture', 'Projects', 'Space',
+                'SnowDays', 'SpecialNeeds']
         real_tags = ['Music', 'SAT', 'Devices', 'PTA', 'Transportation',
                      'Honors Class', 'Olympics', 'Health', 'Programming', 'Volunteer',
-                     'Soccer', 'Supplies', 'Meals', 'Math', 'Futura', 'Health', 
-                     'Bullying', 'Kindergarten','Science', 'Spectrum', 'AOS', 'Safety',
+                     'Soccer', 'Supplies', 'Meals', 'Math', 'Futura', 'Health',
+                     'Bullying', 'Kindergarten', 'Science', 'Spectrum', 'AOS', 'Safety',
                      'Beach', 'CommonCore']
 
         tag_buttons = ''
@@ -96,6 +98,7 @@ class Main(Base):
         table.addHeader(['Trending Topics'])
         table.addRow([tag_buttons])
         return table.getTable()
+
 
 def tag_button(tag, class_=''):
     return input(value=tag, type='button',
