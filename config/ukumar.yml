@@ -1,4 +1,4 @@
-environment: dev
+environment: ukumar
 baseurl: ukumar.stemsible.com
 basedir: /home/ukumar/stemsible
 serverurl: localhost:5000
@@ -17,7 +17,7 @@ logging:
    level: DEBUG
 
 sessions:
-   dir: /data/stemsible/sessions_ukumar
+   dir: /data/stemsible/ukumar-sessions
 
 emails:
    username: info@stemsible.com
