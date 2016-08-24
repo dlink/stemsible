@@ -9,6 +9,7 @@ from userschools import UserSchools
 from follows import Follows
 from schools import Schools, UNKNOWN_ADDRESS_ID, UNKNOWN_DISTRICT_ID
 
+
 class Registration(object):
 
     @lazyproperty
@@ -84,8 +85,8 @@ class Registration(object):
             self.db.rollback()
             raise
 
-        self.logger.info('Added School: %s, %s, %s' %
-                         (user.id, user.fullname, school_name))
+        self.logger.info('Added School: {0}, {1}, {2}'
+                         .format(user.id, user.fullname, school_name))
 
     def _getSchoolId(self, school_name):
         '''Given a school name

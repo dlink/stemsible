@@ -1,10 +1,11 @@
 .messageCard {
     background-color: white;
-    border-style: solid;
     border-color: lightgrey;
+    border-style: solid;
     border-width: 1px;
     margin: 10px;
     padding: 10px;
+    word-break: break-word;
 }
 
 .messageCard .userIcon {
