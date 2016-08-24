@@ -1,0 +1,25 @@
+environment: vagrant
+baseurl: local.stemsible.com
+basedir: /home/vagrant/stemsible
+serverurl: localhost:5000
+
+database:
+   engine : mysql
+   db     : dev_stemsible
+   host   : localhost
+   user   : dev_stemsible
+   passwd : dev_stemsible
+   dictcursor: True
+
+logging:
+   dir: /home/vagrant/log
+   filename: /home/vagrant/log/stemsible.log
+   level: DEBUG
+
+sessions:
+   dir: /data/stemsible/sessions
+
+emails:
+   name: Stemsible
+   username: info@stemsible.com
+   password: $STEMSIBLE_EMAIL_PASS

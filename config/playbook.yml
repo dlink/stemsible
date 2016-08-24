@@ -1,0 +1,103 @@
+---
+
+- name: Install smemsible project for development in a vagrant environment
+  hosts: all
+  become: yes
+  become_user: root
+  remote_user: vagrant
+
+  tasks:
+
+  # Dependencies installation
+  - name: Run apt-get update
+    apt: update_cache=yes
+
+  - name: Ensure required dependencies available with apt are installed
+    apt: name={{ item }} state=latest
+    with_items:
+      - apache2
+      - apache2-doc
+      - apache2-utils
+      - git
+      - libjpeg-dev
+      - libjpeg8-dev
+      - libmysqlclient-dev
+      - mysql-server-5.6
+      - python-dev
+      - python-pip
+
+  - name: Ensure required python dependencies are installed
+    pip: name={{ item }} state=latest
+    tags: packages
+    with_items:
+      - itsdangerous
+      - jinja2
+      - MySQL-python
+      - passlib
+      - pillow
+      - sender
+      - vlib
+      - vweb
+
+  - name: Get latest vlib and vweb
+    git: repo=https://github.com/dlink/{{ item }}.git
+         dest=/home/vagrant/{{ item }}
+    with_items:
+      - vlib
+      - vweb
+
+  # Database
+  - name: Ensure mysql database is present
+    mysql_db: name=dev_stemsible state=present
+    register: dbpresent
+
+  - name: Ensure vagrant mysql user exists
+    mysql_user:
+      name=dev_stemsible password=dev_stemsible priv=*.*:ALL state=present
+
+  - name: Create tables if the database was just created
+    when: dbpresent.changed
+    shell: >
+      cd /home/vagrant/stemsible/sql/ && cat build_all.sql |
+      mysql -udev_stemsible -pdev_stemsible -hlocalhost
+      --database=dev_stemsible --local-infile=1 -t
+
+  # Web
+  - name: Enable apache cgi module
+    apache2_module: name=cgid state=present
+    notify:
+    - restart apache
+
+  - name: Copy apache config
+    copy:
+      src: /home/vagrant/stemsible/config/apache/local.stemsible.com.conf
+      dest: /etc/apache2/sites-available/local.stemsible.com.conf
+
+  - name: Make sure the config is enabled
+    file:
+      src: /etc/apache2/sites-available/local.stemsible.com.conf
+      dest: /etc/apache2/sites-enabled/local.stemsible.com.conf
+      state: link
+    notify:
+    - restart apache
+
+  - name: Ensure nessesary directories exist with proper permissions
+    file: path={{ item.path }} state={{ item.state }} group=www-data mode=g+w
+    with_items:
+    - { path: '/data/stemsible/sessions', state: 'directory' }
+    - { path: '/home/vagrant/log', state: 'directory' }
+    - { path: '/home/vagrant/log/stemsible.log', state: 'touch' }
+
+  # Utils
+  - name: Shell tweaks
+    blockinfile:
+      dest: /home/vagrant/.profile
+      block: |
+        source /home/vagrant/stemsible/bin/aliases
+        export PYTHONPATH=/home/vagrant/vlib:/home/vagrant/vweb:/home/vagrant/stemsible/lib
+        export VCONF=/home/vagrant/stemsible/config/vagrant.yml
+        export STEM_DEV_DBPASS=dev_stemsible
+
+  handlers:
+  - name: restart apache
+    service: name=apache2 state=restarted

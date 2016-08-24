@@ -12,6 +12,7 @@ from record import Record
 from users import User
 from jinja2.utils import urlize
 
+
 class Messages(DataTable):
 
     @lazyproperty

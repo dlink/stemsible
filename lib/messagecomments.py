@@ -1,3 +1,5 @@
+import re
+
 from datetime import datetime
 
 from vlib import conf
@@ -7,15 +9,17 @@ from vweb.html import *
 js_files = ['js/comments.js']
 css_files = ['css/comments.css']
 
+
 def addHeaders(htmlpage):
     htmlpage.javascript_src.extend(js_files)
     htmlpage.style_sheets.extend(css_files)
+
 
 class MessageComments(object):
 
     def __init__(self, message):
         self.conf = conf.getInstance()
-        self.db   = db.getInstance()
+        self.db = db.getInstance()
 
         self.message = message
         self._comments = None
@@ -29,7 +33,7 @@ class MessageComments(object):
     def add(self, user_id):
         sql = 'insert into comments (user_id, message_id) values (%s, %s)'
         self.db.execute(sql, params=(user_id, self.message.id))
-        self._comments = None # reinit comments
+        self._comments = None  # reinit comments
 
     def remove(self, user_id):
         sql = 'delete from comments where user_id = %s and message_id = %s'
@@ -38,7 +42,7 @@ class MessageComments(object):
         sql = 'insert into uncomments (user_id, message_id) values (%s, %s)'
         self.db.execute(sql, params=(user_id, self.message.id))
 
-        self._comments = None # reinit comments
+        self._comments = None  # reinit comments
 
     @property
     def num_comments(self):
@@ -80,13 +84,20 @@ class MessageComments(object):
                     class_='messageFooterButton')
         """
 
-    def html_commentsSection(self, user):
+    def html_commentsSection(self, user, search=None):
         comment_cards = []
 
         # get existing comments
         for comment in self.comments:
             who = comment['user_fullname']
             text = comment['text']
+
+            if search:
+                for term in search.split(' '):
+                    term2 = r'(%s)' % term
+                    text = re.sub(term2, r'<span class="search-term">\1</span>',
+                                  text, flags=re.IGNORECASE)
+
             time_ago = cal_time_ago(comment['created'])
             comment_card = div(span(who, class_='commenter') + ' ' +
                                span(text, class_='comment-text') + ' ' +
@@ -96,12 +107,13 @@ class MessageComments(object):
 
         # add new comment field:
         new_comment_card = open('new-comment.html', 'r').read()\
-            .format(message_id = self.message.id)
+            .format(message_id=self.message.id)
         comment_cards.append(new_comment_card)
 
         comment_cards_html = '\n'.join(comment_cards)
         return div(comment_cards_html, class_='comments',
                    id='comments_%s' % self.message.id)
+
 
 def cal_time_ago(date):
     '''Given a datetime

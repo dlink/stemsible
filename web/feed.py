@@ -17,6 +17,7 @@ from messagecomments import MessageComments, \
 
 from images import getUserImage
 
+
 class Feed(object):
 
     def __init__(self, page):
@@ -34,7 +35,7 @@ class Feed(object):
         # add new messages
         if 'new_message' in self.page.form:
             data = {'user_id': self.page.session.user.id,
-                    'text'   : self.page.form['new_message'].value}
+                    'text': self.page.form['new_message'].value}
             id = self.messages.add(data)
 
         # add like
@@ -53,12 +54,12 @@ class Feed(object):
                             'reference_id': reference_id,
                             'text': self.page.form[field].value}
                     id = self.messages.add(data)
-                break;
+                break
 
         # remember scroll
         if 'scroll_pos' in self.page.form:
             p = self.page.form['scroll_pos'].value
-            self.scroll_pos = int(round(float(p),0))
+            self.scroll_pos = int(round(float(p), 0))
 
     def getMessages(self, user_id=None, search=None):
         # TO DO: rename getMyMessages to something like getThisUsersMessages
@@ -96,8 +97,8 @@ class Feed(object):
                             class_='img-thumbnail'),
                         class_='userIcon')
         username = div(message.author,  class_='messageAuthor')
-        reason   = div(message.reason, class_='messageReason')
-        date     = div(message.created, class_='messageDate')
+        reason = div(message.reason, class_='messageReason')
+        date = div(message.created, class_='messageDate')
         name_link = a(username, href='//%s/profile.py?u=%s'
                       % (self.conf.baseurl, encrypt_int(message.user_id)))
         username_and_date = div(name_link + reason + date,
@@ -116,7 +117,8 @@ class Feed(object):
         o += div(text, class_='messageText')
         o += div(footer, class_='messageFooter')
         o += messageLikes.html_likersSection()
-        o += messageComments.html_commentsSection(self.page.session.user)
+        o += messageComments.html_commentsSection(self.page.session.user,
+                                                  search=search)
 
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
 
@@ -127,5 +129,6 @@ class Feed(object):
         text2 = text
         for term in search.split(' '):
             term2 = r'(%s)' % term
-            text2 = re.sub(term2, r'<span class="search-term">\1</span>', text2, flags=re.IGNORECASE)
+            text2 = re.sub(term2, r'<span class="search-term">\1</span>',
+                           text2, flags=re.IGNORECASE)
         return text2

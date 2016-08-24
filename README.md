@@ -8,7 +8,48 @@ Production Site: http://crowfly.net/stemsible/main.py
 
 Development Site: http://dev.crowfly.net/stemsible/main.py
 
-## Installation:
+## Table Of Contents
+<!-- MarkdownTOC -->
+
+- [Installation](#installation)
+    - [With Vagrant](#with-vagrant)
+    - [Manual](#manual)
+- [Development](#development)
+
+<!-- /MarkdownTOC -->
+
+
+## Installation
+
+### With Vagrant
+
+Clone the project:
+
+```
+git clone git@github.com:dlink/stemsible.git
+cd stemsible
+```
+
+With [Vagrant](https://www.vagrantup.com/) and
+[VirtualBox](https://www.virtualbox.org/) installed:
+```
+vagrant up
+```
+
+This may take up to 5-10 minutes depending on your machine and internet
+connection. In the meantime add the line below to your hosts file:
+```
+192.168.33.22 local.stemsible.com
+```
+
+After your vm is provisioned go to the http://local.stemsible.com/
+
+
+### Manual
+
+*This installation has few steps missing here and there but will get you
+a dev enviroment without a heavy VM*
+
 ```
 apt-get install python-dev libmysqlclient-dev
 
@@ -76,4 +117,28 @@ json
 sha
 shelve
 unittest
+```
+
+
+## Development
+
+SSH console to the vm
+```
+vagrant ssh
+```
+
+MySQL console
+```
+$ dsdb
+```
+
+App logs
+```
+$ tail -f log/stemsible.log
+```
+
+Run tests
+```
+$ cd stemsible/tests/
+$ source test_all.sh
 ```
