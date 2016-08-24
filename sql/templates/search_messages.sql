@@ -49,7 +49,6 @@ from
 
 where
   match(mf.text) against ('<search>' in boolean mode)
-  and not mp.reference_id is null
 
 order by
   -- match(mf.text) against ('<search>' in boolean mode) desc
