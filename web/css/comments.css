@@ -2,11 +2,17 @@
     // background-color: #D2F1E0; /* light green */
     /* display: none;*/
     padding-top: 10px;
+    cursor: pointer;
+}
+.comments .userIcon {
+    float: left;
+    margin: 0 10px 0 0;
 }
 .comments .comment-card {
   background-color: white;
-  padding: 5px;
+  padding: 5px 5px 15px 5px;
   border-top: lightgrey solid 1px;
+  font-size: 12px;
 }
 .comments .comment-card .commenter {
     font-weight: bold;

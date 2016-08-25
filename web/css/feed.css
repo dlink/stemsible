@@ -46,7 +46,8 @@
 }
 
 .messageCard .messageFooter {
-    font-size: large;
+    font-size: medium;
+    cursor: pointer;
 }
 .messageCard .messageFooterButton {
     padding: 0 20px 0 20px;

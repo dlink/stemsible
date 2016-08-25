@@ -6,6 +6,10 @@ from vlib import conf
 from vlib import db
 from vweb.html import *
 
+from encryptint import encrypt_int, decrypt_int
+
+from images import getUserImage
+
 js_files = ['js/comments.js']
 css_files = ['css/comments.css']
 
@@ -89,6 +93,10 @@ class MessageComments(object):
 
         # get existing comments
         for comment in self.comments:
+            image = getUserImage(comment['user_id'])
+            user_icon = div(img(src=image, width='30px',
+                            class_='img-thumbnail'),
+                            class_='userIcon')
             who = comment['user_fullname']
             text = comment['text']
 
@@ -99,7 +107,10 @@ class MessageComments(object):
                                   text, flags=re.IGNORECASE)
 
             time_ago = cal_time_ago(comment['created'])
-            comment_card = div(span(who, class_='commenter') + ' ' +
+            who_link = a(who, href='//%s/profile.py?u=%s'
+                             % (self.conf.baseurl, encrypt_int(comment['user_id'])))
+            comment_card = div(span(user_icon) + ' ' +
+                               span(who_link, class_='commenter') + ' ' +
                                span(text, class_='comment-text') + ' ' +
                                span(time_ago, class_='comment-time-ago'),
                                class_='comment-card')

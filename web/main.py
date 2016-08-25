@@ -71,21 +71,25 @@ class Main(Base):
             return input(value=tag, type='button',
                          class_='btn btn-default btn-xs disabled')
 
-        tags = ['Music', 'SAT', 'Devices', 'PTA', 'Transportation', 'Honors Class',
-                'Olympics', 'Health', 'Programming', 'Volunteer', 'Soccer', 'Supplies',
-                'Meals', 'Math', 'Futura', 'Health', 'Bullying', 'Kindergarten',
-                'Science', 'Spectrum', 'AOS', 'Safety', 'Beach', 'CommonCore',
-                'Economics', 'Cafeteria', 'ESL', 'AP Latin', 'IB', 'Field Trips',
+        tags = ['Music', 'SAT', 'Devices', 'Football', 'Math', 'Research', 'Art', 
+                'Honors Class', 'AP',
+                'After School', 'Transportation', 'Open House', 'Back To School',
+                'Social Media', 'Olympics', 'Health', 'Programming', 'Volunteer',
+                'Soccer', 'Supplies', 'Meals', 'Futura', 'Health', 'Bullying',
+                'Kindergarten', 'PTA', 'Library',
+                'Science', 'Spectrum', 'AOS','Safety', 'Beach', 'Common Core',
+                'Economics', 'Cafeteria', 'ESL', 'AP Latin','IB', 'Field Trips',
                 'ACT', 'Movies', 'Parks', 'Technology', 'History', 'Geography',
-                'Engineering', 'Economics', 'Art', 'Literature', 'Geography', 'Drama',
-                'Football', 'Lacrosse', 'Basketball', 'Softball,' 'Drones', 'Halloween',
+                'Engineering', 'Economics', 'Literature', 'Geography', 'Drama',
+                'Swimming', 'Lacrosse', 'Basketball', 'Softball,' 'Drones', 'Halloween',
                 'Camping', 'Internship', 'Weather', 'Culture', 'Projects', 'Space',
-                'SnowDays', 'SpecialNeeds']
-        real_tags = ['Music', 'SAT', 'Devices', 'PTA', 'Transportation',
-                     'Honors Class', 'Olympics', 'Health', 'Programming', 'Volunteer',
-                     'Soccer', 'Supplies', 'Meals', 'Math', 'Futura', 'Health',
-                     'Bullying', 'Kindergarten', 'Science', 'Spectrum', 'AOS', 'Safety',
-                     'Beach', 'CommonCore']
+                'SnowDays', 'SpecialNeeds' ]
+        real_tags = ['Music', 'SAT', 'Devices', 'Football', 'Math', 'Research', 'Art',
+                     'Honors Class', 'AP', 'After School', 'Transportation', 'Open House',
+                     'Back To School', 'Social Media', 'Olympics', 'Health',
+                     'Programming', 'Volunteer', 'Soccer', 'Supplies', 'Meals',
+                     'Futura', 'Health', 'Bullying', 'Kindergarten', 'PTA', 'Library',
+                     'Science', 'Spectrum', 'AOS', 'Safety', 'Beach', 'Common Core']
 
         tag_buttons = ''
         for tag in tags:
