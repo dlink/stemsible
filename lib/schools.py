@@ -8,8 +8,8 @@ from vlib import conf
 from vlib.utils import format_datetime
 from record import Record
 
-UNKNOWN_ADDRESS_ID = 1
-UNKNOWN_DISTRICT_ID = 1
+UNKNOWN_ADDRESS_ID = 0
+UNKNOWN_DISTRICT_ID = 0
 
 class SchoolError(Exception): pass
 
