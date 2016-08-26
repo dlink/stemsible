@@ -78,7 +78,8 @@ class Feed(object):
 
         hidden_fields = \
             input(name='like', type='hidden') + \
-            input(name='scroll_pos', type='hidden')
+            input(name='scroll_pos', type='hidden') + \
+            input(name='prev_scroll_pos', type='hidden', value=self.scroll_pos)
 
         o = ''
         o += hidden_fields

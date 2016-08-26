@@ -1,3 +1,11 @@
+// scroll to previous scroll position if set. - used by likes and comments
+
+$(document).ready(function() {
+    pos = $("input[name=prev_scroll_pos]").val()
+    if (pos) {
+	$(document).scrollTop(pos);
+    }
+});
 
 function toggleLike(like_id) {
     var pos = $(document).scrollTop();

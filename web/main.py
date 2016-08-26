@@ -36,14 +36,14 @@ class Main(Base):
 
         right = self._getTagsPanel()
 
-        # hack
-        # bot = '<script>$(document).scrollTop(%s);</script>' \
-        #    % self.feed.scroll_pos
-        bot = ''
+        return open('body-section.html', 'r').read() % (left, center, right)
 
-        o = open('body-section.html', 'r').read() \
-            % (left, center, right) + bot
-        return form(o, name='form1', method='POST')
+        # 8/25/2016 - removed this form because there are inner forms
+        # and you cannot nest forms.  This was causing liking to toggle
+        # when user hit like, then posted a test.
+        # leaving commented out for a time to see if there are any
+        # unexpected results.
+        #return form(o, name='form1', method='POST')
 
     def _getSchoolPanel(self):
         def mk_link(name):
