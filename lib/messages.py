@@ -10,8 +10,6 @@ from vlib.utils import lazyproperty
 from record import Record
 
 from users import User
-from jinja2.utils import urlize
-
 
 class Messages(DataTable):
 
@@ -68,7 +66,7 @@ class Messages(DataTable):
                 {'id'      : r['id'],
                  'user_id' : r['user_id'],
                  'author'  : r['author'],
-                 'text'    : urlize(r['text'], target='_blank'),
+                 'text'    : r['text'],
                  'created' : r['created'],
                  'reason'  : r['reason'],
                  }

@@ -9,6 +9,7 @@ from vweb.html import *
 from vweb.htmltable import HtmlTable
 
 from encryptint import encrypt_int, decrypt_int
+from jinja2.utils import urlize
 
 from messages import Messages, Message
 from messagelikes import MessageLikes, addHeaders as messageLikes_addHeaders
@@ -105,7 +106,8 @@ class Feed(object):
         username_and_date = div(name_link + reason + date,
                                 class_='usernameAndDate')
 
-        text = self._highlightKeyTerms(message.text, search)
+        text = urlize(message.text, target='_blank')
+        text = self._highlightKeyTerms(text, search)
 
         messageLikes = MessageLikes(message)
         messageComments = MessageComments(message)

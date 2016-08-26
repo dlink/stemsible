@@ -7,6 +7,7 @@ from vlib import db
 from vweb.html import *
 
 from encryptint import encrypt_int, decrypt_int
+from jinja2.utils import urlize
 
 from images import getUserImage
 
@@ -102,6 +103,7 @@ class MessageComments(object):
 
             if search:
                 for term in search.split(' '):
+                    text = urlize(text, target='_blank')
                     term2 = r'(%s)' % term
                     text = re.sub(term2, r'<span class="search-term">\1</span>',
                                   text, flags=re.IGNORECASE)
