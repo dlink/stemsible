@@ -82,12 +82,22 @@ class Profile(Base):
         if self.user.id == self.session.user.id:
             newcard = self.feed.getNewMessageCard()
 
+        no_posts_msg = ''
+        feed = self.feed.getMessages(self.user.id)
+        if 'messageCard' not in feed:
+            no_posts_msg = div(
+                'Looks like %s has not posted anything on Stemsible yet. '
+                'Remind them to not be so shy next time you see them.'
+                % self.user.first_name,
+                style="width: 80%; margin: 20px auto; font-size: 1.3em;")
+
         # do right before left in order to get self.feed.num_messages
         right = \
             self.schoolInfo.getHtml(self.user) + \
             h3('Posts') + \
             newcard + \
-            self.feed.getMessages(self.user.id)
+            no_posts_msg + \
+            feed
 
         left = \
             self._getUserData() + \
