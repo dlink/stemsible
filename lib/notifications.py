@@ -49,7 +49,9 @@ class Notifications(object):
                     'created': format_datetime(p['last_updated']),
                     'text': ' '.join(p['text'].split(' ')[0:80]), # 80 words
                     'name': p['author'],
-                    'profile_image': getUserImage(p['user_id'])
+                    'profile_image': getUserImage(p['user_id']),
+                    'message_url': 'http://%s/main.py#message_card_%s' \
+                           % (self.conf.baseurl, p['message_id'])
                 })
 
             html = Template(html)

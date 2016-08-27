@@ -1,6 +1,7 @@
 select
     mu.id as user_id,
     concat_ws(' ', mu.first_name, mu.last_name) as author,
+    m.id as message_id,
     m.text,
     m.last_updated
 from
