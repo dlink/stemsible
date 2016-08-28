@@ -15,6 +15,9 @@ class Stemsible(object):
     @lazyproperty
     def schools(self): return __import__('schools').Schools()
 
+    @lazyproperty
+    def users(self): return __import__('users').Users()
+
     def __init__(self):
         self.logger = logger.getLogger(self.__class__.__name__)
         self.notifications = Notifications()
@@ -22,10 +25,12 @@ class Stemsible(object):
     def run(self):
         '''Set up Command Line (CLI) commands and options launch CLI process
         '''
-        commands = ['send_user_notifications',
+        commands = ['email message_activity [user_email]',
+                    'email summary [user_email]',
                     'show missing_school_addresses']
+        options = {'y': "Answer yes to prompts"}
 
-        self.cli = CLI(self.process, commands)
+        self.cli = CLI(self.process, commands, options)
         self.cli.process()
 
     def process(self, *args):
@@ -59,8 +64,19 @@ class Stemsible(object):
                                           % target)
             print target
 
-        elif cmd == 'send_user_notifications':
-            self.notifications.emailNotification()
+        elif cmd == 'email':
+            validate_num_args('email', 1, args)
+            target = args.pop(0)
+            user = self.users.getUsers({'email':args.pop(0)})[0] \
+                   if args else None
+
+            if target == 'message_activity':
+                self.notifications.sendMessageActivity(user)
+            elif target == 'summary':
+                self.notifications.sendSummary(user)
+            else:
+                raise StemsibleArgsError('Unrecognized email target: %s'
+                                         % target)
         else:
             raise StemsibleArgsError('Unrecognized command: %s' % cmd)
 

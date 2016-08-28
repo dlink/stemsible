@@ -4,7 +4,8 @@ create table messages (
   user_id       integer unsigned not null,
   reference_id  integer unsigned ,
   text          text,
-
+  notification  datetime         ,
+  
   created       datetime         not null,
   last_updated  timestamp        not null 
         default current_timestamp on update current_timestamp
