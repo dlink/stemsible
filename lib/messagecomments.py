@@ -101,16 +101,17 @@ class MessageComments(object):
             who = comment['user_fullname']
             text = comment['text']
 
+            text = urlize(text, target='_blank')
             if search:
                 for term in search.split(' '):
-                    text = urlize(text, target='_blank')
                     term2 = r'(%s)' % term
-                    text = re.sub(term2, r'<span class="search-term">\1</span>',
-                                  text, flags=re.IGNORECASE)
+                    text =re.sub(term2, r'<span class="search-term">\1</span>',
+                                 text, flags=re.IGNORECASE)
 
             time_ago = cal_time_ago(comment['created'])
             who_link = a(who, href='//%s/profile.py?u=%s'
-                             % (self.conf.baseurl, encrypt_int(comment['user_id'])))
+                             % (self.conf.baseurl,
+                                encrypt_int(comment['user_id'])))
             comment_card = div(span(user_icon) + ' ' +
                                span(who_link, class_='commenter') + ' ' +
                                span(text, class_='comment-text') + ' ' +
