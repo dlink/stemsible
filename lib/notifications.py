@@ -10,7 +10,7 @@ import json
 
 from images import getUserImage
 
-NUM_DAYS_BACK = 1
+NUM_DAYS_BACK = 2
 
 class Notifications(object):
 
