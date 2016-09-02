@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <body style="margin:10px;padding-left:5%;font-family:Helvetica, Arial, sans-serif;">
+        <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#4090bf; border:1px solid #353535; border-radius:2px;">
+                <tr>
+                    <td align="left" valign="middle" style="color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:20px; font-weight:bold; letter-spacing:-.5px; line-height:150%; padding-top:15px; padding-right:30px; padding-bottom:15px; padding-left:30px;">
+                        <a href="{{ site_url }}" target="_blank" style="color:#FFFFFF; text-decoration:none;">Stemsible</a>
+                    </td>
+                </tr>
+            </table>
+
+
+	<p>Hi {{ user_name }},</p>
+
+        {% for a in activity %}
+            <table border="0" cellpadding="0" cellspacing="0" width="85%" style="margin-left:7%;margin-right:5%;margin-bottom:15px;">
+                <tr>
+                    <td width="10%">
+		      <img src=http://stemsible.com/{{ a['profile_image'] }} width="70px" class="columnImage" />
+                    </td>
+                    <td width="70%">
+                        <h4 style="margin:0px;margin-top:2px;font-size:14px;color:#0B5EBC">{{ p['name'] }}</h4>
+                        <h5 style="margin:0px;font-size:12px;color:grey;"><i>{{ p['created'] }}</i></h5>
+                    </td>
+                </tr>
+            </table>
+
+            <table border="0" cellpadding="0" cellspacing="0" width="85%" style="margin-left:7%;margin-right:5%;margin-bottom:15px;">
+                <tr>
+                    <td>
+                        <p style="font-size:12px;margin:0px 0px 10px 0px;text-overflow:ellipsis;">{{ p['text'] }}</p>
+                        <a href="{{ p['message_url'] }}" style="font-size:12px;margin-top: 10px;" target="_blank">Read More ...</a>
+                    </td>
+                </tr>
+            </table>
+            <hr style="margin-top: 30px">
+        {% endfor %}
+
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#4090bf; border:1px solid #353535; border-radius:2px;">
+            <tr>
+                <td align="center" valign="middle" style="color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; letter-spacing:-.5px; line-height:150%; padding-top:15px; padding-right:30px; padding-bottom:15px; padding-left:30px;">
+                    <a href="http://www.stemsible.com/" target="_blank" style="color:#FFFFFF; text-decoration:none;">Read more in your feed</a>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <p align="center" style="font-size:16px;color:grey;"><b>Created with love, by Stemsible &copy;</b></p>
+</body>
+</html>
