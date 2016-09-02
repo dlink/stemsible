@@ -159,11 +159,10 @@ class Notifications(object):
             html = Template(html)
             html = html.render(likes=total_likes, comments=total_comments,
                                posts=posts, plength=len(posts))
-            print html
             self.email.send_email(to=user.email,
-                                      subject='While you were away',
-                                      body="",
-                                      html=html)
+                                  subject='While you were away',
+                                  body="",
+                                  html=html)
 
     def _getTotalLikes(self, user_id, created_after):
         '''Get total likes after 'created_after' on all the posts of a user.
