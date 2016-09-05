@@ -93,7 +93,9 @@
     float: right;
 }
 #header #forgotpw-link {
-    color: blue;
+    color: grey;
+    cursor: pointer;
+    font-size: 12px;
 }
 #header #forgotpw-panel {
     display: none;
