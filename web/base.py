@@ -175,7 +175,7 @@ class Base(HtmlPage):
         header = h3('Forgot Password')
 
         # text
-        text = p("No problem. Enter your email and we'll reset your password")
+        text = p("Please enter your email and we'll reset your password.")
 
         #email
         email_label = ''#label('Email',
