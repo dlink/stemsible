@@ -163,10 +163,10 @@ class Profile(Base):
             image = image_
 
         # build data
-        data = [
-            ['Name:'  , self.user.fullname],
-            ['Email:' , self.user.email],
-            [nobr('Member Since:'), format_date(self.user.created)]]
+        data = [['Name:'  , self.user.fullname]]
+        if self.user.id == self.session.user.id:
+            data.append(['Email:' , self.user.email])
+        data.append([nobr('Member Since:'), format_date(self.user.created)])
         
         # build html table
         table = HtmlTable(class_='profileTable')
