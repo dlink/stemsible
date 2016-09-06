@@ -28,6 +28,26 @@ class Session(object):
       return logger.getLogger('Session')
 
    def __init__(self):
+      '''Get or create User Session Data based on Cookies
+
+            eq.
+                self.session = Session()
+                if not self.session.logged_id:
+                    do_you_are_not_logged()
+
+         The Process
+
+           1. Gets HTTP_COOKIE from environment
+           2. Looks for SID var in cookie.
+           3. If not found creates a new SID var.
+           4. The old or new SID is used to find the existing session
+              data, on disk, or create a new blank one.  The
+              shelve.open() will do both of these as needed.
+           5. The session.logged_in is set to 1 or 0 should it exist in
+              session data
+           6. The session.cookie is set, and can be used in HTTP Header
+      '''
+
       self.conf = conf.getInstance()
       self.new_session = True
       self._logged_in = False
@@ -53,7 +73,9 @@ class Session(object):
       # persist session data
       session_dir = self.conf.sessions.dir
       try:
-         self.data = shelve.open(session_dir + '/sess_' + sid, writeback=True)
+         self.data = shelve.open(session_dir
+
+      + '/sess_' + sid, writeback=True)
          os.chmod(session_dir + '/sess_' + sid, 0660)
       except Exception, e:
          raise SessionError('Unable to write session data to %s: %s'
@@ -69,13 +91,16 @@ class Session(object):
          self.data['cookie'] = {'expires':''}
 
       # last visit
-      self.data['lastvisit'] = last_visit_secs = repr(time.time())
+      self.dat
+
+      a['lastvisit'] = last_visit_secs = repr(time.time())
       self.last_visit = time.asctime(time.gmtime(float(last_visit_secs)))
 
       # expiration
       self.data['cookie']['expires'] = 30*24*60*60 # 30 days
 
    def login(self, email, password):
+
       '''Log user in by email and password
 
          Sets Memory: logged_in, user_id and _user
