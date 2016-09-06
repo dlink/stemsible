@@ -96,6 +96,7 @@
     color: grey;
     cursor: pointer;
     font-size: 12px;
+    padding-top: 5px;
 }
 #header #forgotpw-panel {
     display: none;
