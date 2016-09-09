@@ -61,6 +61,21 @@ class Messages(DataTable):
         else:
             sql = open(sql_filepath, 'r').read().replace('<user_id>',
                                                          str(user_id))
+        def adj_reason(reason):
+            '''Given reason as semicolon sep. list like this:
+               'Parent - Ashburn, VA ; Interest - Ashburn, VA'
+               Remove any 'Interest' fields unless it is the only one
+            '''
+            if 'Interest' in reason:
+                parts = []
+                for p in reason.split(' ; '):
+                    if 'Interest' not in  p:
+                        parts.append(p)
+                if parts:
+                    return ' ; '.join(parts)
+                return reason
+            return reason
+
         data = {
             'messages': [
                 {'id'      : r['id'],
@@ -68,7 +83,7 @@ class Messages(DataTable):
                  'author'  : r['author'],
                  'text'    : r['text'],
                  'created' : r['created'],
-                 'reason'  : r['reason'],
+                 'reason'  : adj_reason(r['reason']),
                  }
                 for r in self.db.query(sql)]
             }
