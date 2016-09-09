@@ -1,6 +1,6 @@
 id,code,name,display_description,role,active,created,updated
-1,has_interest,Has Interest,I have interest in,Interested in,1,2015-07-18,\N
+1,has_interest,Has Interest,I have interest,Interested in,1,2015-07-18,\N
 2,has_student,Has Student,I have a student in,Parent,1,2015-07-18,\N
 3,is_student,Is Student,I am a student at,Student,1,2015-07-18,\N
-4,is_educator,Is Educator,I am an educator at,Educator,1,2015-07-18,\N
+4,is_educator,Is Educator,I am an educator at,Teacher,1,2015-07-18,\N
 5,is_administrator,Is Administrator,I am an administrator at,Administrator,1,2015-07-18,\N
