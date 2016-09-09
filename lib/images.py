@@ -12,13 +12,11 @@ def _getImageFile(user_id):
     path = os.path.join(config.basedir, 'web', 'uploads', filename)
     return filename, path
 
-
 def getUserImage(user_id):
     filename, path = _getImageFile(user_id)
     if os.path.exists(path):
         return 'uploads/{}'.format(filename)
     return 'images/generic_icon.png'
-
 
 def saveUserImage(user_id, image_file):
     filename, path = _getImageFile(user_id)

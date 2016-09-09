@@ -87,7 +87,7 @@ class Profile(Base):
         if 'messageCard' not in feed:
             no_posts_msg = div(
                 'Looks like %s has not posted anything on Stemsible yet. '
-                'Remind them to not be so shy next time you see them.'
+                'Remind them not be so shy next time you see them.'
                 % self.user.first_name,
                 style="width: 80%; margin: 20px auto; font-size: 1.3em;")
 
