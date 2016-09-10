@@ -9,6 +9,24 @@ from vweb.htmlpage import HtmlPage
 
 from session import Session, SessionErrorLoginFail
 
+
+STYLE_SHEETS = [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+    'http://cdn.embed.ly/jquery.preview-0.3.2.css',
+    'css/main.css',
+    'css/header.css'
+]
+
+JS_SCRIPTS = [
+    'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
+    'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js',
+    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
+    'http://cdn.embed.ly/jquery.embedly-3.0.5.min.js',
+    'http://cdn.embed.ly/jquery.preview-0.3.2.min.js',
+    'js/header.js',
+]
+
+
 class Base(HtmlPage):
 
     @lazyproperty
@@ -25,21 +43,9 @@ class Base(HtmlPage):
         HtmlPage.__init__(self, name, include_form_tag=0)
         self.conf = conf.getInstance()
 
-        self.style_sheets = [
-            'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/' \
-                'bootstrap.min.css',
-            'css/main.css',
-            'css/header.css']
+        self.style_sheets = STYLE_SHEETS
+        self.javascript_src.extend(JS_SCRIPTS)
 
-        self.javascript_src.extend([
-                'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/' \
-                    'jquery.min.js',
-                'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/' \
-                    'jquery-ui.min.js',
-                'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/' \
-                    'bootstrap.min.js',
-                'js/header.js',
-                ])
         self.debug_cgi = 0
         self.reset_pw_msg = None
         self.require_login = True
@@ -82,8 +88,8 @@ class Base(HtmlPage):
                                       'An email was sent to: %s' %
                                       email_fpw, class_='user-msg')
             except Exception, e:
-                self.reset_pw_msg =p("Sorry we couldn't reset password. %s" % e,
-                                     id='pw-reset-msg', class_='user-msg error')
+                self.reset_pw_msg = p("Sorry we couldn't reset password. %s" % e,
+                                      id='pw-reset-msg', class_='user-msg error')
 
         # need to be logged in?
         if self.require_login and not self.session.logged_in:
@@ -102,7 +108,6 @@ class Base(HtmlPage):
         else:
             sys_ind = ''
 
-
         if not self.session.logged_in:
             on_the_right = self._getLogin() + \
                            self._getForgotPW() + \
@@ -119,7 +124,7 @@ class Base(HtmlPage):
                 on_the_right)
 
     def _getForgotPassword(self):
-        #email
+        # email
         email_label = label('Email',
                             for_='email-input')
         email_field = input(type='email',
@@ -177,7 +182,7 @@ class Base(HtmlPage):
         # text
         text = p("Please enter your email and we'll reset your password.")
 
-        #email
+        # email
         email_label = ''#label('Email',
                         #    for_='email-input')
         email_field = input(type='email',
@@ -199,7 +204,7 @@ class Base(HtmlPage):
 
     def _getPasswordReset(self):
         return self.reset_pw_msg if self.reset_pw_msg else ''
-    
+
     def _getHeaderMenu(self):
 
         # menu triangle
@@ -228,7 +233,6 @@ class Base(HtmlPage):
                 o += li(a(option, href=url))
 
         menu = ul(o, id='header-menu')
-
 
         return form(menu_triangle + menu,
                     name='header-form',
