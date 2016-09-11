@@ -131,7 +131,7 @@ class Feed(object):
 
         text2 = text
         for term in search.split(' '):
-            term2 = r'(%s)' % term
+            term2 = r'(%s)(?!=)' % term
             text2 = re.sub(term2, r'<span class="search-term">\1</span>',
                            text2, flags=re.IGNORECASE)
         return text2

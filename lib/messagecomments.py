@@ -104,7 +104,7 @@ class MessageComments(object):
             text = urlize(text, target='_blank')
             if search:
                 for term in search.split(' '):
-                    term2 = r'(%s)' % term
+                    term2 = r'(%s)(?!=)' % term
                     text =re.sub(term2, r'<span class="search-term">\1</span>',
                                  text, flags=re.IGNORECASE)
 
