@@ -84,7 +84,7 @@ class Profile(Base):
 
         no_posts_msg = ''
         feed = self.feed.getMessages(self.user.id)
-        if 'messageCard' not in feed:
+        if 'messageCard' not in feed and self.user.id != self.session.user.id:
             no_posts_msg = div(
                 'Looks like %s has not posted anything on Stemsible yet. '
                 'Remind them not be so shy next time you see them.'
