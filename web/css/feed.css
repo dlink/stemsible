@@ -95,6 +95,7 @@
 }
 #school-panel li {
     font-size: 12px;
+    text-decoration: underline;
 }
 #school-panel li:hover {
     /* background-color: lightgrey; */
