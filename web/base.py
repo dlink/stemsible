@@ -112,6 +112,7 @@ class Base(HtmlPage):
                 on_the_right)
         else:
             on_the_right = self._getProfileButton() + \
+                           self._getHomeButton() + \
                            self._getHeaderMenu()
             return open('header2.html', 'r').read() % (
                 sys_ind,
@@ -235,7 +236,7 @@ class Base(HtmlPage):
                     class_='form-inline')
 
     def _getProfileButton(self):
-        welcome = label('Welcome',
+        welcome = label('Hello',
                         for_='profile-button')
         profile_button = input(type='button',
                                name='profile',
@@ -244,6 +245,15 @@ class Base(HtmlPage):
                                value=self.session.user.fullname,
                                onclick="location.href='profile.py';")
         return welcome + profile_button
+
+    def _getHomeButton(self):
+        home_button = input(type='button',
+                               name='home',
+                               id='home-button',
+                               class_='btn btn-xs btn-info',
+                               value='Home',
+                               onclick="location.href='main.py';")
+        return home_button
 
     def _getUserMsg(self):
         return div(self.user_msg)
