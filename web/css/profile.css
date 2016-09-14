@@ -47,3 +47,14 @@ TABLE.profileTable tr th {
 #change-pw .missing-value {
    border-color: red;
 }
+#profile-pic #profile-pic-action-text{
+    position: relative;
+    width: 100%;
+}
+#profile-pic p#profile-pic-action-text {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    color: orange;
+}

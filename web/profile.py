@@ -151,12 +151,18 @@ class Profile(Base):
     def _getUserData(self):
         '''Return User Data Fields as HTML'''
         header = h3('Profile')
-        image_ = div(img(width='150px', src=getUserImage(self.user.id)))
+        pic_src = getUserImage(self.user.id)
+        image_ = div(img(width='150px', src=pic_src))
 
         if self.user.id == self.session.user.id:
             file = input(type='file', name='filename', accept='image/*',
                          onchange='upload_form.submit();')
-            browse = span(image_ + file, class_='btn btn-file')
+            action_text = ''
+            if pic_src == 'images/generic_icon.png':
+                action_text = p('Click to upload your <br/>profile photo',
+                                id='profile-pic-action-text')
+            browse = div(image_ + action_text + file, id='profile-pic',
+                         class_='btn btn-file')
             image = form(browse, enctype='multipart/form-data', action='',
                              method='post', name='upload_form')
         else:
