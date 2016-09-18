@@ -17,7 +17,7 @@ logging:
    level: DEBUG
 
 sessions:
-   dir: /data/stemsible/stage-sessions
+   dir: /data/stage-stemsible/sessions
 
 emails:
    active: false  # turn off email
