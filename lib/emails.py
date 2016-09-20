@@ -66,7 +66,7 @@ class Emails(object):
         url = 'http://{}/verify.py?t={}'.format(self.config.baseurl, token)
         path = '%s/lib/emails' % self.config.basedir
         body = open('%s/verification.txt' % path).read() % url
-        html = open('%s/verification.html' % path).read() % url
+        html = open('%s/verification.html' % path).read() % (url, url)
         self.send_email(email, 'Please verify your email', body, html=html)
 
     def verify_email_token(self, token):
@@ -115,7 +115,7 @@ class Emails(object):
         self.send_email(user.email, 'Welcome to Stemsible!', body, html=html)
     
 if __name__ == '__main__':
-    # Emails().send_verification_email(sys.argv[1])
+    #print Emails().send_verification_email(sys.argv[1])
     #print Emails().verify_email_token(sys.argv[1])
     # print Emails().send_email(sys.argv[1], 'test1', 'test body')
     #print Emails().send_new_password(sys.argv[1])
