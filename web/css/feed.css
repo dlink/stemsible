@@ -118,19 +118,22 @@
 
 
 /* url preview styles */
+.selector-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
 .thumb {
-    float: left;
-    margin: 0 10px 0 0;
+    margin: 0 auto;
     position: relative;
-    width: 100px;
+    max-width: 580px;
 }
 
 .thumb .items {
     position: relative;
     overflow: hidden;
     padding: 0px;
-    height: 100px;
-    width: 100px;
+    height: 350px;
+    width: 580px;
 }
 
 .thumb .items .images {
@@ -146,21 +149,21 @@
     float: left;
     margin: 0px;
     padding: 0px;
-    width: 100px;
-    height: 100px;
+    width: 580px;
+    height: 350px;
 }
 
 .thumb .items .images img {
-    max-width: 100px;
-    max-height: 100px;
+    height: 350px;
+    margin: 0 auto;
 }
 
 .thumb .controls {
     top: 0px;
     left: 0px;
-    width: 100px;
+    width: 55px;
     position: absolute;
-    height: 16px;
+    height: 24px;
     z-index: 1;
     background-color: #222;
     opacity: 0.5;
@@ -192,7 +195,7 @@
 }
 
 .thumb .controls .right {
-    left: 16px;
+    left: 20px;
 }
 
 .thumb .nothumb {
@@ -243,7 +246,7 @@
 }
 
 .selector .attributes a.title {
-    margin: 0 0 5px;
+    margin: 10px 0 5px;
     display: block;
 }
 
@@ -387,3 +390,4 @@ html[xmlns] .clearfix {
 * html .clearfix {
     height: 1%;
 }
+
