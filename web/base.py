@@ -12,7 +12,6 @@ from session import Session, SessionErrorLoginFail
 
 STYLE_SHEETS = [
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
-    'http://cdn.embed.ly/jquery.preview-0.3.2.css',
     'css/main.css',
     'css/header.css'
 ]
