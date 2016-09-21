@@ -90,7 +90,7 @@ class Feed(object):
 
     def getNewMessageCard(self):
         return form(open('new-message2.html', 'r').read(),
-                    name='new-card-form')
+                    name='new-card-form', method='POST')
 
     def _getMessageCard(self, message, search=None):
         message = odict(message)
