@@ -22,4 +22,4 @@ sessions:
 emails:
    name: Stemsible
    username: info@stemsible.com
-   password: $STEMSIBLE_EMAIL_PASS
+   apikey: $STEMSIBLE_MAILGUN_APIKEY
