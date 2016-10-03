@@ -54,7 +54,7 @@ class Emails(object):
                       "subject": subject,
                       "text": body,
                       "html": html})
-            self.logger.info('Email sent: %s, %s' % (to, subject))
+            self.logger.info('Email sent: %s, %s: %s' % (to, subject, ret))
             return ret
         except Exception, e:
             self.logger.error('Email error: %s, %s' % (to, subject))
@@ -62,6 +62,7 @@ class Emails(object):
     def send_verification_email(self, email):
         user = self.users.getUsers({'email': email})
         if not user:
+            self.logger.error('Send_vrification_email: %s not found' % email)
             raise Exception('user not found')
         user = user[0]
         token = self.serializer.dumps(email)
