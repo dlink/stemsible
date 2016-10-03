@@ -1,9 +1,11 @@
+import re
+
 from jinja2 import Template
 from datetime import datetime, timedelta
 from encryptint import encrypt_int
 
-from vlib import db, conf
-from vlib.utils import format_datetime
+from vlib import db, conf, logger
+from vlib.utils import format_datetime, lazyproperty, str2datetime
 from vweb.html import *
 
 from users import Users, User
@@ -15,6 +17,10 @@ from images import getUserImage
 NUM_DAYS_BACK = 2
 
 class Notifications(object):
+
+    @lazyproperty
+    def logger(self):
+        return logger.getLogger('Notifications')
 
     def __init__(self):
         self.conf = conf.getInstance()
@@ -132,6 +138,8 @@ class Notifications(object):
         '''Given a User Object, or None for all,
            Send Summary Email to user(s).
         '''
+        sent = failed = 0
+
         # one or all users?
         users = [user] if user else Users().getUsers('1=1')
 
@@ -158,11 +166,52 @@ class Notifications(object):
             html = open('%s/lib/emails/summary.html' %self.conf.basedir).read()
             html = Template(html)
             html = html.render(likes=total_likes, comments=total_comments,
-                               posts=posts, plength=len(posts))
-            self.email.send_email(to=user.email,
-                                  subject='While you were away',
-                                  body="",
-                                  html=html)
+                               posts=posts,
+                               new_posts=self._summary_getNewPosts())
+            try:
+                self.email.send_email(to=user.email,
+                                      subject='While you were away',
+                                      body="",
+                                      html=html)
+                sent += 1
+            except Exception, e:
+                self.logger.error('Summary Email Failed: %s: %s' %
+                                  (user.email, e))
+                failed += 1
+
+            self.logger.info('Summary Email: %s sent, %s failed' % \
+                             (sent, failed))
+
+    def _summary_getNewPosts(self):
+        '''Return the number of new posts since last time Summary Email
+           was sent, excluding comments.
+
+           It does this by reading the system Log and then quering the db
+        '''
+
+        # get last_call from logs
+        try:
+            LINE_IND = r'INFO\tNotifications\tSummary Email:'
+            file = open(self.conf.logging.filename, "r")
+            last_line = None
+            for line in file:
+                if re.search(LINE_IND, line):
+                    last_line = line
+
+            datetime_str = last_line.split('\t')[0]
+            last_call = str2datetime(datetime_str)
+        except Exception, e:
+            self.logger.error('_summary_getNewPosts: Unable to get summary '
+                              'email last call from log: %s.  Defaulting to '
+                              'two days ago.' % e)
+            last_call = datetime.now() - timedelta(days=2)
+        self.logger.debug('_summary_getNewPosts: last_call: %s' % last_call)
+
+        # get number of messages since last_call:
+        sql = 'select count(*) as messages from messages ' \
+              'where reference_id is null and created > %s'
+        messages = self.db.query(sql, params=(last_call,))[0]['messages']
+        return messages
 
     def _getTotalLikes(self, user_id, created_after):
         '''Get total likes after 'created_after' on all the posts of a user.

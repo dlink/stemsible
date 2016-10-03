@@ -20,6 +20,7 @@ sessions:
    dir: /data/stemsible/stage-sessions
 
 emails:
+   active: false  # turn off email
    name: Stage Stemsible
    username: info@stemsible.com
    password: $STEMSIBLE_EMAIL_PASS

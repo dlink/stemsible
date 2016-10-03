@@ -13,6 +13,7 @@ from vlib import logger
 from vlib.utils import lazyproperty
 
 USER_STATUS_ACTIVE = 10
+
 forgot_password_text = """
 Hello,
 
@@ -40,16 +41,22 @@ class Emails(object):
 
     def __init__(self):
         self.db = db.getInstance()
-        self.config = conf.getInstance()
+        self.conf = conf.getInstance()
         self.serializer = Serializer(self.SECRET, expires_in=self.EXPIRATION)
 
     def send_email(self, to, subject, body, html=None):
+
+        # stub out email in dev environment
+        if not self.conf.emails.active:
+            print 'Email turned off: %s' % to
+            return
+
         try:
             ret = requests.post(
                 "https://api.mailgun.net/v3/stemsible.com/messages",
-                auth=("api", self.config.emails.apikey),
-                data={"from": "%s <%s>"  % (self.config.emails.name,
-                                            self.config.emails.username),
+                auth=("api", self.conf.emails.apikey),
+                data={"from": "%s <%s>"  % (self.conf.emails.name,
+                                            self.conf.emails.username),
                       "to": to,
                       "subject": subject,
                       "text": body,
@@ -66,8 +73,8 @@ class Emails(object):
             raise Exception('user not found')
         user = user[0]
         token = self.serializer.dumps(email)
-        url = 'http://{}/verify.py?t={}'.format(self.config.baseurl, token)
-        path = '%s/lib/emails' % self.config.basedir
+        url = 'http://{}/verify.py?t={}'.format(self.conf.baseurl, token)
+        path = '%s/lib/emails' % self.conf.basedir
         body = open('%s/verification.txt' % path).read() % url
         html = open('%s/verification.html' % path).read() % (url, url)
         self.send_email(email, 'Please verify your email', body, html=html)
@@ -110,7 +117,7 @@ class Emails(object):
                         forgot_password_text.format(password))
 
     def send_welcome_email(self, user):
-        path = '%s/lib/emails' % self.config.basedir
+        path = '%s/lib/emails' % self.conf.basedir
         
         body = open('%s/welcome.txt' % path).read() % user.first_name
         html = open('%s/welcome.html' % path).read() % user.first_name

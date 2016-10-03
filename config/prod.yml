@@ -20,6 +20,7 @@ sessions:
    dir: /data/stemsible/sessions
 
 emails:
+   active: true
    name: Stemsible
    username: info@stemsible.com
    apikey: $STEMSIBLE_MAILGUN_APIKEY
