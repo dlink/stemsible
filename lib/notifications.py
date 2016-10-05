@@ -144,6 +144,7 @@ class Notifications(object):
         users = [user] if user else Users().getUsers('1=1')
 
         time_since = datetime.now() - timedelta(NUM_DAYS_BACK)
+        new_posts = self._summary_getNewPosts()
         for user in users:
             print 'user:', user
             total_posts = self._getInterestingPosts(user_id=user.id,
@@ -166,8 +167,7 @@ class Notifications(object):
             html = open('%s/lib/emails/summary.html' %self.conf.basedir).read()
             html = Template(html)
             html = html.render(likes=total_likes, comments=total_comments,
-                               posts=posts,
-                               new_posts=self._summary_getNewPosts())
+                               posts=posts, new_posts=new_posts)
             try:
                 self.email.send_email(to=user.email,
                                       subject='While you were away',
@@ -179,8 +179,8 @@ class Notifications(object):
                                   (user.email, e))
                 failed += 1
 
-            self.logger.info('Summary Email: %s sent, %s failed' % \
-                             (sent, failed))
+        self.logger.info('Summary Email: %s sent, %s failed' % \
+                         (sent, failed))
 
     def _summary_getNewPosts(self):
         '''Return the number of new posts since last time Summary Email
