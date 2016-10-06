@@ -72,7 +72,7 @@
     font-size: 0.5em;
 }
 #header.homepage-header #company-name {
-    margin-top: 40px;
+    margin-top: 25px;
 }
 #header.homepage-header #company-name span{
     background-color: white;
@@ -81,6 +81,11 @@
     font-family: san-sarif;
     font-size: 40px;
     font-weight: bold;
+}
+@media (max-width: 476px) {
+    #header.homepage-header #company-name span{
+	padding-bottom: 0px;
+    }
 }
 #header #header-login {
     margin-bottom: 10px;
@@ -97,6 +102,11 @@
     cursor: pointer;
     font-size: 12px;
     padding-top: 5px;
+}
+@media (max-width: 767px) {
+    #header #forgotpw-link {
+	color: white;
+    }
 }
 #header #forgotpw-panel {
     display: none;

@@ -1,10 +1,17 @@
 .container {
+   background-color: #4e604f;
    background-image: url("../images/boy.jpg");
+   background-repeat: no-repeat;
 }
 #home-page #header1 {
-    margin-top: 70px;
+    margin-top: 50px;
     margin-left: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 33px;
+}
+@media (max-width: 767px) {
+    #home-page #header1 {
+	margin-top: 0px;
+    }
 }
 #home-page #head2 {
    margin-top: 0px;
@@ -13,10 +20,28 @@
     color: white;
     margin-left: 20px;
 }
+#home-page #head1 {
+    margin-top: 45px;
+}
 #home-page #head2 small {
     color: white;
 }
 /* expand width of school typeahead field */
 .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
    width: 100%;
+}
+#home-page #explainer-video {
+    width: 72%;  /* 90% * 80% */
+    margin: auto;
+    position: relative;
+    padding-bottom: 45%; /* (16:9) * 80%  */
+    padding-top: 25px;
+    height: 0;
+}
+#home-page #explainer-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
