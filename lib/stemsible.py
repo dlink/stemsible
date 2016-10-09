@@ -67,8 +67,16 @@ class Stemsible(object):
         elif cmd == 'email':
             validate_num_args('email', 1, args)
             target = args.pop(0)
-            user = self.users.getUsers({'email':args.pop(0)})[0] \
-                   if args else None
+
+            # get user:
+            if args:
+                try:
+                    email = args.pop(0)
+                    user = self.users.getUsers({'email':email})[0]
+                except IndexError, e:
+                    raise StemsibleArgsError('Unknown user: %s' % email)
+            else:
+                user = None
 
             if target == 'message_activity':
                 self.notifications.sendMessageActivity(user)
