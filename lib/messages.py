@@ -113,20 +113,19 @@ class Messages(DataTable):
 
             text = message.data['text']
             text = text if len(text) < 40 else text[0:40] + ' ...'
+
             self.logger.info('%s: new message: %s, %s'
                              % (results['user']['email'], id, text))
 
-            # if comment
-            if 'reference_id' in results:
+            # record comments for later notification
+            if results.get('reference_id'):
                 self.activity_notifications.registerComment(results)
 
             return results
 
         except Exception, e:
             self.logger.error("new message failed: %s: %s" % (data, e))
-            return {'error': str(e),
-                    'data': str(data)}
-
+            return {'error': str(e), 'data': str(data)}
 
 class Message(Record):
     '''Preside over a single Message'''
