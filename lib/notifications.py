@@ -34,6 +34,7 @@ class Notifications(object):
            Send Message Activity Email to user(s)
 
            Send notification about Comments on Users message
+           or on comments to messages user has liked or commented on
            Since the last time run
 
            TO DO: Implement dynamtic send interval based
@@ -41,11 +42,15 @@ class Notifications(object):
         '''
         data = self._getMessageComments(user.id if user else None)
         for user_id in data.keys():
+            purge = []
             user = User(user_id)
+
             print 'Email to:', data[user_id]['email']
 
             posts = []
             for message in data[user_id]['messages']:
+                # message data
+                mUser = User(message['message_user_id'])
 
                 # comments data
                 comments = []
@@ -57,14 +62,26 @@ class Notifications(object):
                                      'profile_image': getUserImage(cUser.id),
                                      'profile_url': profile_url,
                                      'text': message['comment_texts'][i]})
+                    purge.append([user_id, cid])
+
                 # activity message
                 message_url = 'http://%s/main.py#message_card_%s' \
                               % (self.conf.baseurl, message['id'])
-                post_link = a(b('post'), href=message_url)
-                activity_msg = '%s new comment%s on your %s' % \
+                post_link = a(b('Post', style='font-size:14px'),
+                              href=message_url)
+                orig_post = message['message_text'][0:119]
+                if len(message['message_text']) > 120:
+                    orig_post += ' ...'
+                if user_id == mUser.id:
+                    who = 'your'
+                else:
+                    who = mUser.fullname + "'s"
+                activity_msg = '%s new comment%s on %s %s<p/>%s' % \
                                (len(comments),
                                 's' if len(comments) > 1 else '',
-                                post_link)
+                                who,
+                                post_link,
+                                orig_post)
                 posts.append({
                     'activity_msg': activity_msg,
                     'comments': comments,
@@ -76,16 +93,24 @@ class Notifications(object):
                         self.conf.basedir).read()
             html = Template(html)
             html = html.render(posts=posts)
-            self.email.send_email(#to='dvlink@gmail.com',
-                                  to=user.email,
+            self.email.send_email(to='dvlink@gmail.com',
+                                  #to=user.email,
                                   subject='Recent activity',
                                   body='',
                                   html=html)
 
-            # update likes and comments as 'notified':
-            for message in data[user_id]['messages']:
-                for cid in message['comment_ids']:
-                    Comment(cid).updateRows({'notification': datetime.now()})
+            # purge notify queue
+            for user_id, comment_id in purge:
+                # copy queue recors to queue_log
+                sql = 'insert into notify_queue_log ' \
+                      'select * from notify_queue ' \
+                      'where user_id = %s and comment_id = %s'
+                self.db.execute(sql, params=(user_id, comment_id))
+
+                # delete queue records
+                sql = 'delete from notify_queue ' \
+                      'where user_id = %s and comment_id = %s'
+                self.db.execute(sql, params=(user_id, comment_id))
 
     def _getMessageComments(self, user_id):
         '''Return the following message activity Data structure:
@@ -94,7 +119,8 @@ class Notifications(object):
                {'email': 'david@stemsible.com',
                {'messages':
                    [{id: 806,  # message_id
-                     'text': "I'm very excited about how Stemsible",
+                     'message_user_id': 1,
+                     'message_text': "I'm very excited about how Stemsible",
                      'created': <datetime>
                      'comment_ids: [109, 134]
                      'comment_texts': ['test comment message',
@@ -106,27 +132,27 @@ class Notifications(object):
         data = {}
 
         # get sql
-        user_filter = 'and u.id = %s' % user_id if user_id else ''
-        sql_file = '%s/lib/sql/message_comments.sql' % self.conf.basedir
+        user_filter = 'u.id = %s' % user_id if user_id else '1=1'
+        sql_file = '%s/lib/sql/new_comments.sql' % self.conf.basedir
         sql = open(sql_file, 'r').read() % user_filter
-
         # loop thru records, tally on user_id change
         for row in self.db.query(sql):
 
             user_id = row['user_id']
             user_email = row['user_email']
+            message_user_id = row['message_user_id']
             message_id = row['message_id']
+            message_text = row['message_text']
             comment_ids = row['comment_ids'].split(',')
             comment_texts = row['comment_texts'].split('^!^!^')
 
             if user_id not in data:
-                data[user_id] = {'email': user_email,
-                                 'messages': []}
+                data[user_id] = {'email': user_email, 'messages': []}
 
             data[user_id]['messages'].append(
                 {'id': message_id,
-                 #'text': message_text,
-                 #'created': message_created,
+                 'message_user_id': message_user_id,
+                 'message_text': message_text,
                  'comment_ids': comment_ids,
                  'comment_texts': comment_texts
                 })

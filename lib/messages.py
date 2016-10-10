@@ -10,6 +10,7 @@ from vlib.utils import lazyproperty
 from record import Record
 
 from users import User
+from activitynotifications import ActivityNotifications
 
 class Messages(DataTable):
 
@@ -20,6 +21,7 @@ class Messages(DataTable):
     def __init__(self):
         self.db = db.getInstance()
         self.conf = conf.getInstance()
+        self.activity_notifications = ActivityNotifications()
         DataTable.__init__(self, db.getInstance(), 'messages')
 
     def getMessages(self):
@@ -111,14 +113,19 @@ class Messages(DataTable):
 
             text = message.data['text']
             text = text if len(text) < 40 else text[0:40] + ' ...'
+
             self.logger.info('%s: new message: %s, %s'
                              % (results['user']['email'], id, text))
+
+            # record comments for later notification
+            if results.get('reference_id'):
+                self.activity_notifications.registerComment(results)
+
             return results
 
         except Exception, e:
             self.logger.error("new message failed: %s: %s" % (data, e))
-            return {'error': str(e),
-                    'data': str(data)}
+            return {'error': str(e), 'data': str(data)}
 
 class Message(Record):
     '''Preside over a single Message'''

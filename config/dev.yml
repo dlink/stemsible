@@ -20,7 +20,7 @@ sessions:
    dir: /data/stemsible/dev-sessions
 
 emails:
-   active: false  # turn off email
+   active: 1 #false  # turn off email
    name: Dev Stemsible
    username: info@stemsible.com
    apikey: $STEMSIBLE_MAILGUN_APIKEY
