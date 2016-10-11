@@ -93,8 +93,8 @@ class Notifications(object):
                         self.conf.basedir).read()
             html = Template(html)
             html = html.render(posts=posts)
-            self.email.send_email(to='dvlink@gmail.com',
-                                  #to=user.email,
+            self.email.send_email(#to='dvlink@gmail.com',
+                                  to=user.email,
                                   subject='Recent activity',
                                   body='',
                                   html=html)
