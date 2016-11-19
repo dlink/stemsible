@@ -52,6 +52,8 @@ a dev enviroment without a heavy VM*
 
 ```
 apt-get install python-dev libmysqlclient-dev
+apt-get install libxml2-dev libxslt-dev python-dev
+apt-get install python2.7-lxml
 
 pip install MySQL-python vlib vweb passlib jinja2 pillow itsdangerous sender
 

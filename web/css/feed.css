@@ -115,3 +115,21 @@
     white-space: nowrap;
     overflow: hidden;
 }
+.url-preview {
+    border: solid 3px lightgrey;
+    margin: 10px 20px 20px;
+    font-size: 0.8em;
+}
+.url-preview div {
+    margin: 10px;
+}
+.url-preview .url-credit {
+    color: grey;
+}
+.url-preview .url-thumbnail img {
+    max-width: 100%;
+    margin-left: 0px;
+}
+.url-preview .url-title {
+    font-weight: bold;
+}

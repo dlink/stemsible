@@ -108,6 +108,8 @@ class Messages(DataTable):
         try:
             id = self.insertRow(data)
             message = Message(id)
+            message.addUrlPreviews()
+
             results = message.data
             results['user'] = message.user.data
 
@@ -131,8 +133,81 @@ class Message(Record):
     '''Preside over a single Message'''
 
     def __init__(self, id):
-        Record.__init__(self, db.getInstance(), 'messages', id)
+        self.db = db.getInstance()
+        self.conf = conf.getInstance()
+        Record.__init__(self, self.db, 'messages', id)
+
+    @lazyproperty
+    def url_previews(self):
+        '''Get url preview data'''
+        self.url_previewsDt.setFilters({'message_id': self.id})
+        return self.url_previewsDt.getTable()
 
     @lazyproperty
     def user(self):
         return User(self.user_id)
+
+    @lazyproperty
+    def urls(self):
+        from urls import Urls
+        return Urls()
+
+    @lazyproperty
+    def urlPreview(self):
+        from url_preview import UrlPreview
+        return UrlPreview()
+
+    @lazyproperty
+    def url_previewsDt(self):
+        from vlib.datatable import DataTable
+        return DataTable(self.db, 'url_previews')
+
+    def addUrlPreviews(self):
+        '''Extract urls from message text
+           Call UrlPreview
+           Write url preview data fields to database
+        '''
+        for url in self.urls.extractUrls(self.text):
+            preview = self.urlPreview.getData(url)
+            if preview.get('error'):
+                continue
+
+            # no pdf support, which returns an html field, but no 'url'
+            if not preview.get('url'):
+                return ''
+
+            data = {'message_id': self.id}
+            for f in self.urlPreview.FIELDS:
+                data[f] = preview.get(f)
+            self.url_previewsDt.replaceRow(data)
+
+def gen_all_url_previews():
+    for m in range(1,420):
+        print m
+        try:
+            message = Message(m)
+        except:
+            print 'skipping', m
+            continue
+        message.addUrlPreviews()
+
+if __name__ == '__main__':
+    from vlib.utils import pretty
+    
+    id = 431
+    #cmd = 'get_data'
+    #cmd = 'get_url_preview_data'
+    cmd = 'gen_all'
+    
+    if cmd == 'get_data':
+        m = Message(id)
+        print pretty(m.data)
+    elif cmd == 'get_url_preview_data':
+        m = Message(id)
+        for preview in m.url_previews:
+            print pretty(preview)
+            print
+    elif cmd == 'gen_all':
+        gen_all_url_previews()
+    else:
+        print 'cmd unknown:', cmd

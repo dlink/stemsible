@@ -17,7 +17,7 @@ logging:
    level: DEBUG
 
 sessions:
-   dir: /data/stemsible/ukumar-sessions
+   dir: /data/ukumar-stemsible/sessions
 
 emails:
    active: false  # turn off email
