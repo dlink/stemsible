@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import re
+from copy import copy
 
 from vlib import conf
 from vlib.odict import odict
@@ -30,7 +31,8 @@ class Feed(object):
         self.messages = Messages()
         self.scroll_pos = 0
         self.num_messages = None
-
+        self.url_preview_html = unicode(open('url_preview.html').read())
+        
     def process(self):
 
         # add new messages
@@ -106,7 +108,8 @@ class Feed(object):
         username_and_date = div(name_link + reason + date,
                                 class_='usernameAndDate')
 
-        text = urlize(message.text, target='_blank')
+        text = urlize(message.text, trim_url_limit=50, nofollow=True,
+                      target='_blank')
         text = self._highlightKeyTerms(text, search)
 
         messageLikes = MessageLikes(message)
@@ -114,15 +117,24 @@ class Feed(object):
         footer = \
             messageLikes.html_widget(self.page.session.user) + \
             messageComments.html_widget()
-
+        
+        # hack need to instantiate m for each mesage:
+        url_previews = ''
+        for preview in Message(message.id).url_previews:
+            preview2 = copy(preview)
+            preview2['thumbnail_width'] = min(preview2['thumbnail_width'], 500)
+            url_previews += self.url_preview_html.format(**preview2)
+            
         o = ''
         o += user_icon + username_and_date
         o += div(text, class_='messageText')
+        o += url_previews
         o += div(footer, class_='messageFooter')
         o += messageLikes.html_likersSection()
         o += messageComments.html_commentsSection(self.page.session.user,
                                                   search=search)
-
+        
+        
         return div(o, class_='messageCard', id='message_card_%s' % message.id)
 
     def _highlightKeyTerms(self, text, search=None):
