@@ -87,6 +87,13 @@
 	padding-bottom: 0px;
     }
 }
+#header #env-name {
+    color: yellow;
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    font-size: 10px;
+}
 #header #header-login {
     margin-bottom: 10px;
 }

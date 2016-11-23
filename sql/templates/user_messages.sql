@@ -26,6 +26,7 @@ from
    join schools ms on mus.school_id = ms.id
    join addresses msa on ms.address_id = msa.id
 
+   left join messages c on m.id = c.reference_id
 where
    u.id = '<user_id>' and
    m.reference_id is null
@@ -33,5 +34,9 @@ where
 group by
    1, 2, 3, 4, 5
 order by
-   m.id desc
+   -- m.id desc
+
+   -- sort by comment create date (if exists),
+   --    otherwise by message create date
+   if(max(c.id) is null, m.id, max(c.id)) desc
 ;
