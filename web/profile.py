@@ -32,7 +32,7 @@ class Profile(Base):
         self.style_sheets.extend(['css/profile.css', 'css/feed.css'])
         self.style_sheets.extend(self.schoolInfo.getCssFile())
         self.javascript_src.extend(['js/profile.js', 'js/signup.js',
-                                    'js/tags.js'])
+                                    'js/tags.js', 'js/feed.js'])
         self.javascript_src.extend(self.schoolInfo.getJsFile())
         self.cannot_read_profile = 0
 
