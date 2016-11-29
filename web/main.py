@@ -15,7 +15,8 @@ class Main(Base):
     def __init__(self):
         Base.__init__(self)
         self.style_sheets.append('css/feed.css')
-        self.javascript_src.extend(['js/tags.js'])
+        self.javascript_src.extend(['js/tags.js',
+                                    'js/feed.js'])
 
         self.feed = Feed(self)
         self.debug_cgi = 0

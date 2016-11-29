@@ -123,6 +123,8 @@ class Feed(object):
         for preview in Message(message.id).url_previews:
             preview2 = copy(preview)
             preview2['thumbnail_width'] = min(preview2['thumbnail_width'], 500)
+            if not preview2['thumbnail_url']:
+                preview2['thumbnail_url'] = ''
             url_previews += self.url_preview_html.format(**preview2)
             
         o = ''
