@@ -200,6 +200,7 @@ class Base(HtmlPage):
                    ['Help', 'help.py'],
                    ['Terms and Conditions', 'terms.py'],
                    ['Privacy Policy', 'privacy.py'],
+                   ['Bugs and Improvements', 'feedback.py'],
                    ['Logout', 'logout']]
         o = ''
         for option, url in options:
