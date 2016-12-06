@@ -72,7 +72,7 @@ class Main(Base):
             return input(value=tag, type='button',
                          class_='btn btn-default btn-xs disabled')
 
-        tags = ['Music', 'SAT', 'Devices', 'Special Ed', 'Football', 'Math', 'Research',
+        tags = ['Music', 'SAT', 'Devices', 'Special Ed','Football','Math','Research',
                 'Honors Class', 'AP', 'Art', 'Life Skills', 'DIY', 'Cub Scouts',
                 'After School', 'Transportation', 'Open House', 'Back To School',
                 'Social Media', 'Olympics', 'Health', 'Programming', 'Volunteer',
@@ -84,15 +84,24 @@ class Main(Base):
                 'Engineering', 'Economics', 'Literature', 'Drama',
                 'Swimming', 'Lacrosse', 'Basketball', 'Softball', 'Drones', 'Halloween',
                 'Camping', 'Internship', 'Weather', 'Culture', 'Projects', 'Space',
-                'SnowDays' ]
-        real_tags = ['Music', 'Cub Scouts', 'Devices', 'Special Ed', 'Basketball', 'Math',
-                     'Honors Class', 'AP', 'After School', 'Transportation', 'Open House',
-                     'Back To School', 'Social Media', 'Autism', 'Olympics', 'Health',
-                     'Programming', 'Field Trip', 'Volunteer', 'Soccer', 'Supplies',
-                     'Futura', 'Health', 'Bullying', 'Kindergarten', 'PTA', 'Library',
-                     'Science', 'Spectrum', 'AOS', 'Safety', 'Beach', 'Common Core',
-                     'Research', 'Football', 'Meals', 'Art', 'Life Skills', 'DIY', 'Grit',
-                     'SAT']
+                'SnowDays', 'Teaching', 'Performance', 'Tennis', 'Aerobics', 'FLE',
+                'SexEd', 'Leadership', 'White House', 'Character', 'Team', 'Books',
+                'Moms', 'Recognition', 'Tweens' ]
+        real_tags = ['Music', 'SAT', 'Devices', 'Special Ed','Football','Math','Research',
+                'Honors Class', 'AP', 'Art', 'Life Skills', 'DIY', 'Cub Scouts',
+                'After School', 'Transportation', 'Open House', 'Back To School',
+                'Social Media', 'Olympics', 'Health', 'Programming', 'Volunteer',
+                'Soccer', 'Supplies', 'Meals', 'Futura', 'Health', 'Bullying',
+                'Kindergarten', 'PTA', 'Library', 'Autism', 'Grit',
+                'Science', 'Spectrum', 'AOS','Safety', 'Beach', 'Common Core',
+                'Economics', 'Cafeteria', 'ESL', 'AP Latin','IB', 'Field Trip',
+                'ACT', 'Movies', 'Parks', 'Technology', 'History', 'Geography',
+                'Engineering', 'Economics', 'Literature', 'Drama',
+                'Swimming', 'Lacrosse', 'Basketball', 'Softball', 'Drones', 'Halloween',
+                'Camping', 'Internship', 'Weather', 'Culture', 'Projects', 'Space',
+                'SnowDays', 'Teaching', 'Performance', 'Tennis', 'Aerobics', 'FLE',
+                'SexEd', 'Leadership', 'White House', 'Character', 'Team', 'Books',
+                'Moms', 'Recognition', 'Tweens' ]
 
         tag_buttons = ''
         for tag in tags:
