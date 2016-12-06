@@ -23,6 +23,7 @@ class Base(HtmlPage):
 
     def __init__(self, name='Stemsible'):
         HtmlPage.__init__(self, name, include_form_tag=0)
+        self.set_meta_info()
         self.conf = conf.getInstance()
 
         self.style_sheets = [
@@ -45,6 +46,15 @@ class Base(HtmlPage):
         self.require_login = True
         self.user_msg = ''
         self.search = None
+
+    def set_meta_info(self):
+        self.meta_data = {
+            'description': "Engage, discuss, and influence our children's "
+                         "learning, growth, and well-being at Stemsible.com.",
+            'provider_name': 'Stemsible',
+            'provider_url': 'http://www.stemsible.com',
+            'title': 'Stemsible - Learning, Growth, and Well-Being for Kids',
+            'url': 'http://www.stemsible.com/'}
 
     def process(self):
         HtmlPage.process(self)
