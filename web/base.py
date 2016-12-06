@@ -24,7 +24,7 @@ class Base(HtmlPage):
     def __init__(self, name='Stemsible - Learning, Growth, and Well-Being '
                  'for Kids'):
         HtmlPage.__init__(self, name, include_form_tag=0)
-        self.set_og_metadata()
+        self.set_metadata()
         self.conf = conf.getInstance()
 
         self.style_sheets = [
@@ -48,12 +48,16 @@ class Base(HtmlPage):
         self.user_msg = ''
         self.search = None
 
-    def set_og_metadata(self):
+    def set_metadata(self):
+        self.metadata = {
+            'description': "Engage, discuss, and influence our children\'s "
+                         "learning, growth, and well-being at Stemsible.com.",
+            'keywords': "Education,Learning",
+            'provider_name': 'Stemsible',
+            'provider_url': 'http://www.stemsible.com'}
         self.og_metadata = {
             'og:description': "Engage, discuss, and influence our children\'s "
                          "learning, growth, and well-being at Stemsible.com.",
-            #'og:provider_name': 'Stemsible',
-            #'og:provider_url': 'http://www.stemsible.com',
             'og:title': 'Stemsible - Learning, Growth, and Well-Being for Kids',
             'og:type': 'website',
             'og:url': 'http://www.stemsible.com/'}
