@@ -72,12 +72,10 @@
     font-size: 0.5em;
 }
 #header.homepage-header #company-name {
-    margin-top: 25px;
+    margin-top: 12px;
 }
 #header.homepage-header #company-name span{
-    background-color: white;
-    color: #5e5e5e; /* grey */
-    padding: 20px;
+    padding: 0px;
     font-family: san-sarif;
     font-size: 40px;
     font-weight: bold;
