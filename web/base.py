@@ -40,8 +40,10 @@ class Base(HtmlPage):
                     'jquery-ui.min.js',
                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/' \
                     'bootstrap.min.js',
+                'js/googleanalytics.js',
                 'js/header.js',
                 ])
+
         self.debug_cgi = 0
         self.reset_pw_msg = None
         self.require_login = True
