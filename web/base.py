@@ -168,7 +168,7 @@ class Base(HtmlPage):
 
     def _getForgotPW(self):
         # forgot password
-        link = p('Forgot Password?', id='forgotpw-link', class_='clear')
+        link = p(a('Forgot Password?', id='forgotpw-link'), class_='clear')
 
         # header
         header = h3('Forgot Password')
