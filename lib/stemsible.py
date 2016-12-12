@@ -26,6 +26,7 @@ class Stemsible(object):
         '''Set up Command Line (CLI) commands and options launch CLI process
         '''
         commands = ['email message_activity [user_email]',
+                    'email message_notification [message_id] [user_email]',
                     'email summary [user_email]',
                     'show missing_school_addresses']
         options = {'y': "Answer yes to prompts"}
@@ -68,11 +69,20 @@ class Stemsible(object):
             validate_num_args('email', 1, args)
             target = args.pop(0)
 
+            # get message_id:
+            if target == 'message_notification':
+                validate_num_args('email_notification', 1, args)
+                message_id = args.pop(0)
+                
             # get user:
             if args:
                 try:
                     email = args.pop(0)
-                    user = self.users.getUsers({'email':email})[0]
+                    if email == '-':
+                        user = None
+                    else:
+                        user = self.users.getUsers({'email':email})[0]
+                        
                 except IndexError, e:
                     raise StemsibleArgsError('Unknown user: %s' % email)
             else:
@@ -80,6 +90,9 @@ class Stemsible(object):
 
             if target == 'message_activity':
                 self.notifications.sendMessageActivity(user)
+            elif target == 'message_notification':
+                self.notifications.sendMessageNotification(message_id, user)
+                
             elif target == 'summary':
                 self.notifications.sendSummary(user)
             else:

@@ -9,12 +9,14 @@ from vlib.utils import format_datetime, lazyproperty, str2datetime
 from vweb.html import *
 
 from users import Users, User
-from messages import Messages
+from messages import Messages, Message
 from emails import Emails
 from comments import Comment
 from images import getUserImage
 
 NUM_DAYS_BACK = 2
+
+class NotificationsError(Exception): pass
 
 class Notifications(object):
 
@@ -160,6 +162,41 @@ class Notifications(object):
         return data
 
 
+    def sendMessageNotification(self, message_id, user=None):
+        '''Given a message_id, and a User Object, or None for all,
+           Send a Message Notification Email to user(s)
+        '''
+        try:
+            message = Message(message_id)
+        except Exception, e:
+            raise NotificationsError('Message %s not found: %s' %
+                                     (message_id, e))
+                                    
+        print message
+        profile_url = 'http://%s/profile.py?u=%s' % \
+                      (self.conf.baseurl, encrypt_int(message.user.id))
+        mdata = {'notification_message': \
+                 '%s could use your help answering a question' % \
+                 message.user.first_name,
+                 'name': message.user.fullname,
+                 'created': format_datetime(message.created),
+                 'text': message.text,
+                 'message_url': 'http://%s/main.py#message_card_%s' \
+                 % (self.conf.baseurl, message.id),
+                 'profile_image': getUserImage(message.user.id),
+                 'profile_url': profile_url,
+        }
+        html = open('%s/lib/emails/message_notification.html' % \
+                    self.conf.basedir).read()
+        html = Template(html)
+        html = html.render(mdata=mdata)
+        self.email.send_email(to='dvlink@gmail.com',
+                              #to=user.email,
+                              subject=mdata['notification_message'],
+                              body='',
+                              html=html)
+
+        
     def sendSummary(self, user=None):
         '''Given a User Object, or None for all,
            Send Summary Email to user(s).
