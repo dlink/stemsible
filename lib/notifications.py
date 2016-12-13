@@ -163,21 +163,36 @@ class Notifications(object):
 
 
     def sendMessageNotification(self, message_id, user=None):
-        '''Given a message_id, and a User Object, or None for all,
-           Send a Message Notification Email to user(s)
+        '''Given a message_id, and a User Object, or None for all
+              users not including original author, commenters or likers,
+              send a Message Notification Email to user(s)
+              with subject line:
+                "<user.first_name> could use your help answering a question"
         '''
         try:
             message = Message(message_id)
         except Exception, e:
             raise NotificationsError('Message %s not found: %s' %
                                      (message_id, e))
-                                    
+
+        if user:
+            users = [user]
+        else:
+            # exclude message author, commenters and likers:
+            exclude = [message.user_id]
+            exclude.extend([c.user_id for c in message.comments])
+            exclude.extend([l.user_id for l in message.likes])
+            filter = ("id not in (%s)" %
+                      ', '.join([str(x) for x in set(exclude)]))
+            users = self.users.getUsers(filter)
+            
         print message
+
         profile_url = 'http://%s/profile.py?u=%s' % \
                       (self.conf.baseurl, encrypt_int(message.user.id))
-        mdata = {'notification_message': \
-                 '%s could use your help answering a question' % \
-                 message.user.first_name,
+        subject = '%s could use your help answering a question' % \
+                  message.user.first_name
+        mdata = {'notification_message': subject + '.',
                  'name': message.user.fullname,
                  'created': format_datetime(message.created),
                  'text': message.text,
@@ -190,12 +205,13 @@ class Notifications(object):
                     self.conf.basedir).read()
         html = Template(html)
         html = html.render(mdata=mdata)
-        self.email.send_email(to='dvlink@gmail.com',
-                              #to=user.email,
-                              subject=mdata['notification_message'],
-                              body='',
-                              html=html)
-
+        for user in users:
+            print 'email: %s' % (user.email)
+            self.email.send_email(#to='dvlink@gmail.com',
+                                  to=user.email,
+                                  subject=subject,
+                                  body='',
+                                  html=html)
         
     def sendSummary(self, user=None):
         '''Given a User Object, or None for all,
