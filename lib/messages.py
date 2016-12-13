@@ -10,6 +10,8 @@ from vlib.utils import lazyproperty
 from record import Record
 
 from users import User
+from comments import Comment
+from likes import Like
 from activitynotifications import ActivityNotifications
 
 class Messages(DataTable):
@@ -137,6 +139,21 @@ class Message(Record):
         self.conf = conf.getInstance()
         Record.__init__(self, self.db, 'messages', id)
 
+    @lazyproperty
+    def comments(self):
+        comments = []
+        sql = 'select id from messages where reference_id = %s'
+        for row in self.db.query(sql, params=[self.id]):
+            comments.append(Comment(row['id']))
+        return comments
+    @lazyproperty
+    def likes(self):
+        likes = []
+        sql = 'select id from likes where message_id = %s'
+        for row in self.db.query(sql, params=[self.id]):
+            likes.append(Like(row['id']))
+        return likes
+    
     @lazyproperty
     def url_previews(self):
         '''Get url preview data'''
