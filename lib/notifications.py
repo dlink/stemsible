@@ -188,10 +188,17 @@ class Notifications(object):
             
         print message
 
+        # mutiple possible subjects:
+        SUBJECT1 = '%s could use your help answering a question' % \
+                   message.user.first_name
+        SUBJECT2 = '%s posted a link that may interest you' % \
+                   message.user.first_name
+        subject = SUBJECT2
+        
+        
         profile_url = 'http://%s/profile.py?u=%s' % \
                       (self.conf.baseurl, encrypt_int(message.user.id))
-        subject = '%s could use your help answering a question' % \
-                  message.user.first_name
+        
         mdata = {'notification_message': subject + '.',
                  'name': message.user.fullname,
                  'created': format_datetime(message.created),

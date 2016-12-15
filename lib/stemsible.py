@@ -28,6 +28,7 @@ class Stemsible(object):
         commands = ['email message_activity [user_email]',
                     'email message_notification [message_id] [user_email]',
                     'email summary [user_email]',
+                    'email verification <user_email>',
                     'messages check_dups',
                     'show missing_school_addresses']
         options = {'y': "Answer yes to prompts"}
@@ -96,9 +97,15 @@ class Stemsible(object):
                 
             elif target == 'summary':
                 self.notifications.sendSummary(user)
+            elif target == 'verification':
+                if not user:
+                    raise StemsibleArgsError('Must specific user_email')
+                from emails import Emails
+                Emails().send_verification_email(email)
             else:
                 raise StemsibleArgsError('Unrecognized email target: %s'
                                          % target)
+            
         elif cmd == 'messages':
             validate_num_args('messages', 1, args)
             action = args.pop(0)
