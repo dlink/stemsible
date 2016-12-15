@@ -206,7 +206,7 @@ class Messages(DataTable):
         if report:
             from emails import Emails
             Emails().send_email(
-                'dvlink@gmail.com,david@stemsible.com',
+                'dvlink@gmail.com,udaydotkumar@gmail.com',
                 'Dupliate Messages Report',report)
             
 class Message(Record):
