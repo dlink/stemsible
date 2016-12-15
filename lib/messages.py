@@ -131,6 +131,84 @@ class Messages(DataTable):
             self.logger.error("new message failed: %s: %s" % (data, e))
             return {'error': str(e), 'data': str(data)}
 
+    def checkForDups(self):
+        '''-- Problem statement
+
+        -- After user creates a new comment, or creates a new post --
+           if they immediately refresh the page (with Ctrl-R for
+           example), the previous HTML POST data is repeated. And
+           their data update is repeated. You can verify this is dev
+           or staging.
+        
+        -- This pattern seems to be the solution;
+        -- https://en.wikipedia.org/wiki/Post/Redirect/Get
+        
+        -- In the mean time we can remove duplicate entries from the database
+        
+        
+        -- This query lists dupicate messages (or comments).
+        '''
+
+        sql = '''
+        select
+           u.id as user_id,
+           concat_ws(' ', u.first_name, u.last_name) as user_fullname,
+           m.created,
+           m.text,
+           m.reference_id
+        from
+           messages m
+           join (
+              select
+                 text,
+                 count(*)
+              from
+                 messages
+              group by
+                 1
+              having
+                 count(*) > 1
+           ) m2 on m.text = m2.text
+           join users u on m.user_id = u.id
+        order by
+           m.text,
+           m.id
+        '''
+
+        from vlib.utils import format_datetime
+        
+        old_text = None
+        dups = []
+        report = ''
+        
+        for row in self.db.query(sql):
+            user_id       = str(row['user_id'])
+            user_fullname = row['user_fullname']
+            created       = format_datetime(row['created'])
+            text          = row['text'][0:50]
+            reference_id  = str(row['reference_id'])
+            
+            print_rec = ', '.join(
+                [user_id, user_fullname, created, text, reference_id])
+
+            # rec text same as last one?
+            if old_text and text != old_text:
+                report += '\n'.join(dups) + '\n\n'
+                dups = []
+
+            dups.append(print_rec)
+            old_text = text
+        
+        if dups:
+            report += '\n'.join(dups) + '\n\n'
+            dups = []
+
+        if report:
+            from emails import Emails
+            Emails().send_email(
+                'dvlink@gmail.com,david@stemsible.com',
+                'Dupliate Messages Report',report)
+            
 class Message(Record):
     '''Preside over a single Message'''
 

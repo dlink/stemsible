@@ -28,6 +28,7 @@ class Stemsible(object):
         commands = ['email message_activity [user_email]',
                     'email message_notification [message_id] [user_email]',
                     'email summary [user_email]',
+                    'messages check_dups',
                     'show missing_school_addresses']
         options = {'y': "Answer yes to prompts"}
 
@@ -98,6 +99,15 @@ class Stemsible(object):
             else:
                 raise StemsibleArgsError('Unrecognized email target: %s'
                                          % target)
+        elif cmd == 'messages':
+            validate_num_args('messages', 1, args)
+            action = args.pop(0)
+            if action == 'check_dups':
+                from messages import Messages
+                Messages().checkForDups()
+            else:
+                raise StemsibleArgsError('Unrecognized message action: %s'
+                                         % action)
         else:
             raise StemsibleArgsError('Unrecognized command: %s' % cmd)
 
