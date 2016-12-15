@@ -69,7 +69,7 @@ class Emails(object):
     def send_verification_email(self, email):
         user = self.users.getUsers({'email': email})
         if not user:
-            self.logger.error('Send_vrification_email: %s not found' % email)
+            self.logger.error('Send_verification_email: %s not found' % email)
             raise Exception('user not found')
         user = user[0]
         token = self.serializer.dumps(email)
