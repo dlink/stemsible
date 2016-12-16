@@ -80,18 +80,16 @@ class Emails(object):
         self.send_email(email, 'Please verify your email', body, html=html)
 
     def verify_email_token(self, token):
+        email = 'email_undetermined'
         try:
             email = self.serializer.loads(token)
             user = self.users.getUsers('email = "%s"' % email)[0]
             user.update('status_id', USER_STATUS_ACTIVE)
-            
-            #user = Users()
-            #user.setFilters('email = "%s"' % email)
-            #user.updateRows({'status_id': USER_STATUS_ACTIVE})
-            
             self.logger.info('User is verified: {}'.format(email))
             return user
-        except BadData:
+        except Exception, e:
+            self.logger.error('User verifification failed: email=%s, '
+                              'token=%s: %s' % (email, token, e))
             return False
 
     def send_new_password(self, email):
