@@ -135,4 +135,7 @@ if __name__ == '__main__':
     #print Emails().send_email(sys.argv[1], 'test1', 'test body', html='<h3>test body</h3>')
     #from users import User
     #print Emails().send_welcome_email(User(sys.argv[1]))
-    print test_email(sys.argv[1])
+    #print test_email(sys.argv[1])
+    email = sys.argv[1]
+    token = Emails().serializer.dumps(email)
+    print token

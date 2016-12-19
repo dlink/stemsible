@@ -42,6 +42,25 @@ class Users(DataTable):
         user = self.getUsers({'email': email})
         rows = self.updateRows(data)
         return rows
+
+    def emails(self):
+        sql = 'select email from users'
+        return [r['email'] for r in self.db.query(sql)]
+
+    def list_all(self):
+        sql = 'select id, email, first_name, last_name, status_id, created ' \
+              'from users'
+        o = []
+        o.append(
+            ['id', 'email', 'first_name', 'last_name', 'status_id', 'created'])
+        for row in self.db.query(sql):
+            o.append([str(row['id']),
+                      row['email'],
+                      row['first_name'],
+                      row['last_name'],
+                      row['status_id'],
+                      str(row['created'])])
+        return o
         
 class User(Record):
     '''Preside over a single User'''
