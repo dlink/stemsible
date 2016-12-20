@@ -14,7 +14,7 @@ from emails import Emails
 from comments import Comment
 from images import getUserImage
 
-NUM_DAYS_BACK = 2
+NUM_DAYS_BACK = 5
 
 class NotificationsError(Exception): pass
 
@@ -233,16 +233,14 @@ class Notifications(object):
 
         time_since = datetime.now() - timedelta(NUM_DAYS_BACK)
         new_posts = self._summary_getNewPosts()
+        total_comments = self._getTotalComments(created_after=time_since)
+        total_likes = self._getTotalLikes(created_after=time_since)
         for user in users:
             print 'user:', user
-            total_posts = self._getInterestingPosts(user_id=user.id,
-                                                    created_after=time_since)
-            total_comments = self._getTotalComments(user_id=user.id,
-                                                    created_after=time_since)
-            total_likes = self._getTotalLikes(user_id=user.id,
-                                              created_after=time_since)
+            interesting_posts = self._getInterestingPosts(
+                user_id=user.id, created_after=time_since)
             posts = []
-            for p in total_posts:
+            for p in interesting_posts:
                 posts.append({
                     'created': format_datetime(p['last_updated']),
                     'text': ' '.join(p['text'].split(' ')[0:80]), # 80 words
@@ -301,25 +299,25 @@ class Notifications(object):
         messages = self.db.query(sql, params=(last_call,))[0]['messages']
         return messages
 
-    def _getTotalLikes(self, user_id, created_after):
-        '''Get total likes after 'created_after' on all the posts of a user.
-        Given a user_id of type integer and a created_after of type datetime,
-        return the total number of likes as integer.
+    def _getTotalLikes(self, created_after):
+        '''Get total likes after 'created_after' on all posts
+           Given a created_after of type datetime,
+           Return the total number of likes as integer.
         '''
         sql_file = '%s/sql/templates/email_total_likes.sql' %self.conf.basedir
         sql = open(sql_file, 'r').read()
-        resp = self.db.query(sql, params=(user_id, created_after))
+        resp = self.db.query(sql, params=(created_after,))
         return resp[0]['total_likes']
 
-    def _getTotalComments(self, user_id, created_after):
-        '''Get total comments after 'created_after' on all the posts of a user
-        Given a user_id of type integer and a created_after of type datetime,
-        return the total number of comments as integer.
+    def _getTotalComments(self, created_after):
+        '''Get total comments after 'created_after' on all posts 
+           Given a created_after of type datetime,
+           Return the total number of comments as integer.
         '''
         sql_file = '%s/sql/templates/email_total_comments.sql' \
                    % self.conf.basedir
         sql = open(sql_file, 'r').read()
-        resp = self.db.query(sql, params=(user_id, created_after))
+        resp = self.db.query(sql, params=(created_after,))
         return resp[0]['total_comments']
 
     def _getInterestingPosts(self, user_id, created_after):
