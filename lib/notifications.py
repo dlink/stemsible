@@ -105,7 +105,9 @@ class Notifications(object):
             for user_id, comment_id in purge:
                 # copy queue recors to queue_log
                 sql = 'insert into notify_queue_log ' \
-                      'select * from notify_queue ' \
+                      '(user_id, comment_id, created) ' \
+                      'select user_id, comment_id, created ' \
+                      'from notify_queue ' \
                       'where user_id = %s and comment_id = %s'
                 self.db.execute(sql, params=(user_id, comment_id))
 
