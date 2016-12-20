@@ -1,6 +1,6 @@
 
 create table notify_queue_log (
-  id            integer unsigned not null primary key, -- no auto increment
+  id            integer unsigned not null auto_increment primary key,
   user_id       integer unsigned not null,
   comment_id    integer unsigned not null,
 
