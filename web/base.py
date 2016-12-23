@@ -50,6 +50,15 @@ class Base(HtmlPage):
         self.user_msg = ''
         self.search = None
 
+    def getHtmlHeader(self):
+        '''Override vweb's getHtmlHeader() method
+           in order to hack in fb-pix.html
+        '''
+        o = HtmlPage.getHtmlHeader(self)
+        o = o.replace('</head>',
+                      '%s</head>' % open('fb-pix.html', 'r').read())
+        return o
+
     def set_metadata(self):
         self.metadata = {
             'description': "Engage, discuss, and influence our children\'s "
