@@ -49,6 +49,7 @@ class Base(HtmlPage):
         self.require_login = True
         self.user_msg = ''
         self.search = None
+        self.school_id = None
 
     def getHtmlHeader(self):
         '''Override vweb's getHtmlHeader() method

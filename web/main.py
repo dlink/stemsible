@@ -27,11 +27,15 @@ class Main(Base):
 
         if 'search' in self.form:
             self.search = self.form['search'].value.strip()
+        elif 'school_search' in self.form:
+            self.school_id = int(self.form['school_search'].value)
 
     def _getBody(self):
         left = self._getSchoolPanel()
         if self.search:
             center = self.feed.getMessages(search=self.search)
+        elif self.school_id:
+            center = self.feed.getMessages(school_id=self.school_id)
         else:
             center = self.feed.getNewMessageCard() + self.feed.getMessages()
 
@@ -47,19 +51,29 @@ class Main(Base):
         #return form(o, name='form1', method='POST')
 
     def _getSchoolPanel(self):
-        def mk_link(name):
-            name2 = name.replace("'", "\\\'")
-            return p(name, onclick="javascript:search('%s')" % name2)
+        def mk_link(name, sid):
+            return p(name, onclick="javascript:school_search('%s')" % sid)
 
         school_header = p('Schools', id='school-header')
 
-        schools = set([s['school'] for s in self.session.user.schools])
+        schools = []
+        for s in self.session.user.schools:
+            pair = [s['school'], s['school_id']]
+            if pair not in schools:
+                schools.append(pair)
         links = ''
-        for school in schools:
-            links += li(mk_link(school), class_='cursor-pointer')
+        for school, sid in schools:
+            class_ = 'cursor-pointer'
+            if self.school_id == sid:
+                class_ += ' red'
+            links += li(mk_link(school, sid), class_=class_)
         school_links = ul(links)
 
-        return div(school_header + school_links, id='school-panel')
+        school_search = input(type='hidden', name='school_search')
+        
+        form_ = form(school_header + school_links + school_search,
+                     id='school-search-form', method='post')
+        return div(form_, id='school-panel')
 
     def _getTagsPanel(self):
         def mk_button(tag, class_=''):

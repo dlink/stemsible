@@ -64,11 +64,14 @@ class Feed(object):
             p = self.page.form['scroll_pos'].value
             self.scroll_pos = int(round(float(p), 0))
 
-    def getMessages(self, user_id=None, search=None):
+    def getMessages(self, user_id=None, search=None, school_id=None):
         # TO DO: rename getMyMessages to something like getThisUsersMessages
 
         if search:
             messages = self.messages.getSearchMessages(search)['messages']
+        elif school_id:
+            messages = self.messages.getSchoolSearchMessages(school_id)\
+                       ['messages']
         else:
             if not user_id:
                 user_id = self.page.session.user.id

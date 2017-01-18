@@ -2,6 +2,7 @@ select
    us.id,
    sr.name as relation,
    s.name as school,
+   s.id as school_id,
    us.grade,
    sd.name as district,
    a.address1,

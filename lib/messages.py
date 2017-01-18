@@ -41,7 +41,8 @@ class Messages(DataTable):
             }
         return data
 
-    def getUserMessages(self, user_id=None, type=None, search=None):
+    def getUserMessages(self, user_id=None, type=None, search=None,
+                        school_id=None):
         '''Return a all messages this users follows
            if search passed in then return search result messages.
            if type == 'my', then return this users messages.
@@ -53,6 +54,8 @@ class Messages(DataTable):
         '''
         if search:
             sql_file = 'search_messages.sql'
+        elif school_id:
+            sql_file = 'school_messages.sql'
         elif type == 'my':
             sql_file = 'my_messages.sql'
         else:
@@ -62,6 +65,9 @@ class Messages(DataTable):
 
         if search:
             sql = open(sql_filepath, 'r').read().replace('<search>', search)
+        elif school_id:
+            sql = open(sql_filepath, 'r').read().replace('<school_id>',
+                                                         str(school_id))
         else:
             sql = open(sql_filepath, 'r').read().replace('<user_id>',
                                                          str(user_id))
@@ -105,6 +111,9 @@ class Messages(DataTable):
         searchq = ' '.join(['+%s*' % n for n in search.strip().split(' ')])
 
         return self.getUserMessages(search=searchq)
+
+    def getSchoolSearchMessages(self, school_id):
+        return self.getUserMessages(school_id=school_id)
 
     def add(self, data):
         try:
@@ -241,7 +250,7 @@ class Message(Record):
     @lazyproperty
     def user(self):
         return User(self.user_id)
-
+    
     @lazyproperty
     def urls(self):
         from urls import Urls
@@ -292,7 +301,8 @@ if __name__ == '__main__':
     id = 431
     #cmd = 'get_data'
     #cmd = 'get_url_preview_data'
-    cmd = 'gen_all'
+    #cmd = 'gen_all'
+    cmd = 'not set'
     
     if cmd == 'get_data':
         m = Message(id)

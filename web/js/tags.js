@@ -3,3 +3,8 @@ function search(search_term) {
     form['search'].value = search_term;
     form.submit();
 }
+function school_search(sid) {
+    form = document.getElementById("school-search-form")
+    form['school_search'].value = sid
+    form.submit()
+}
