@@ -39,4 +39,6 @@ order by
    -- sort by comment create date (if exists),
    --    otherwise by message create date
    if(max(c.id) is null, m.id, max(c.id)) desc
+limit
+   100
 ;
