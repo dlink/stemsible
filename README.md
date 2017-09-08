@@ -4,9 +4,7 @@
 
 Stemsible is a Python 2.7 CGI Web App.
 
-Production Site: http://crowfly.net/stemsible/main.py
-
-Development Site: http://dev.crowfly.net/stemsible/main.py
+Production Site: http://stemsible.com
 
 ## Table Of Contents
 <!-- MarkdownTOC -->
